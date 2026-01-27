@@ -158,6 +158,16 @@
             margin-bottom: 15px;
         }
 
+        #gameOfLife {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2em;
@@ -174,68 +184,105 @@
     </style>
 </head>
 <body>
+    <canvas id="gameOfLife"></canvas>
     <div class="container">
         <a href="index.html" class="back-link">← Back to Projects</a>
 
         <div class="header">
             <div class="week-number">FINAL PROJECT</div>
-            <h1>Project Title</h1>
-        </div>
-
-        <div class="section">
-            <h2>Overview</h2>
-            <div class="highlight">
-                <h3>Project Summary</h3>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Concept & Design</h2>
-        </div>
-
-        <div class="section">
-            <h2>Fabrication</h2>
-        </div>
-
-        <div class="section">
-            <h2>Programming</h2>
-            <pre><code>// Your main code
-void setup() {
-    // Initialization
-}
-
-void loop() {
-    // Main program loop
-}</code></pre>
-        </div>
-
-        <div class="section">
-            <h2>Challenges & Solutions</h2>
-        </div>
-
-        <div class="section">
-            <h2>Results</h2>
-            <div class="highlight">
-                <h3>Final Outcome</h3>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>Resources</h2>
-            <ul>
-                <li><a href="#">CAD Files</a></li>
-                <li><a href="#">Code Repository</a></li>
-                <li><a href="#">Schematics</a></li>
-                <li><a href="#">Bill of Materials</a></li>
-                <li><a href="#">Video Demo</a></li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Acknowledgments</h2>
+            <h1>Final Project Ideas</h1>
+            <h2>Wrestling Drone (similar to "Beyblade" but in the air with two drones)</h2>
+            <h2>Sensor Network with strict energy, communication, and visibility constraints</h2>
+            <h2>Low tech anti drone system</h2>
         </div>
     </div>
+
+    <script>
+        const canvas = document.getElementById('gameOfLife');
+        const ctx = canvas.getContext('2d');
+
+        let width, height, cellSize, cols, rows;
+        let grid, nextGrid;
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            cellSize = 10;
+            cols = Math.floor(width / cellSize);
+            rows = Math.floor(height / cellSize);
+
+            grid = createGrid();
+            nextGrid = createGrid();
+            randomizeGrid();
+        }
+
+        function createGrid() {
+            return new Array(cols).fill(null).map(() => new Array(rows).fill(0));
+        }
+
+        function randomizeGrid() {
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    grid[i][j] = Math.random() > 0.7 ? 1 : 0;
+                }
+            }
+        }
+
+        function countNeighbors(x, y) {
+            let count = 0;
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if (i === 0 && j === 0) continue;
+                    const col = (x + i + cols) % cols;
+                    const row = (y + j + rows) % rows;
+                    count += grid[col][row];
+                }
+            }
+            return count;
+        }
+
+        function updateGrid() {
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const neighbors = countNeighbors(i, j);
+                    const current = grid[i][j];
+
+                    if (current === 1 && (neighbors < 2 || neighbors > 3)) {
+                        nextGrid[i][j] = 0;
+                    } else if (current === 0 && neighbors === 3) {
+                        nextGrid[i][j] = 1;
+                    } else {
+                        nextGrid[i][j] = current;
+                    }
+                }
+            }
+            [grid, nextGrid] = [nextGrid, grid];
+        }
+
+        function drawGrid() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#d4af37';
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    if (grid[i][j] === 1) {
+                        ctx.fillRect(i * cellSize, j * cellSize, cellSize - 1, cellSize - 1);
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            updateGrid();
+            drawGrid();
+            setTimeout(() => requestAnimationFrame(animate), 100);
+        }
+
+        initCanvas();
+        animate();
+
+        window.addEventListener('resize', initCanvas);
+    </script>
 </body>
 </html>
