@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - David Ettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            letter-spacing: 0.5px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .back-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-bottom: 60px;
+        }
+
+        .back-link:hover {
+            color: #d4af37;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            color: #fff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 30px;
+        }
+
+        .content {
+            color: #ccc;
+            font-size: 1.05em;
+            font-weight: 300;
+        }
+
+        .content p {
+            margin-bottom: 25px;
+        }
+
+        .content strong {
+            color: #d4af37;
+            font-weight: 400;
+        }
+
+        .divider {
+            height: 1px;
+            background: #222;
+            margin: 50px 0;
+        }
+
+        .contact {
+            margin-top: 50px;
+        }
+
+        .contact h2 {
+            font-size: 1.2em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #999;
+        }
+
+        .contact a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back</a>
+
+        <h1>About</h1>
+
+        <div class="content">
+            <p>
+                This is my documentation site for <strong>PS70: Introduction to Digital Fabrication</strong> at Harvard University.
+            </p>
+
+            <p>
+                Throughout this course, I explore the intersection of design, engineering, and fabrication.
+                From 2D design and CNC machining to programming microcontrollers and building networked systems,
+                each project documents my journey in learning to create physical objects through digital tools.
+            </p>
+
+            <p>
+                The site showcases weekly assignments covering topics like inputs and outputs,
+                machine building, and culminates in a final project that synthesizes these skills.
+            </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="contact">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
