@@ -15,7 +15,6 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: #87CEEB;
             min-height: 100vh;
-            padding: 40px 20px;
             position: relative;
             overflow-x: hidden;
             cursor: none;
@@ -38,7 +37,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            z-index: 0;
+            z-index: 1;
         }
 
         .cloud {
@@ -137,8 +136,8 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            height: 60%;
-            z-index: 0;
+            height: 70%;
+            z-index: 2;
         }
 
         .mountain {
@@ -150,23 +149,23 @@
         }
 
         .mountain-back {
-            border-width: 0 250px 400px 250px;
+            border-width: 0 300px 450px 300px;
             border-color: transparent transparent #8B7355 transparent;
-            left: 10%;
-            filter: brightness(0.8);
+            left: 5%;
+            filter: brightness(0.75);
         }
 
         .mountain-mid {
-            border-width: 0 300px 500px 300px;
+            border-width: 0 350px 550px 350px;
             border-color: transparent transparent #A0826D transparent;
-            left: 30%;
-            filter: brightness(0.9);
+            left: 25%;
+            filter: brightness(0.85);
         }
 
         .mountain-front {
-            border-width: 0 350px 550px 350px;
+            border-width: 0 400px 600px 400px;
             border-color: transparent transparent #6B8E23 transparent;
-            left: 50%;
+            right: 15%;
         }
 
         /* Snow caps */
@@ -178,24 +177,24 @@
         }
 
         .snow-cap-1 {
-            border-width: 0 150px 150px 150px;
+            border-width: 0 180px 180px 180px;
             border-color: transparent transparent white transparent;
-            left: 10%;
-            bottom: 400px;
+            left: 5%;
+            bottom: 450px;
         }
 
         .snow-cap-2 {
-            border-width: 0 180px 180px 180px;
+            border-width: 0 210px 210px 210px;
             border-color: transparent transparent white transparent;
-            left: 30%;
-            bottom: 500px;
+            left: 25%;
+            bottom: 550px;
         }
 
         .snow-cap-3 {
-            border-width: 0 200px 200px 200px;
+            border-width: 0 240px 240px 240px;
             border-color: transparent transparent white transparent;
-            left: 50%;
-            bottom: 550px;
+            right: 15%;
+            bottom: 600px;
         }
 
         /* Sun */
@@ -208,7 +207,7 @@
             background: #FFD700;
             border-radius: 50%;
             box-shadow: 0 0 60px #FFD700;
-            z-index: 0;
+            z-index: 1;
             animation: pulse 4s ease-in-out infinite;
         }
 
@@ -235,159 +234,101 @@
             transform: translate(-50%, -50%);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
         header {
+            position: relative;
             text-align: center;
             color: white;
-            margin-bottom: 50px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            padding: 40px 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 3;
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 3.5em;
             margin-bottom: 10px;
             font-weight: 700;
         }
 
         h2 {
-            font-size: 1.5em;
+            font-size: 1.8em;
             font-weight: 400;
             opacity: 0.95;
         }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        /* Animal positioning */
+        .animal {
+            position: fixed;
+            cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            position: relative;
-            transform-style: preserve-3d;
+            z-index: 5;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
         }
 
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        .animal:hover {
+            transform: scale(1.15) translateY(-10px);
+            filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.4));
+            z-index: 100;
         }
 
-        .project-image {
+        .animal svg {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4em;
-            color: white;
-            position: relative;
-            overflow: hidden;
+            height: 100%;
         }
 
-        .project-image::after {
-            content: 'Add Image';
+        .animal .tooltip {
             position: absolute;
-            font-size: 0.3em;
-            opacity: 0.7;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            margin-bottom: 10px;
         }
 
-        .project-content {
-            padding: 20px;
+        .animal:hover .tooltip {
+            opacity: 1;
         }
 
-        .project-title {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
+        /* Specific animal positions and sizes */
+        .cow { bottom: 15%; left: 8%; width: 100px; height: 80px; }
+        .steinbock { bottom: 55%; right: 25%; width: 90px; height: 85px; }
+        .marmot { bottom: 48%; left: 32%; width: 70px; height: 60px; }
+        .deer { bottom: 25%; left: 28%; width: 95px; height: 90px; }
+        .fox { bottom: 12%; left: 45%; width: 75px; height: 65px; }
+        .rabbit { bottom: 20%; right: 50%; width: 60px; height: 55px; }
+        .goat { bottom: 35%; right: 12%; width: 85px; height: 75px; }
+        .sheep { bottom: 18%; right: 35%; width: 80px; height: 70px; }
+        .bird { bottom: 42%; left: 12%; width: 60px; height: 55px; }
+        .chamois { bottom: 50%; left: 18%; width: 85px; height: 80px; }
+        .snake { bottom: 8%; right: 20%; width: 90px; height: 40px; }
+        .eagle { top: 25%; right: 15%; width: 110px; height: 90px; animation: soar 8s ease-in-out infinite; }
+
+        @keyframes soar {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+            }
         }
 
-        .project-week {
-            font-size: 0.9em;
-            color: #667eea;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .minigame-card {
-            background: linear-gradient(135deg, rgba(76,201,240,0.95) 0%, rgba(67,233,123,0.95) 100%);
-        }
-
-        .minigame-card .project-image {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .minigame-card .project-title {
-            color: #fff;
-            font-size: 1.5em;
-        }
-
-        .minigame-card .project-week {
-            color: #fff;
-            opacity: 0.9;
-        }
-
-        .final-project {
-            grid-column: span 2;
-            background: linear-gradient(135deg, rgba(255,215,0,0.95) 0%, rgba(255,140,0,0.95)100%);
-        }
-
-        .final-project .project-image {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            height: 250px;
-        }
-
-        .final-project .project-title {
-            font-size: 1.8em;
-            color: #fff;
-        }
-
-        .final-project .project-week {
-            color: #fff;
-            opacity: 0.9;
+        @media (max-width: 1024px) {
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 1.3em; }
+            .animal { transform: scale(0.8); }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .final-project {
-                grid-column: span 1;
-            }
-        }
-
-        /* Cursor trail effect */
-        .cursor-trail {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.15s ease;
-            transform: translate(-50%, -50%);
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.1em; }
+            .animal { transform: scale(0.6); }
         }
     </style>
 </head>
@@ -414,110 +355,361 @@
     <!-- Cat cursor follower -->
     <div class="cat-cursor">🐱</div>
 
-    <div class="container">
-        <header>
-            <h1>PS70: Digital Fabrication</h1>
-            <h2>David Ettel</h2>
-        </header>
+    <header>
+        <h1>PS70: Digital Fabrication</h1>
+        <h2>David Ettel</h2>
+    </header>
 
-        <div class="projects-grid">
-            <a href="week1.html" class="project-card">
-                <div class="project-image">🔧</div>
-                <div class="project-content">
-                    <div class="project-week">Week 1</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <!-- Animals on the mountains -->
+    <a href="week1.html" class="animal cow">
+        <div class="tooltip">Week 1</div>
+        <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cow body -->
+            <ellipse cx="50" cy="45" rx="35" ry="25" fill="#ffffff" stroke="#000" stroke-width="2"/>
+            <!-- Cow head -->
+            <ellipse cx="25" cy="35" rx="18" ry="16" fill="#ffffff" stroke="#000" stroke-width="2"/>
+            <!-- Spots -->
+            <ellipse cx="45" cy="40" rx="8" ry="6" fill="#000"/>
+            <ellipse cx="60" cy="48" rx="10" ry="7" fill="#000"/>
+            <!-- Legs -->
+            <rect x="30" y="65" width="6" height="15" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+            <rect x="42" y="65" width="6" height="15" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+            <rect x="54" y="65" width="6" height="15" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+            <rect x="66" y="65" width="6" height="15" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+            <!-- Ears -->
+            <ellipse cx="18" cy="28" rx="5" ry="8" fill="#ffc0cb" stroke="#000" stroke-width="1.5"/>
+            <ellipse cx="32" cy="28" rx="5" ry="8" fill="#ffc0cb" stroke="#000" stroke-width="1.5"/>
+            <!-- Horns -->
+            <path d="M 15 24 Q 12 18 10 22" fill="none" stroke="#8b4513" stroke-width="2"/>
+            <path d="M 35 24 Q 38 18 40 22" fill="none" stroke="#8b4513" stroke-width="2"/>
+            <!-- Eye -->
+            <circle cx="23" cy="32" r="2" fill="#000"/>
+            <!-- Tail -->
+            <path d="M 85 45 Q 92 38 95 50" fill="none" stroke="#000" stroke-width="2"/>
+            <ellipse cx="95" cy="52" rx="3" ry="5" fill="#000"/>
+        </svg>
+    </a>
 
-            <a href="week2.html" class="project-card">
-                <div class="project-image">⚙️</div>
-                <div class="project-content">
-                    <div class="project-week">Week 2</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week2.html" class="animal steinbock">
+        <div class="tooltip">Week 2</div>
+        <svg viewBox="0 0 90 85" xmlns="http://www.w3.org/2000/svg">
+            <!-- Steinbock body -->
+            <ellipse cx="50" cy="50" rx="28" ry="22" fill="#8b6f47" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Head -->
+            <ellipse cx="28" cy="38" rx="15" ry="14" fill="#8b6f47" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Legs -->
+            <rect x="35" y="68" width="5" height="17" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="45" y="68" width="5" height="17" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="55" y="68" width="5" height="17" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="65" y="68" width="5" height="17" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <!-- Large curved horns -->
+            <path d="M 20 28 Q 15 10 8 15" fill="none" stroke="#3a3020" stroke-width="3"/>
+            <path d="M 36 28 Q 41 10 48 15" fill="none" stroke="#3a3020" stroke-width="3"/>
+            <path d="M 20 28 Q 18 8 12 5" fill="none" stroke="#3a3020" stroke-width="2.5"/>
+            <path d="M 36 28 Q 38 8 44 5" fill="none" stroke="#3a3020" stroke-width="2.5"/>
+            <!-- Ear -->
+            <ellipse cx="22" cy="32" rx="3" ry="6" fill="#6b5638"/>
+            <ellipse cx="34" cy="32" rx="3" ry="6" fill="#6b5638"/>
+            <!-- Eye -->
+            <circle cx="26" cy="35" r="2" fill="#000"/>
+            <!-- Beard -->
+            <path d="M 28 46 L 26 52" stroke="#3a3020" stroke-width="2"/>
+            <path d="M 30 46 L 28 52" stroke="#3a3020" stroke-width="2"/>
+        </svg>
+    </a>
 
-            <a href="week3.html" class="project-card">
-                <div class="project-image">🔨</div>
-                <div class="project-content">
-                    <div class="project-week">Week 3</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week3.html" class="animal marmot">
+        <div class="tooltip">Week 3</div>
+        <svg viewBox="0 0 70 60" xmlns="http://www.w3.org/2000/svg">
+            <!-- Marmot body (standing up) -->
+            <ellipse cx="35" cy="42" rx="20" ry="16" fill="#a0826d" stroke="#6b5638" stroke-width="2"/>
+            <!-- Head -->
+            <circle cx="35" cy="22" r="12" fill="#a0826d" stroke="#6b5638" stroke-width="2"/>
+            <!-- Belly -->
+            <ellipse cx="35" cy="42" rx="12" ry="10" fill="#d4a76a"/>
+            <!-- Ears -->
+            <circle cx="28" cy="15" r="5" fill="#8b6f47"/>
+            <circle cx="42" cy="15" r="5" fill="#8b6f47"/>
+            <!-- Eyes -->
+            <circle cx="30" cy="20" r="2.5" fill="#000"/>
+            <circle cx="40" cy="20" r="2.5" fill="#000"/>
+            <circle cx="31" cy="19" r="1" fill="#fff"/>
+            <circle cx="41" cy="19" r="1" fill="#fff"/>
+            <!-- Nose -->
+            <circle cx="35" cy="26" r="2" fill="#000"/>
+            <!-- Front paws -->
+            <ellipse cx="28" cy="50" rx="4" ry="6" fill="#6b5638"/>
+            <ellipse cx="42" cy="50" rx="4" ry="6" fill="#6b5638"/>
+            <!-- Back legs -->
+            <ellipse cx="25" cy="55" rx="5" ry="4" fill="#6b5638"/>
+            <ellipse cx="45" cy="55" rx="5" ry="4" fill="#6b5638"/>
+            <!-- Tail -->
+            <ellipse cx="35" cy="58" rx="8" ry="3" fill="#8b6f47"/>
+        </svg>
+    </a>
 
-            <a href="week4.html" class="project-card">
-                <div class="project-image">🎨</div>
-                <div class="project-content">
-                    <div class="project-week">Week 4</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week4.html" class="animal deer">
+        <div class="tooltip">Week 4</div>
+        <svg viewBox="0 0 95 90" xmlns="http://www.w3.org/2000/svg">
+            <!-- Deer body -->
+            <ellipse cx="55" cy="50" rx="30" ry="24" fill="#8b6f47" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Neck -->
+            <rect x="25" y="35" width="10" height="25" fill="#8b6f47" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Head -->
+            <ellipse cx="28" cy="30" rx="12" ry="14" fill="#8b6f47" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Snout -->
+            <ellipse cx="22" cy="34" rx="6" ry="5" fill="#a0826d" stroke="#5a4a2f" stroke-width="1.5"/>
+            <!-- Legs -->
+            <rect x="40" y="70" width="5" height="20" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="50" y="70" width="5" height="20" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="60" y="70" width="5" height="20" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="70" y="70" width="5" height="20" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <!-- Antlers -->
+            <path d="M 28 18 L 26 8 M 26 10 L 22 8 M 26 12 L 22 14" stroke="#3a3020" stroke-width="2.5" fill="none"/>
+            <path d="M 32 18 L 34 8 M 34 10 L 38 8 M 34 12 L 38 14" stroke="#3a3020" stroke-width="2.5" fill="none"/>
+            <!-- Ear -->
+            <ellipse cx="26" cy="24" rx="3" ry="6" fill="#6b5638"/>
+            <ellipse cx="34" cy="24" rx="3" ry="6" fill="#6b5638"/>
+            <!-- Eye -->
+            <circle cx="26" cy="28" r="2" fill="#000"/>
+            <!-- Tail -->
+            <path d="M 85 50 L 90 48" stroke="#6b5638" stroke-width="3"/>
+        </svg>
+    </a>
 
-            <a href="week5.html" class="project-card">
-                <div class="project-image">⚡</div>
-                <div class="project-content">
-                    <div class="project-week">Week 5</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week5.html" class="animal fox">
+        <div class="tooltip">Week 5</div>
+        <svg viewBox="0 0 75 65" xmlns="http://www.w3.org/2000/svg">
+            <!-- Fox body -->
+            <ellipse cx="45" cy="42" rx="22" ry="16" fill="#ff6b35" stroke="#c54028" stroke-width="2"/>
+            <!-- Head -->
+            <circle cx="25" cy="32" r="13" fill="#ff6b35" stroke="#c54028" stroke-width="2"/>
+            <!-- Snout -->
+            <ellipse cx="15" cy="34" rx="7" ry="5" fill="#fff" stroke="#c54028" stroke-width="1.5"/>
+            <!-- Ears (pointed) -->
+            <path d="M 20 20 L 16 10 L 22 18 Z" fill="#ff6b35" stroke="#c54028" stroke-width="2"/>
+            <path d="M 30 20 L 34 10 L 28 18 Z" fill="#ff6b35" stroke="#c54028" stroke-width="2"/>
+            <path d="M 20 20 L 18 14 L 22 18 Z" fill="#fff"/>
+            <path d="M 30 20 L 32 14 L 28 18 Z" fill="#fff"/>
+            <!-- Legs -->
+            <rect x="35" y="55" width="4" height="10" fill="#c54028"/>
+            <rect x="43" y="55" width="4" height="10" fill="#c54028"/>
+            <rect x="51" y="55" width="4" height="10" fill="#c54028"/>
+            <rect x="59" y="55" width="4" height="10" fill="#c54028"/>
+            <!-- Bushy tail -->
+            <ellipse cx="68" cy="38" rx="8" ry="18" fill="#ff6b35" stroke="#c54028" stroke-width="2"/>
+            <ellipse cx="70" cy="36" rx="4" ry="12" fill="#fff"/>
+            <!-- Eye -->
+            <circle cx="22" cy="30" r="2" fill="#000"/>
+            <circle cx="22" cy="29" r="0.8" fill="#fff"/>
+            <!-- Nose -->
+            <circle cx="13" cy="34" r="1.5" fill="#000"/>
+            <!-- Chest white fur -->
+            <ellipse cx="30" cy="44" rx="8" ry="6" fill="#fff"/>
+        </svg>
+    </a>
 
-            <a href="week6.html" class="project-card">
-                <div class="project-image">💡</div>
-                <div class="project-content">
-                    <div class="project-week">Week 6</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week6.html" class="animal rabbit">
+        <div class="tooltip">Week 6</div>
+        <svg viewBox="0 0 60 55" xmlns="http://www.w3.org/2000/svg">
+            <!-- Rabbit body -->
+            <ellipse cx="35" cy="38" rx="18" ry="14" fill="#d3d3d3" stroke="#808080" stroke-width="2"/>
+            <!-- Head -->
+            <circle cx="25" cy="28" r="11" fill="#d3d3d3" stroke="#808080" stroke-width="2"/>
+            <!-- Long ears -->
+            <ellipse cx="20" cy="12" rx="4" ry="14" fill="#d3d3d3" stroke="#808080" stroke-width="2"/>
+            <ellipse cx="30" cy="12" rx="4" ry="14" fill="#d3d3d3" stroke="#808080" stroke-width="2"/>
+            <ellipse cx="20" cy="12" rx="2" ry="10" fill="#ffc0cb"/>
+            <ellipse cx="30" cy="12" rx="2" ry="10" fill="#ffc0cb"/>
+            <!-- Back legs (sitting) -->
+            <ellipse cx="28" cy="50" rx="8" ry="5" fill="#d3d3d3" stroke="#808080" stroke-width="1.5"/>
+            <ellipse cx="42" cy="50" rx="8" ry="5" fill="#d3d3d3" stroke="#808080" stroke-width="1.5"/>
+            <!-- Front paws -->
+            <ellipse cx="30" cy="46" rx="3" ry="5" fill="#a9a9a9"/>
+            <ellipse cx="38" cy="46" rx="3" ry="5" fill="#a9a9a9"/>
+            <!-- Fluffy tail -->
+            <circle cx="50" cy="40" r="6" fill="#d3d3d3" stroke="#808080" stroke-width="1.5"/>
+            <!-- Eye -->
+            <circle cx="24" cy="26" r="2" fill="#000"/>
+            <circle cx="24" cy="25" r="0.8" fill="#fff"/>
+            <!-- Nose -->
+            <circle cx="20" cy="30" r="1.5" fill="#ff69b4"/>
+            <!-- Whiskers -->
+            <line x1="14" y1="29" x2="8" y2="28" stroke="#808080" stroke-width="1"/>
+            <line x1="14" y1="31" x2="8" y2="32" stroke="#808080" stroke-width="1"/>
+        </svg>
+    </a>
 
-            <a href="week7.html" class="project-card">
-                <div class="project-image">🚀</div>
-                <div class="project-content">
-                    <div class="project-week">Week 7</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week7.html" class="animal goat">
+        <div class="tooltip">Week 7</div>
+        <svg viewBox="0 0 85 75" xmlns="http://www.w3.org/2000/svg">
+            <!-- Goat body -->
+            <ellipse cx="50" cy="45" rx="26" ry="20" fill="#f5f5dc" stroke="#8b7355" stroke-width="2"/>
+            <!-- Head -->
+            <ellipse cx="30" cy="35" rx="14" ry="13" fill="#f5f5dc" stroke="#8b7355" stroke-width="2"/>
+            <!-- Snout -->
+            <ellipse cx="22" cy="38" rx="6" ry="5" fill="#e5d5bc" stroke="#8b7355" stroke-width="1.5"/>
+            <!-- Legs -->
+            <rect x="38" y="62" width="5" height="13" fill="#8b7355"/>
+            <rect x="48" y="62" width="5" height="13" fill="#8b7355"/>
+            <rect x="58" y="62" width="5" height="13" fill="#8b7355"/>
+            <rect x="68" y="62" width="5" height="13" fill="#8b7355"/>
+            <!-- Horns (curved back) -->
+            <path d="M 26 26 Q 22 18 18 22" fill="none" stroke="#3a3020" stroke-width="2.5"/>
+            <path d="M 34 26 Q 38 18 42 22" fill="none" stroke="#3a3020" stroke-width="2.5"/>
+            <!-- Ears -->
+            <ellipse cx="24" cy="30" rx="3" ry="5" fill="#d5c5ac"/>
+            <ellipse cx="36" cy="30" rx="3" ry="5" fill="#d5c5ac"/>
+            <!-- Eye -->
+            <ellipse cx="28" cy="33" rx="3" ry="2" fill="#000"/>
+            <rect x="27" y="32" width="1" height="2" fill="#ffd700"/>
+            <!-- Beard -->
+            <path d="M 26 44 L 24 50 L 22 48 L 20 50" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <!-- Tail -->
+            <path d="M 76 45 Q 80 40 82 48" fill="none" stroke="#8b7355" stroke-width="2.5"/>
+        </svg>
+    </a>
 
-            <a href="week8.html" class="project-card">
-                <div class="project-image">🎯</div>
-                <div class="project-content">
-                    <div class="project-week">Week 8</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week8.html" class="animal sheep">
+        <div class="tooltip">Week 8</div>
+        <svg viewBox="0 0 80 70" xmlns="http://www.w3.org/2000/svg">
+            <!-- Fluffy body with curls -->
+            <circle cx="45" cy="45" r="24" fill="#f5f5f5" stroke="#d3d3d3" stroke-width="2"/>
+            <circle cx="38" cy="38" r="8" fill="#fff" stroke="#d3d3d3" stroke-width="1.5"/>
+            <circle cx="52" cy="38" r="8" fill="#fff" stroke="#d3d3d3" stroke-width="1.5"/>
+            <circle cx="38" cy="52" r="8" fill="#fff" stroke="#d3d3d3" stroke-width="1.5"/>
+            <circle cx="52" cy="52" r="8" fill="#fff" stroke="#d3d3d3" stroke-width="1.5"/>
+            <circle cx="45" cy="32" r="7" fill="#fff" stroke="#d3d3d3" stroke-width="1.5"/>
+            <circle cx="45" cy="58" r="7" fill="#fff" stroke="#d3d3d3" stroke-width="1.5"/>
+            <!-- Head (black face) -->
+            <ellipse cx="22" cy="40" rx="11" ry="12" fill="#2f2f2f" stroke="#1a1a1a" stroke-width="2"/>
+            <!-- Ears -->
+            <ellipse cx="17" cy="35" rx="4" ry="6" fill="#2f2f2f"/>
+            <ellipse cx="27" cy="35" rx="4" ry="6" fill="#2f2f2f"/>
+            <!-- Eye -->
+            <circle cx="20" cy="39" r="2" fill="#fff"/>
+            <circle cx="20" cy="39" r="1" fill="#000"/>
+            <!-- Legs (black) -->
+            <rect x="35" y="65" width="4" height="10" fill="#2f2f2f"/>
+            <rect x="44" y="65" width="4" height="10" fill="#2f2f2f"/>
+            <rect x="53" y="65" width="4" height="10" fill="#2f2f2f"/>
+            <rect x="62" y="65" width="4" height="10" fill="#2f2f2f"/>
+        </svg>
+    </a>
 
-            <a href="week9.html" class="project-card">
-                <div class="project-image">🌟</div>
-                <div class="project-content">
-                    <div class="project-week">Week 9</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week9.html" class="animal bird">
+        <div class="tooltip">Week 9</div>
+        <svg viewBox="0 0 60 55" xmlns="http://www.w3.org/2000/svg">
+            <!-- Small bird body -->
+            <ellipse cx="32" cy="32" rx="16" ry="14" fill="#ff6b6b" stroke="#d63447" stroke-width="2"/>
+            <!-- Head -->
+            <circle cx="20" cy="25" r="10" fill="#ff6b6b" stroke="#d63447" stroke-width="2"/>
+            <!-- Wing -->
+            <ellipse cx="42" cy="32" rx="12" ry="8" fill="#ff8787" stroke="#d63447" stroke-width="1.5"/>
+            <path d="M 48 28 Q 54 26 56 30" fill="none" stroke="#d63447" stroke-width="1.5"/>
+            <path d="M 48 32 Q 54 30 56 34" fill="none" stroke="#d63447" stroke-width="1.5"/>
+            <path d="M 48 36 Q 54 34 56 38" fill="none" stroke="#d63447" stroke-width="1.5"/>
+            <!-- Tail feathers -->
+            <path d="M 48 38 L 54 44" stroke="#d63447" stroke-width="2"/>
+            <path d="M 46 40 L 50 46" stroke="#d63447" stroke-width="2"/>
+            <!-- Beak -->
+            <path d="M 12 25 L 6 24 L 12 26 Z" fill="#ffa500" stroke="#ff8c00" stroke-width="1"/>
+            <!-- Eye -->
+            <circle cx="17" cy="23" r="2.5" fill="#000"/>
+            <circle cx="18" cy="22" r="1" fill="#fff"/>
+            <!-- Legs -->
+            <line x1="28" y1="45" x2="26" y2="52" stroke="#8b4513" stroke-width="2"/>
+            <line x1="34" y1="45" x2="36" y2="52" stroke="#8b4513" stroke-width="2"/>
+            <!-- Feet -->
+            <path d="M 26 52 L 24 54 M 26 52 L 28 54" stroke="#8b4513" stroke-width="1.5"/>
+            <path d="M 36 52 L 34 54 M 36 52 L 38 54" stroke="#8b4513" stroke-width="1.5"/>
+        </svg>
+    </a>
 
-            <a href="week10.html" class="project-card">
-                <div class="project-image">✨</div>
-                <div class="project-content">
-                    <div class="project-week">Week 10</div>
-                    <div class="project-title">Project Title</div>
-                </div>
-            </a>
+    <a href="week10.html" class="animal chamois">
+        <div class="tooltip">Week 10</div>
+        <svg viewBox="0 0 85 80" xmlns="http://www.w3.org/2000/svg">
+            <!-- Chamois body -->
+            <ellipse cx="48" cy="48" rx="26" ry="21" fill="#8b6f47" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Head -->
+            <ellipse cx="28" cy="38" rx="14" ry="13" fill="#8b6f47" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Snout -->
+            <ellipse cx="20" cy="40" rx="6" ry="5" fill="#a0826d" stroke="#5a4a2f" stroke-width="1.5"/>
+            <!-- Legs -->
+            <rect x="36" y="66" width="5" height="14" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="46" y="66" width="5" height="14" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="56" y="66" width="5" height="14" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <rect x="66" y="66" width="5" height="14" fill="#6b5638" stroke="#5a4a2f" stroke-width="1.5"/>
+            <!-- Small curved horns -->
+            <path d="M 24 28 Q 22 22 20 24" fill="none" stroke="#3a3020" stroke-width="2.5"/>
+            <path d="M 32 28 Q 34 22 36 24" fill="none" stroke="#3a3020" stroke-width="2.5"/>
+            <!-- Face stripe (darker) -->
+            <path d="M 22 34 Q 24 38 22 42" fill="none" stroke="#3a3020" stroke-width="3"/>
+            <!-- Ears -->
+            <ellipse cx="23" cy="32" rx="3" ry="5" fill="#6b5638"/>
+            <ellipse cx="33" cy="32" rx="3" ry="5" fill="#6b5638"/>
+            <!-- Eye -->
+            <circle cx="25" cy="36" r="2" fill="#000"/>
+            <!-- Tail -->
+            <path d="M 74 48 L 80 52" stroke="#3a3020" stroke-width="2.5"/>
+        </svg>
+    </a>
 
-            <a href="snake.html" class="project-card minigame-card">
-                <div class="project-image">🎮</div>
-                <div class="project-content">
-                    <div class="project-week">Minigame</div>
-                    <div class="project-title">Play Snake!</div>
-                </div>
-            </a>
+    <a href="snake.html" class="animal snake">
+        <div class="tooltip">Minigame: Snake</div>
+        <svg viewBox="0 0 90 40" xmlns="http://www.w3.org/2000/svg">
+            <!-- Snake body (S-shape) -->
+            <path d="M 10 20 Q 20 10 30 20 T 50 20 T 70 20 T 85 20"
+                  fill="none" stroke="#4a7c59" stroke-width="12" stroke-linecap="round"/>
+            <path d="M 10 20 Q 20 10 30 20 T 50 20 T 70 20 T 85 20"
+                  fill="none" stroke="#6b8e23" stroke-width="8" stroke-linecap="round"/>
+            <!-- Pattern -->
+            <circle cx="25" cy="20" r="3" fill="#4a7c59"/>
+            <circle cx="45" cy="20" r="3" fill="#4a7c59"/>
+            <circle cx="65" cy="20" r="3" fill="#4a7c59"/>
+            <!-- Head -->
+            <ellipse cx="86" cy="20" rx="8" ry="7" fill="#6b8e23" stroke="#4a7c59" stroke-width="2"/>
+            <!-- Eyes -->
+            <circle cx="84" cy="18" r="2" fill="#000"/>
+            <circle cx="88" cy="18" r="2" fill="#000"/>
+            <circle cx="84" cy="17" r="0.8" fill="#ffd700"/>
+            <circle cx="88" cy="17" r="0.8" fill="#ffd700"/>
+            <!-- Tongue -->
+            <path d="M 92 20 L 96 19 L 96 21 L 92 20" fill="#ff0000" stroke="#cc0000" stroke-width="0.5"/>
+        </svg>
+    </a>
 
-            <a href="final.html" class="project-card final-project">
-                <div class="project-image">🏆</div>
-                <div class="project-content">
-                    <div class="project-week">Final Project</div>
-                    <div class="project-title">Final Project Title</div>
-                </div>
-            </a>
-        </div>
-    </div>
+    <a href="final.html" class="animal eagle">
+        <div class="tooltip">Final Project</div>
+        <svg viewBox="0 0 110 90" xmlns="http://www.w3.org/2000/svg">
+            <!-- Eagle body -->
+            <ellipse cx="55" cy="50" rx="18" ry="24" fill="#8b7355" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Head -->
+            <circle cx="55" cy="28" r="14" fill="#f5f5f5" stroke="#5a4a2f" stroke-width="2"/>
+            <!-- Beak (hooked) -->
+            <path d="M 48 28 Q 42 28 40 32 Q 42 34 48 32 Z" fill="#ffa500" stroke="#ff8c00" stroke-width="1.5"/>
+            <!-- Eye (fierce) -->
+            <circle cx="52" cy="26" r="3" fill="#ffd700" stroke="#000" stroke-width="1.5"/>
+            <circle cx="52" cy="26" r="1.5" fill="#000"/>
+            <!-- Left wing (spread) -->
+            <ellipse cx="30" cy="50" rx="25" ry="18" fill="#5a4a2f" stroke="#3a3020" stroke-width="2" transform="rotate(-20 30 50)"/>
+            <path d="M 10 50 Q 8 45 6 50" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <path d="M 14 52 Q 12 47 10 52" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <path d="M 18 54 Q 16 49 14 54" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <path d="M 22 56 Q 20 51 18 56" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <!-- Right wing (spread) -->
+            <ellipse cx="80" cy="50" rx="25" ry="18" fill="#5a4a2f" stroke="#3a3020" stroke-width="2" transform="rotate(20 80 50)"/>
+            <path d="M 100 50 Q 102 45 104 50" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <path d="M 96 52 Q 98 47 100 52" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <path d="M 92 54 Q 94 49 96 54" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <path d="M 88 56 Q 90 51 92 56" fill="none" stroke="#3a3020" stroke-width="2"/>
+            <!-- Tail feathers -->
+            <path d="M 55 74 L 50 84 M 55 74 L 55 86 M 55 74 L 60 84" stroke="#5a4a2f" stroke-width="2.5"/>
+            <!-- Talons -->
+            <path d="M 50 74 L 48 82 M 48 82 L 46 84 M 48 82 L 48 84 M 48 82 L 50 84" stroke="#ffa500" stroke-width="2"/>
+            <path d="M 60 74 L 62 82 M 62 82 L 60 84 M 62 82 L 62 84 M 62 82 L 64 84" stroke="#ffa500" stroke-width="2"/>
+        </svg>
+    </a>
 
     <script>
         // Cat cursor follower
@@ -532,7 +724,6 @@
             mouseY = e.clientY;
         });
 
-        // Smooth cat following animation
         function animateCat() {
             const dx = mouseX - catX;
             const dy = mouseY - catY;
@@ -543,7 +734,6 @@
             cat.style.left = catX + 'px';
             cat.style.top = catY + 'px';
 
-            // Make cat face the direction it's moving
             if (dx > 1) {
                 cat.style.transform = 'translate(-50%, -50%) scaleX(1)';
             } else if (dx < -1) {
@@ -554,28 +744,6 @@
         }
 
         animateCat();
-
-        // Card tilt effect
-        const cards = document.querySelectorAll('.project-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
-
-                card.style.transform = `translateY(-10px) scale(1.02) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
-            });
-        });
     </script>
 </body>
 </html>
