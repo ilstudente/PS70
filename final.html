@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Project - PS70</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .header {
+            border-bottom: 4px solid #f5576c;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .week-number {
+            color: #f5576c;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1.1em;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #333;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4em;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        }
+
+        .section {
+            margin: 50px 0;
+        }
+
+        h2 {
+            color: #f5576c;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .gallery-item {
+            height: 250px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-style: italic;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+            border-left: 4px solid #f5576c;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #f8f8f2;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            line-height: 2;
+        }
+
+        a {
+            color: #f5576c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Back to Projects</a>
+
+        <div class="header">
+            <div class="week-number">🏆 Final Project</div>
+            <h1>Final Project Title</h1>
+        </div>
+
+        <div class="project-image">
+            📸 Main Project Image
+        </div>
+
+        <div class="section">
+            <h2>Project Overview</h2>
+            <div class="highlight-box">
+                <p>
+                    <strong>What is this project about?</strong> Describe your final project concept,
+                    motivation, and goals. What problem does it solve? Why is it interesting?
+                </p>
+            </div>
+            <p>
+                Provide more detailed context about your project here. What inspired you?
+                What did you learn throughout the course that helped you create this?
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Design & Planning</h2>
+            <p>
+                Document your design process. Include sketches, CAD models, circuit diagrams,
+                or any planning materials you created.
+            </p>
+
+            <div class="image-gallery">
+                <div class="gallery-item">Sketch/Design 1</div>
+                <div class="gallery-item">CAD Model</div>
+                <div class="gallery-item">Circuit Diagram</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Fabrication & Assembly</h2>
+            <p>
+                Walk through how you built your project. What fabrication techniques did you use?
+                3D printing? Laser cutting? CNC machining? Electronics assembly?
+            </p>
+
+            <div class="image-gallery">
+                <div class="gallery-item">Build Process 1</div>
+                <div class="gallery-item">Build Process 2</div>
+                <div class="gallery-item">Build Process 3</div>
+                <div class="gallery-item">Build Process 4</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Programming & Electronics</h2>
+            <p>If your project involves code or electronics, document them here:</p>
+            <pre><code>// Your code here
+void setup() {
+    // Initialization code
+}
+
+void loop() {
+    // Main program loop
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Challenges & Solutions</h2>
+            <p>
+                What challenges did you encounter? How did you overcome them?
+                What did you learn from the problems you faced?
+            </p>
+            <ul>
+                <li>Challenge 1 and how you solved it</li>
+                <li>Challenge 2 and how you solved it</li>
+                <li>Challenge 3 and how you solved it</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Final Results</h2>
+            <div class="highlight-box">
+                <p>
+                    <strong>The finished project!</strong> Show off your completed work.
+                    Does it work as intended? What are you most proud of?
+                </p>
+            </div>
+
+            <div class="image-gallery">
+                <div class="gallery-item">Final Image 1</div>
+                <div class="gallery-item">Final Image 2</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Future Improvements</h2>
+            <p>
+                What would you do differently if you had more time?
+                What features would you add? How could the project be expanded?
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Project Files & Resources</h2>
+            <p>Download project files and resources:</p>
+            <ul>
+                <li><a href="#">CAD Files (.stl, .dxf, etc.)</a></li>
+                <li><a href="#">Code Repository (GitHub)</a></li>
+                <li><a href="#">Circuit Schematics</a></li>
+                <li><a href="#">Bill of Materials</a></li>
+                <li><a href="#">Video Demo</a></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Acknowledgments</h2>
+            <p>
+                Thank anyone who helped you with this project or inspired your work.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
