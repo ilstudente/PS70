@@ -267,13 +267,15 @@
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, width, height);
 
-            // Gradually change hue over time
-            hue = (hue + 0.2) % 360;
-            ctx.fillStyle = `hsl(${hue}, 70%, 50%)`;
+            // Gradually change hue over time (faster)
+            hue = (hue + 1) % 360;
 
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
                     if (grid[i][j] === 1) {
+                        // Create gradient by varying hue based on position
+                        const cellHue = (hue + (i + j) * 2) % 360;
+                        ctx.fillStyle = `hsl(${cellHue}, 70%, 50%)`;
                         ctx.fillRect(i * cellSize, j * cellSize, cellSize - 1, cellSize - 1);
                     }
                 }
