@@ -303,6 +303,9 @@
         let zoom = 1;
         const minZoom = 0.5;
         const maxZoom = 3;
+        let gradientAngle = 0;
+        let gradientOffsetX = 0;
+        let gradientOffsetY = 0;
 
         function initCanvas() {
             width = canvas.width = window.innerWidth;
@@ -366,11 +369,19 @@
             // Gradually change hue over time (faster)
             hue = (hue + 1) % 360;
 
+            // Animate gradient movement and rotation
+            gradientAngle += 0.5;
+            gradientOffsetX += 0.3;
+            gradientOffsetY += 0.2;
+
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
                     if (grid[i][j] === 1) {
-                        // Create gradient by varying hue based on position
-                        const cellHue = (hue + (i + j) * 2) % 360;
+                        // Create rotating, moving gradient
+                        const angleRad = gradientAngle * Math.PI / 180;
+                        const rotatedX = (i + gradientOffsetX) * Math.cos(angleRad) - (j + gradientOffsetY) * Math.sin(angleRad);
+                        const rotatedY = (i + gradientOffsetX) * Math.sin(angleRad) + (j + gradientOffsetY) * Math.cos(angleRad);
+                        const cellHue = (hue + (rotatedX + rotatedY) * 2) % 360;
                         ctx.fillStyle = `hsl(${cellHue}, 70%, 50%)`;
                         ctx.fillRect(i * cellSize, j * cellSize, cellSize - 1, cellSize - 1);
                     }
@@ -409,7 +420,7 @@
         function animate() {
             updateGrid();
             drawGrid();
-            setTimeout(() => requestAnimationFrame(animate), 100);
+            setTimeout(() => requestAnimationFrame(animate), 200);
         }
 
         initCanvas();
