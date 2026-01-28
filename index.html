@@ -306,6 +306,7 @@
         let gradientAngle = 0;
         let gradientOffsetX = 0;
         let gradientOffsetY = 0;
+        let patternPhase = 0;
 
         function initCanvas() {
             width = canvas.width = window.innerWidth;
@@ -369,19 +370,36 @@
             // Gradually change hue over time (faster)
             hue = (hue + 1) % 360;
 
-            // Animate gradient movement and rotation
-            gradientAngle += 0.5;
+            // Animate gradient movement and rotation (faster)
+            gradientAngle += 2;
             gradientOffsetX += 0.3;
             gradientOffsetY += 0.2;
+            patternPhase += 0.02;
+
+            // Morph between circular and linear patterns
+            const morphFactor = (Math.sin(patternPhase) + 1) / 2; // 0 to 1
+
+            const centerX = cols / 2;
+            const centerY = rows / 2;
 
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
                     if (grid[i][j] === 1) {
-                        // Create rotating, moving gradient
+                        // Linear gradient (rotating)
                         const angleRad = gradientAngle * Math.PI / 180;
                         const rotatedX = (i + gradientOffsetX) * Math.cos(angleRad) - (j + gradientOffsetY) * Math.sin(angleRad);
                         const rotatedY = (i + gradientOffsetX) * Math.sin(angleRad) + (j + gradientOffsetY) * Math.cos(angleRad);
-                        const cellHue = (hue + (rotatedX + rotatedY) * 2) % 360;
+                        const linearValue = (rotatedX + rotatedY) * 2;
+
+                        // Circular gradient (radial from center)
+                        const dx = i - centerX;
+                        const dy = j - centerY;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const circularValue = distance * 3;
+
+                        // Morph between linear and circular
+                        const gradientValue = linearValue * (1 - morphFactor) + circularValue * morphFactor;
+                        const cellHue = (hue + gradientValue) % 360;
                         ctx.fillStyle = `hsl(${cellHue}, 70%, 50%)`;
                         ctx.fillRect(i * cellSize, j * cellSize, cellSize - 1, cellSize - 1);
                     }
