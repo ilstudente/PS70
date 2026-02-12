@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2D Design - PS70</title>
+    <title>CAD Modeling & Laser Cutting - PS70</title>
     <style>
         * {
             margin: 0;
@@ -142,6 +142,141 @@
             font-style: italic;
         }
 
+        .media-container {
+            margin: 30px 0;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .media-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+
+        .media-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 3px;
+            border: 1px solid #222;
+        }
+
+        .step {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #0a0a0a;
+            border-left: 2px solid #d4af37;
+            border-radius: 3px;
+        }
+
+        .step h3 {
+            color: #d4af37;
+            font-size: 1.2em;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            color: #ccc;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #d4af37;
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-right: 10px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .speed-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: center;
+        }
+
+        .speed-label {
+            color: #999;
+            font-size: 0.9em;
+            margin-right: 5px;
+        }
+
+        .speed-btn {
+            background: #1a1a1a;
+            color: #ccc;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .speed-btn:hover {
+            background: #222;
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+
+        .speed-btn.active {
+            background: #d4af37;
+            color: #000;
+            border-color: #d4af37;
+        }
+
+        .download-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 5px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1a1a1a;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 12px 24px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background: #d4af37;
+            color: #000;
+        }
+
+        .download-btn::before {
+            content: "⬇";
+            font-size: 1.2em;
+        }
+
         #gameOfLife {
             position: fixed;
             top: 0;
@@ -173,32 +308,136 @@
         <a href="index.html" class="back-link">← Back to Projects</a>
 
         <div class="header">
-            <div class="week-number">WEEK 01</div>
-            <h1>2D Design</h1>
+            <div class="week-number">WEEK 02</div>
+            <h1>CAD Modeling & Laser Cutting</h1>
         </div>
 
         <div class="section">
-            <h2>Overview</h2>
+            <h2>Laser Cut Boxes</h2>
+            <p>Two boxes designed and cut using the laser cutter.</p>
+            <div class="image-grid">
+                <img src="assets/week2/box1.jpg" alt="Laser cut box 1">
+                <img src="assets/week2/box2.jpg" alt="Laser cut box 2">
+            </div>
+
+            <div class="download-section">
+                <h3 style="color: #999; font-size: 1.1em; font-weight: 300; margin-bottom: 15px;">Design Files</h3>
+                <p style="color: #888; font-size: 0.95em; margin-bottom: 15px;">Download the Fusion 360 design file for the laser cut box.</p>
+                <a href="assets/week2/laser-cut-box.f3d" download class="download-btn">Download Fusion 360 File (.f3d)</a>
+            </div>
         </div>
 
+        <div class="divider"></div>
+
         <div class="section">
-            <h2>Process</h2>
+            <h2>LEGO Stone - Fusion 360 Model</h2>
+            <p>A LEGO stone modeled in Fusion 360, inspired by the <a href="https://www.youtube.com/watch?v=d3qGQ2utl2A&t=38s" target="_blank">LEGO modeling tutorial series</a>.</p>
+
+            <div class="media-container">
+                <h3 style="color: #999; font-size: 1.1em; font-weight: 300; margin-bottom: 20px;">Documentation</h3>
+                <video controls>
+                    <source src="assets/week2/lego-block.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="download-section">
+                <h3 style="color: #999; font-size: 1.1em; font-weight: 300; margin-bottom: 15px;">Design Files</h3>
+                <p style="color: #888; font-size: 0.95em; margin-bottom: 15px;">Download the Fusion 360 design file to explore the LEGO stone model.</p>
+                <a href="assets/week2/lego-stone.f3d" download class="download-btn">Download Fusion 360 File (.f3d)</a>
+            </div>
         </div>
 
-        <div class="section">
-            <h2>Code</h2>
-            <pre><code>// Example code
-function setup() {
-    // initialization code
-}
-
-function loop() {
-    // main loop
-}</code></pre>
-        </div>
+        <div class="divider"></div>
 
         <div class="section">
-            <h2>Results</h2>
+            <h2>Household Items - Fusion 360 Models</h2>
+            <p>Various household items modeled in Fusion 360.</p>
+
+            <div class="media-container">
+                <h3 style="color: #999; font-size: 1.1em; font-weight: 300; margin-bottom: 20px;">Video Demonstration</h3>
+                <video controls>
+                    <source src="assets/week2/household-items.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="media-container">
+                <h3 style="color: #999; font-size: 1.1em; font-weight: 300; margin-bottom: 20px;">Video Walkthrough</h3>
+                <video id="docVideo" controls>
+                    <source src="assets/week2/household-documentation.mov" type="video/quicktime">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="speed-controls">
+                    <span class="speed-label">Playback Speed:</span>
+                    <button class="speed-btn" onclick="setSpeed(0.5)">0.5x</button>
+                    <button class="speed-btn active" onclick="setSpeed(1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(2)">2x</button>
+                </div>
+            </div>
+
+            <div class="media-container">
+                <h3 style="color: #999; font-size: 1.1em; font-weight: 300; margin-bottom: 20px;">Step-by-Step Documentation</h3>
+
+                <p style="color: #d4af37; font-style: italic; margin-bottom: 30px;">Note: The model is at a scale of 1:10</p>
+
+                <div class="step">
+                    <h3><span class="step-number">1</span>Create the Bottle Body Base</h3>
+                    <p>Sketch a circle with radius R=4.5mm, then extrude it 28mm to form the main body of the bottle.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span>Shell and Add Upper Body</h3>
+                    <p>Shell out the body with 0.5mm thickness. Add the narrower upper part of the body with R=3.5mm and shell thickness of 0.5mm.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">3</span>Connect Body Sections</h3>
+                    <p>Draw a smooth surface connecting the two body sections and rotate it around the Z-axis. Smoothen out the upper part of the bottleneck and extend it slightly by 1mm.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">4</span>Add Bottom Structure</h3>
+                    <p>Add structure to the bottom of the bottle using concentric circles (R=3.5mm and R=1.5mm). Extrude and connect them. Finally, smoothen all remaining edges with R=1mm.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">5</span>Create the Bottle Cap Base</h3>
+                    <p>Start with a circle (R=3.5mm) and a smaller concentric circle (R=3mm). Extrude the annulus 2mm to form the cap base.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">6</span>Add Narrow Cap Section</h3>
+                    <p>Add the narrow part of the bottle cap by extruding an annulus of concentric circles (R=1.5mm and R=1mm).</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">7</span>Connect Cap Sections</h3>
+                    <p>Connect the wide and narrow extruded annuli with a new surface and round the edges with R=1mm.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">8</span>Add Band Attachment Hooks</h3>
+                    <p>Construct the tangent plane on one side of the narrow part of the cap. Draw a sketch of circles and extrude inward (R=1mm, R=1.5mm, extrusion=0.5mm). Round edges with R=0.5mm, then mirror this to the other side of the cap.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">9</span>Create the Band</h3>
+                    <p>Create a sketch of a curve connecting the two band handles. Make an inset version of this curve (0.15mm) and extrude symmetrically in both directions (0.5mm).</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">10</span>Define Components and Joint</h3>
+                    <p>Define each of the two parts (bottle body and cap) as separate components in Fusion 360. Create a joint that allows translating the cap up and down relative to the bottle (range=2mm).</p>
+                </div>
+            </div>
+
+            <div class="download-section">
+                <h3 style="color: #999; font-size: 1.1em; font-weight: 300; margin-bottom: 15px;">Design Files</h3>
+                <p style="color: #888; font-size: 0.95em; margin-bottom: 15px;">Download the Fusion 360 design file to explore the model yourself.</p>
+                <a href="assets/week2/household-item.f3d" download class="download-btn">Download Fusion 360 File (.f3d)</a>
+            </div>
         </div>
 
         <div class="divider"></div>
@@ -206,9 +445,9 @@ function loop() {
         <div class="section">
             <h2>Resources</h2>
             <ul>
-                <li><a href="#">Design Files</a></li>
-                <li><a href="#">Code Repository</a></li>
-                <li><a href="#">Documentation</a></li>
+                <li><a href="https://www.youtube.com/watch?v=d3qGQ2utl2A&t=38s" target="_blank">LEGO Modeling Tutorial Series</a></li>
+                <li><a href="#" target="_blank">Fusion 360 Design Files</a></li>
+                <li><a href="#" target="_blank">Laser Cutting Design Files</a></li>
             </ul>
         </div>
     </div>
@@ -233,6 +472,18 @@ function loop() {
         canvas.addEventListener('touchstart', (e) => { if (e.touches.length === 2) { const dx = e.touches[0].clientX - e.touches[1].clientX; const dy = e.touches[0].clientY - e.touches[1].clientY; lastTouchDistance = Math.sqrt(dx * dx + dy * dy); } });
         canvas.addEventListener('touchmove', (e) => { if (e.touches.length === 2) { e.preventDefault(); const dx = e.touches[0].clientX - e.touches[1].clientX; const dy = e.touches[0].clientY - e.touches[1].clientY; const distance = Math.sqrt(dx * dx + dy * dy); if (lastTouchDistance > 0) { handleZoom(distance - lastTouchDistance); } lastTouchDistance = distance; } }, { passive: false });
         window.addEventListener('resize', initCanvas);
+
+        // Video speed control
+        function setSpeed(speed) {
+            const video = document.getElementById('docVideo');
+            video.playbackRate = speed;
+
+            // Update active button
+            document.querySelectorAll('.speed-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
     </script>
 </body>
 </html>
