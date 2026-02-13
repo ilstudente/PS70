@@ -529,15 +529,18 @@
     </script>
 
     <!-- Three.js for 3D model viewing -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/STLLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
 
     <script>
         // 3D Model Viewer Setup
         function init3DViewer(containerId, modelPath, options = {}) {
             const container = document.getElementById(containerId);
-            if (!container) return;
+            if (!container) {
+                console.error('Container not found:', containerId);
+                return;
+            }
 
             const scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0a0a0a);
@@ -579,35 +582,45 @@
 
             // Load STL
             const loader = new THREE.STLLoader();
-            loader.load(modelPath, function(geometry) {
-                const material = new THREE.MeshPhongMaterial({
-                    color: options.color || 0xd4af37,
-                    specular: 0x111111,
-                    shininess: 200
-                });
+            loader.load(
+                modelPath,
+                function(geometry) {
+                    console.log('STL loaded successfully:', modelPath);
+                    const material = new THREE.MeshPhongMaterial({
+                        color: options.color || 0xd4af37,
+                        specular: 0x111111,
+                        shininess: 200
+                    });
 
-                const mesh = new THREE.Mesh(geometry, material);
+                    const mesh = new THREE.Mesh(geometry, material);
 
-                // Center and scale the model
-                geometry.computeBoundingBox();
-                const boundingBox = geometry.boundingBox;
-                const center = new THREE.Vector3();
-                boundingBox.getCenter(center);
-                mesh.position.sub(center);
+                    // Center and scale the model
+                    geometry.computeBoundingBox();
+                    const boundingBox = geometry.boundingBox;
+                    const center = new THREE.Vector3();
+                    boundingBox.getCenter(center);
+                    mesh.position.sub(center);
 
-                const size = new THREE.Vector3();
-                boundingBox.getSize(size);
-                const maxDim = Math.max(size.x, size.y, size.z);
-                const scale = options.scale || (50 / maxDim);
-                mesh.scale.set(scale, scale, scale);
+                    const size = new THREE.Vector3();
+                    boundingBox.getSize(size);
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scale = options.scale || (50 / maxDim);
+                    mesh.scale.set(scale, scale, scale);
 
-                scene.add(mesh);
+                    scene.add(mesh);
 
-                // Optional rotation
-                if (options.rotateX) mesh.rotation.x = options.rotateX;
-                if (options.rotateY) mesh.rotation.y = options.rotateY;
-                if (options.rotateZ) mesh.rotation.z = options.rotateZ;
-            });
+                    // Optional rotation
+                    if (options.rotateX) mesh.rotation.x = options.rotateX;
+                    if (options.rotateY) mesh.rotation.y = options.rotateY;
+                    if (options.rotateZ) mesh.rotation.z = options.rotateZ;
+                },
+                function(xhr) {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                function(error) {
+                    console.error('Error loading STL:', error);
+                }
+            );
 
             // Animation loop
             function animate() {
@@ -628,6 +641,7 @@
 
         // Initialize viewers
         window.addEventListener('load', function() {
+            console.log('Initializing 3D viewers...');
             init3DViewer('lego-viewer', 'assets/week2/lego-stone.stl', {
                 color: 0xd4af37,
                 scale: 1
