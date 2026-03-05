@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design - PS70</title>
+    <title>Week 5: 3D Printing & Scanning - PS70</title>
     <style>
         * {
             margin: 0;
@@ -75,6 +75,14 @@
             padding-left: 20px;
         }
 
+        h3 {
+            font-size: 1.15em;
+            font-weight: 400;
+            color: #eee;
+            margin: 30px 0 15px 0;
+            letter-spacing: 0.5px;
+        }
+
         p {
             color: #ccc;
             font-size: 1.05em;
@@ -92,30 +100,6 @@
 
         li {
             margin-bottom: 10px;
-        }
-
-        code {
-            background: #111;
-            color: #d4af37;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-        }
-
-        pre {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 5px;
-            padding: 25px;
-            overflow-x: auto;
-            margin: 30px 0;
-        }
-
-        pre code {
-            background: none;
-            color: #ccc;
-            padding: 0;
         }
 
         a {
@@ -142,6 +126,188 @@
             font-style: italic;
         }
 
+        .highlight {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid #2a2a2a;
+            border-radius: 5px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .img-placeholder {
+            width: 100%;
+            background: #111;
+            border: 1px dashed #333;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            margin: 20px 0;
+            min-height: 280px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .img-grid .img-placeholder {
+            min-height: 200px;
+            font-size: 0.8em;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .photo-grid { grid-template-columns: 1fr; }
+        }
+
+        .download-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            display: inline-block;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 18px;
+            border-radius: 3px;
+            font-size: 0.88em;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #fff;
+        }
+
+        /* BOM table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        th {
+            text-align: left;
+            color: #d4af37;
+            font-weight: 300;
+            letter-spacing: 1px;
+            padding: 10px 15px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        td {
+            color: #ccc;
+            padding: 10px 15px;
+            border-bottom: 1px solid #1a1a1a;
+            font-weight: 300;
+        }
+
+        tr:hover td {
+            background: #0a0a0a;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: #2a2a2a;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d4af37;
+        }
+
+        .timeline-week {
+            color: #d4af37;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            color: #eee;
+            font-size: 1.05em;
+            margin-bottom: 6px;
+        }
+
+        .timeline-desc {
+            color: #888;
+            font-size: 0.92em;
+            font-weight: 300;
+        }
+
+        .viewer-3d {
+            width: 100%;
+            height: 420px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
+            cursor: grab;
+        }
+
+        .viewer-3d:active {
+            cursor: grabbing;
+        }
+
+        .viewer-controls {
+            color: #555;
+            font-size: 0.82em;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
         #gameOfLife {
             position: fixed;
             top: 0;
@@ -153,17 +319,10 @@
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-
-            h2 {
-                font-size: 1.2em;
-            }
-
-            p, ul, ol {
-                font-size: 1em;
-            }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.2em; }
+            p, ul, ol { font-size: 1em; }
+            .img-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -173,45 +332,483 @@
         <a href="index.html" class="back-link">← Back to Projects</a>
 
         <div class="header">
-            <div class="week-number">WEEK 04</div>
-            <h1>Design</h1>
+            <div class="week-number">WEEK 05</div>
+            <h1>3D Printing &amp; Scanning</h1>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             PART 1 - PHOTOGRAMMETRY / FACE SCAN
+        ════════════════════════════════════════════════════════════ -->
         <div class="section">
-            <h2>Overview</h2>
-        </div>
+            <h2>Face Scan via Structured-Light (RevoPoint)</h2>
 
-        <div class="section">
-            <h2>Process</h2>
-        </div>
+            <p>
+                I scanned my face using the RevoPoint structured-light camera and the accompanying
+                RevoScan software available in the lab. The scanner works by projecting a pattern
+                of infrared light onto the subject and reading the deformation with a depth sensor,
+                producing a dense point cloud that is then meshed.
+            </p>
 
-        <div class="section">
-            <h2>Code</h2>
-            <pre><code>// Example code
-function setup() {
-    // initialization code
-}
+            <h3>Scanning Challenges</h3>
+            <p>
+                The main difficulty was hair. Structured-light scanners rely on finding consistent
+                surface geometry, and hair produces a chaotic, semi-transparent surface that the
+                algorithm struggles to reconstruct reliably. To get a clean result I chose to only
+                scan my face - forehead to chin, excluding the hair above - and kept lighting
+                conditions as even as possible to minimise specular reflections on skin.
+            </p>
 
-function loop() {
-    // main loop
-}</code></pre>
-        </div>
+            <div id="scan-raw-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
 
-        <div class="section">
-            <h2>Results</h2>
+            <h3>Post-Processing in Blender</h3>
+            <p>
+                The raw mesh exported from RevoScan (<code>headmodified.stl</code>) still contained
+                floating noise artefacts and thin geometry at the hair boundary. In Blender I:
+            </p>
+            <ul>
+                <li>Removed noise islands using <em>Select → Select All by Trait → Non-Manifold</em> and manual cleanup</li>
+                <li>Trimmed the ragged hair boundary to leave a clean face silhouette</li>
+                <li>Added a solid "cap" to close the back of the face so the mesh is fully watertight - a requirement for 3D printing</li>
+            </ul>
+            <p>
+                The cleaned result was saved as <code>headmodified2.stl</code>.
+            </p>
+
+            <div id="scan-clean-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+
+            <div class="download-links">
+                <a class="download-btn" download href="./assets/week5/headmodified-web.stl">↓ Raw scan STL (headmodified.stl)</a>
+                <a class="download-btn" download href="./assets/week5/headmodified2-web.stl">↓ Cleaned scan STL (headmodified2.stl)</a>
+            </div>
         </div>
 
         <div class="divider"></div>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             PART 2 - 3D PRINT: ELEPHANT WITH MY FACE
+        ════════════════════════════════════════════════════════════ -->
         <div class="section">
-            <h2>Resources</h2>
+            <h2>3D Print: Elephant–Face Hybrid</h2>
+
+            <p>
+                This object was designed as something that <em>cannot be easily made by subtractive
+                methods</em>: the face geometry is embedded inside the curved surface of an elephant
+                head, creating undercuts in every direction. A mill or lathe would require many
+                setups with complex fixturing, and the fine facial detail would be lost. Additive
+                manufacturing handles this natively.
+            </p>
+
+            <h3>Design Process</h3>
+            <p>
+                I downloaded an elephant model from GrabCAD (<a href="https://grabcad.com/library/elefant-3" target="_blank">Elefant by werkel</a>) and imported both it and the cleaned face scan
+                into Blender. After scaling and aligning the face to sit on the elephant's forehead
+                region, I performed a Boolean union to merge the two meshes, then exported as
+                <code>elefantheadtoptop.blend</code> (the Blender source) and as an STL for slicing.
+            </p>
+
+            <h3>Interactive 3D Model</h3>
+            <div id="elefant-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+
+            <div class="download-links">
+                <a class="download-btn" download href="./assets/week5/elefantheadtoptop.blend">↓ Blender source (.blend)</a>
+            </div>
+
+            <h3>Print Attempts</h3>
+            <p>
+                Getting the orientation and supports right required three iterations. Each photo below
+                shows all three prints side by side: <strong style="color:#555">black = Attempt 1</strong>,
+                <strong style="color:#c67b2a">orange = Attempt 2</strong>,
+                <strong style="color:#d4af37">yellow = Attempt 3</strong>.
+            </p>
+
+            <div class="photo-grid">
+                <img src="./assets/week5/print1.jpg" alt="All three print attempts – side angle">
+                <img src="./assets/week5/print2.jpg" alt="All three print attempts – top view">
+                <img src="./assets/week5/print3.jpg" alt="All three print attempts – front angle">
+                <img src="./assets/week5/print4.jpg" alt="All three print attempts – wider angle">
+            </div>
+
+            <blockquote>
+                <strong>Attempt 1 (black, MK3):</strong> Naive first try - printed upright on its feet with full supports. The result was a mess.<br><br>
+                <strong>Attempt 2 (orange, MK4):</strong> Switched to the better MK4 printer and printed on its feet with no supports. The MK4's improved bridging helped, but the underside geometry still caused problems.<br><br>
+                <strong>Attempt 3 (yellow, MK3):</strong> Back on the MK3, but this time placed the elephant on its back and added full supports. Best result so far - the face detail is readable and the form holds.
+            </blockquote>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PART 3 - FINAL PROJECT UPDATE
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Final Project: Drone from Scratch</h2>
+
+            <p>
+                My final project is to build a fully functional quadrotor drone from first principles -
+                minimising tutorial-following in favour of trial-and-error learning. The goal is to
+                deeply understand every subsystem: aerodynamics, motor control, power distribution,
+                and flight stabilisation.
+            </p>
+
+            <h3>Philosophy</h3>
+            <p>
+                Rather than buying a kit or following a step-by-step build guide, I will attempt each
+                subsystem independently, fail fast, analyse the failure, and iterate. Tutorials will
+                only be consulted when I am genuinely stuck after exhausting my own attempts.
+            </p>
+
+            <h3>3D-Printed Structure</h3>
+            <p>
+                The primary frame and rotor guards will be 3D printed. The current CAD model covers
+                the structural components I want to print; motor mounts, electronics interfaces, and
+                sensor brackets will be added in subsequent revisions. A downloadable STL will be
+                added here once the model is finalised.
+            </p>
+
+            <h3>Frame</h3>
+            <div id="drone-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+
+            <h3>Rotor</h3>
+            <p>Rotor model downloaded from the description of <a href="https://www.youtube.com/watch?v=skstk8Oel4E" target="_blank">this YouTube video by TheFusionEssentials</a>.</p>
+            <div id="rotor-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+
+            <div class="download-links">
+                <a class="download-btn" download href="./assets/week5/drone.f3d">↓ Drone Fusion 360 file (.f3d)</a>
+                <a class="download-btn" download href="./assets/week5/rotor-v1.stl">↓ Rotor STL (v1)</a>
+            </div>
+
+            <h3>Planned Extensions</h3>
             <ul>
-                <li><a href="#">Design Files</a></li>
-                <li><a href="#">Code Repository</a></li>
-                <li><a href="#">Documentation</a></li>
+                <li>Arduino-based flight controller (custom PID implementation)</li>
+                <li>Brushless motors with ESCs</li>
+                <li>IMU (accelerometer + gyroscope) for stabilisation</li>
+                <li>Ultrasonic / ToF sensors for altitude hold and obstacle avoidance</li>
+                <li>Optional: pen-holder payload so the drone can write on a surface</li>
             </ul>
         </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             BILL OF MATERIALS
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Bill of Materials</h2>
+
+            <p>Estimated BOM for the drone project. Prices are approximate and will be refined as the design develops.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Component</th>
+                        <th>Qty</th>
+                        <th>Unit Price (est.)</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>3D-printed frame &amp; arms</td>
+                        <td>1 set</td>
+                        <td>~$5 (filament)</td>
+                        <td>PLA or PETG, printed in lab</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>3D-printed rotor guards</td>
+                        <td>4</td>
+                        <td>~$2 (filament)</td>
+                        <td>Protective shrouds around each propeller</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Brushless motors (2204 or similar)</td>
+                        <td>4</td>
+                        <td>~$8 each</td>
+                        <td>~2300 KV for 5" props</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Electronic Speed Controllers (ESC)</td>
+                        <td>4</td>
+                        <td>~$6 each</td>
+                        <td>20 A rated, BLHeli_S firmware preferred</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Propellers (5" 3-blade)</td>
+                        <td>4 + 4 spare</td>
+                        <td>~$1 each</td>
+                        <td>2× CW, 2× CCW per set</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Arduino Nano / Uno</td>
+                        <td>1</td>
+                        <td>~$5</td>
+                        <td>Flight controller candidate; may migrate to custom PCB</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>IMU - MPU-6050</td>
+                        <td>1</td>
+                        <td>~$3</td>
+                        <td>6-axis accelerometer + gyroscope</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>LiPo battery (3S, 1300 mAh)</td>
+                        <td>1</td>
+                        <td>~$15</td>
+                        <td>Balance connector; lab charger compatible</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Power distribution board (PDB)</td>
+                        <td>1</td>
+                        <td>~$4</td>
+                        <td>Or custom PCB in later weeks</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>RC receiver (e.g. FlySky FS-iA6B)</td>
+                        <td>1</td>
+                        <td>~$12</td>
+                        <td>Paired with a basic 6-channel transmitter</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>RC transmitter (FlySky FS-i6)</td>
+                        <td>1</td>
+                        <td>~$35</td>
+                        <td>May share with lab unit if available</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>ToF distance sensor (VL53L0X)</td>
+                        <td>1</td>
+                        <td>~$4</td>
+                        <td>Altitude hold / ground detection</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Wiring, connectors, heat-shrink</td>
+                        <td>-</td>
+                        <td>~$5</td>
+                        <td>XT30 / XT60 connectors for battery</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>M3 hardware (bolts, nuts, standoffs)</td>
+                        <td>-</td>
+                        <td>~$3</td>
+                        <td>For mounting motors and electronics</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align:right; color:#d4af37; padding-top:14px;">Estimated Total</td>
+                        <td style="color:#d4af37; padding-top:14px;"><strong>~$120</strong></td>
+                        <td style="color:#666; padding-top:14px;">Before pen-holder payload</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             TIMELINE
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Project Timeline (10 Weeks)</h2>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 1</div>
+                    <div class="timeline-title">Frame Design &amp; First Print</div>
+                    <div class="timeline-desc">
+                        Finalise frame CAD model in Fusion 360 / Blender. Print first prototype
+                        in PLA. Measure actual motor mount spacing against design intent.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 2</div>
+                    <div class="timeline-title">Motor &amp; Propeller Testing (Bench)</div>
+                    <div class="timeline-desc">
+                        Wire up one motor + ESC to Arduino. Write a basic PWM ramp sketch
+                        from scratch. Measure thrust on a simple lever-arm scale. Confirm
+                        KV rating and prop efficiency.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 3</div>
+                    <div class="timeline-title">Power Distribution &amp; Full Motor Test</div>
+                    <div class="timeline-desc">
+                        Assemble PDB, connect all 4 ESCs. Verify power draw under load.
+                        Run all 4 motors simultaneously from a single Arduino via PWM.
+                        Check for heat issues and voltage sag.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 4</div>
+                    <div class="timeline-title">IMU Integration &amp; Sensor Fusion</div>
+                    <div class="timeline-desc">
+                        Integrate MPU-6050. Read raw accelerometer and gyroscope data.
+                        Implement complementary filter (no library) to fuse into roll/pitch
+                        estimates. Log data over serial and validate against known angles.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 5</div>
+                    <div class="timeline-title">PID Controller (First Attempt)</div>
+                    <div class="timeline-desc">
+                        Write PID loop from scratch for roll and pitch axes. Tune P term
+                        manually on a test rig (drone pivoting around a fixed axis). Expect
+                        oscillation - analyse and adjust.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 6</div>
+                    <div class="timeline-title">RC Receiver Integration &amp; Manual Flight Test</div>
+                    <div class="timeline-desc">
+                        Connect RC receiver. Map stick inputs to motor mixing (quadrotor
+                        geometry). Attempt first tethered hover. Tune PID gains. Document
+                        every crash and failure mode.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 7</div>
+                    <div class="timeline-title">Free Hover &amp; Stability Iteration</div>
+                    <div class="timeline-desc">
+                        First untethered flight attempt in a safe open space. Iteratively
+                        refine PID gains. Add yaw control (D term). Assess frame rigidity -
+                        reprint stiffer arms if needed.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 8</div>
+                    <div class="timeline-title">Altitude Hold (ToF Sensor)</div>
+                    <div class="timeline-desc">
+                        Integrate VL53L0X distance sensor. Add altitude PID loop. Test
+                        hover at fixed height above ground. Tune throttle PID independently
+                        from attitude loops.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 9</div>
+                    <div class="timeline-title">Obstacle Avoidance &amp; Sensor Expansion</div>
+                    <div class="timeline-desc">
+                        Add additional sensors (ultrasonic or IR) for forward-facing
+                        obstacle detection. Implement simple avoidance behaviour.
+                        Optionally add FPV camera if time allows.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">WEEK 10</div>
+                    <div class="timeline-title">Pen Payload &amp; Final Demo</div>
+                    <div class="timeline-desc">
+                        Design and print a pen-holder gimbal. Program a simple pattern
+                        (e.g. line, circle) executed autonomously at low altitude. Final
+                        demonstration and full write-up.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
+
+    <!-- Three.js STL viewers -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script>
+        function init3DViewer(containerId, modelPath, color = 0xd4af37) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a0a);
+
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 2000);
+            camera.position.set(0, 0, 200);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+            const dir1 = new THREE.DirectionalLight(0xffffff, 0.8);
+            dir1.position.set(1, 2, 3);
+            scene.add(dir1);
+            const dir2 = new THREE.DirectionalLight(0xffffff, 0.4);
+            dir2.position.set(-2, -1, -1);
+            scene.add(dir2);
+
+            const loader = new THREE.STLLoader();
+            loader.load(modelPath, function(geometry) {
+                geometry.computeBoundingBox();
+                const center = new THREE.Vector3();
+                geometry.boundingBox.getCenter(center);
+                geometry.translate(-center.x, -center.y, -center.z);
+
+                const size = new THREE.Vector3();
+                geometry.boundingBox.getSize(size);
+                const maxDim = Math.max(size.x, size.y, size.z);
+                camera.position.set(0, 0, maxDim * 1.8);
+                controls.maxDistance = maxDim * 10;
+                controls.minDistance = maxDim * 0.1;
+
+                const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
+                    color: color,
+                    specular: 0x333333,
+                    shininess: 40
+                }));
+                scene.add(mesh);
+            });
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            (function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            })();
+        }
+
+        window.addEventListener('load', function() {
+            init3DViewer('scan-raw-viewer',   'assets/week5/headmodified-web.stl',  0xccaa88);
+            init3DViewer('scan-clean-viewer', 'assets/week5/headmodified2-web.stl', 0xd4af37);
+            init3DViewer('elefant-viewer',    'assets/week5/elefant-face.stl',      0xd4af37);
+            init3DViewer('drone-viewer',      'assets/week5/droneall.stl',          0xaaaacc);
+            init3DViewer('rotor-viewer',      'assets/week5/rotor-v1.stl',          0xaaaacc);
+        });
+    </script>
 
     <script>
         const canvas = document.getElementById('gameOfLife');
