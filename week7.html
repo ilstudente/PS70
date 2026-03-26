@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Outputs - PS70</title>
+    <title>Week 7: DIY Drone MVP - PS70</title>
     <style>
         * {
             margin: 0;
@@ -75,6 +75,14 @@
             padding-left: 20px;
         }
 
+        h3 {
+            font-size: 1.15em;
+            font-weight: 400;
+            color: #eee;
+            margin: 30px 0 15px 0;
+            letter-spacing: 0.5px;
+        }
+
         p {
             color: #ccc;
             font-size: 1.05em;
@@ -116,6 +124,8 @@
             background: none;
             color: #ccc;
             padding: 0;
+            font-size: 0.88em;
+            line-height: 1.6;
         }
 
         a {
@@ -142,6 +152,219 @@
             font-style: italic;
         }
 
+        .highlight {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid #2a2a2a;
+            border-radius: 5px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        /* 3D viewer */
+        .viewer-3d {
+            width: 100%;
+            height: 420px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
+            cursor: grab;
+        }
+
+        .viewer-3d:active {
+            cursor: grabbing;
+        }
+
+        .viewer-controls {
+            color: #555;
+            font-size: 0.82em;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Photo / media */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .photo-grid img,
+        .photo-grid video {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+        }
+
+        .photo-single img,
+        .photo-single video {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+            margin: 20px 0;
+        }
+
+        .media-caption {
+            color: #666;
+            font-size: 0.85em;
+            text-align: center;
+            margin-top: -8px;
+            margin-bottom: 25px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Spec table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        th {
+            text-align: left;
+            color: #d4af37;
+            font-weight: 300;
+            letter-spacing: 1px;
+            padding: 10px 15px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        td {
+            color: #ccc;
+            padding: 10px 15px;
+            border-bottom: 1px solid #1a1a1a;
+            font-weight: 300;
+        }
+
+        tr:hover td {
+            background: #0a0a0a;
+        }
+
+        /* Download buttons */
+        .download-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            display: inline-block;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 18px;
+            border-radius: 3px;
+            font-size: 0.88em;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #fff;
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            font-size: 0.78em;
+            letter-spacing: 1.5px;
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-left: 12px;
+            vertical-align: middle;
+            font-weight: 300;
+        }
+
+        .status-badge.pending {
+            border-color: #555;
+            color: #888;
+            background: rgba(255,255,255,0.03);
+        }
+
+        /* Video pair layout */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .video-grid video {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+        }
+
+        .video-label {
+            color: #888;
+            font-size: 0.82em;
+            text-align: center;
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Code tabs */
+        .code-tabs {
+            margin: 20px 0;
+        }
+
+        .tab-bar {
+            display: flex;
+            border-bottom: 1px solid #222;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: #666;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            margin-bottom: -1px;
+        }
+
+        .tab-btn:hover {
+            color: #ccc;
+        }
+
+        .tab-btn.active {
+            color: #d4af37;
+            border-bottom-color: #d4af37;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .tab-panel pre {
+            margin-top: 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
         #gameOfLife {
             position: fixed;
             top: 0;
@@ -153,17 +376,10 @@
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-
-            h2 {
-                font-size: 1.2em;
-            }
-
-            p, ul, ol {
-                font-size: 1em;
-            }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.2em; }
+            p, ul, ol { font-size: 1em; }
+            .photo-grid, .video-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -173,46 +389,724 @@
         <a href="index.html" class="back-link">← Back to Projects</a>
 
         <div class="header">
-            <div class="week-number">WEEK 06</div>
-            <h1>Outputs</h1>
+            <div class="week-number">WEEK 07</div>
+            <h1>DIY Drone MVP</h1>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             OVERVIEW
+        ════════════════════════════════════════════════════════════ -->
         <div class="section">
             <h2>Overview</h2>
-        </div>
-
-        <div class="section">
-            <h2>Process</h2>
-        </div>
-
-        <div class="section">
-            <h2>Code</h2>
-            <pre><code>// Example code
-function setup() {
-    // initialization code
-}
-
-function loop() {
-    // main loop
-}</code></pre>
-        </div>
-
-        <div class="section">
-            <h2>Results</h2>
+            <p>
+                This week marks the first physical MVP of the DIY drone project. The goal is to build
+                a cheap, mostly 3D-printed quadrotor from scratch — minimising off-the-shelf
+                assemblies in favour of understanding every subsystem through direct experimentation.
+            </p>
+            <p>
+                To maximise iteration speed, I deliberately chose a very small form factor: with
+                prints at this scale taking at most 10 minutes each, the design-print-test loop
+                becomes nearly instant. Everything that can be 3D printed is 3D printed, and
+                hardware is only ordered when absolutely necessary.
+            </p>
         </div>
 
         <div class="divider"></div>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             FRAME
+        ════════════════════════════════════════════════════════════ -->
         <div class="section">
-            <h2>Resources</h2>
+            <h2>3D-Printed Frame</h2>
+
+            <p>
+                I designed and printed a minimal quadrotor frame sized around the smallest brushless
+                motors I could source. The cross geometry keeps the design rigid despite its tiny
+                footprint, and the pair of mounting holes on each arm allow motor bolts to be seated
+                with a small standoff to clear the printed material.
+            </p>
+
+            <h3>Interactive 3D Model</h3>
+            <div id="frame-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+
+            <div class="download-links">
+                <a class="download-btn" download href="./assets/week7/droneframe.stl">↓ Frame STL</a>
+            </div>
+
+            <h3>Prusa Slicer</h3>
+            <div class="photo-single">
+                <img src="./assets/week7/frame-prusa.png" alt="Prusa slicer — frame sliced and ready to print">
+            </div>
+            <p class="media-caption">Prusa slicer layout for the frame print</p>
+
+            <h3>Printed Result</h3>
+            <div class="photo-single">
+                <img src="./assets/week7/frame.jpeg" alt="The 3D-printed drone frame">
+            </div>
+            <p class="media-caption">
+                The printed frame — Diameter: 70 mm &nbsp;|&nbsp; Hole diameter: 2 mm &nbsp;|&nbsp;
+                Thickness: 2 mm &nbsp;|&nbsp; Distance between pair of holes on each cross: 9 mm
+            </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             MOTORS
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Brushless Motors <span class="status-badge pending">ARRIVING SATURDAY</span></h2>
+
+            <p>
+                The frame was designed around a specific micro brushless motor: the
+                <strong style="color:#eee;">DarwinFPV Baby Ape / Pro 3" — 1104</strong>.
+                These motors have not yet arrived (expected Saturday) but the mounting hole geometry
+                on the frame is already matched to their bolt pattern.
+            </p>
+
+            <h3>Motor Specifications</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Motor size</td><td>1104 (11 mm stator diameter, 4 mm stator height)</td></tr>
+                    <tr><td>KV rating</td><td>7500 KV (recommended for 2S) / 4500 KV (3S)</td></tr>
+                    <tr><td>Propeller compatibility</td><td>2.5″ – 3″</td></tr>
+                    <tr><td>No-load current (I₀)</td><td>≈ 0.5 A</td></tr>
+                    <tr><td>Max thrust (2S, 3" prop)</td><td>≈ 100 g per motor</td></tr>
+                    <tr><td>Max continuous current</td><td>6 A</td></tr>
+                    <tr><td>Peak current</td><td>8 A</td></tr>
+                    <tr><td>Shaft diameter</td><td>1.5 mm</td></tr>
+                    <tr><td>Mounting pattern</td><td>M2, 9 mm × 9 mm</td></tr>
+                    <tr><td>Motor weight</td><td>≈ 5.5 g</td></tr>
+                    <tr><td>Recommended battery</td><td>2S – 3S LiPo / LiHV</td></tr>
+                    <tr><td>Recommended ESC</td><td>8–10 A BLHeli_S or AM32</td></tr>
+                </tbody>
+            </table>
+
+            <p>
+                The 1104 form factor is one of the smallest classes of brushless motors used in
+                FPV micro-quads. The high KV rating (7500 on 2S) pairs well with lightweight
+                3-inch propellers and a sub-100 g airframe, making it ideal for rapid indoor
+                prototyping at this scale.
+            </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PROPELLERS
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>3D-Printed Propellers</h2>
+
+            <p>
+                While waiting for the motors, I also attempted to print the propellers. Finding
+                propellers small enough for a 70 mm frame is genuinely difficult — most commercial
+                props start at 2.5″ and are designed for stiffer materials. I printed two
+                iterations, both of which are not quite usable in practice: the Prusa MK4
+                lacks the resolution to reproduce the thin trailing edge of a blade accurately,
+                leading to uneven geometry that would produce vibration and asymmetric thrust.
+            </p>
+            <p>
+                The most likely path forward is to order purpose-made micro propellers online
+                rather than continue printing them. The geometry is too fine for FDM at this scale.
+            </p>
+
+            <h3>Printed Props</h3>
+            <div class="photo-grid">
+                <div>
+                    <img src="./assets/week7/propeller1.jpeg" alt="3D-printed propeller — attempt 1">
+                    <p class="video-label">Propeller attempt 1</p>
+                </div>
+                <div>
+                    <img src="./assets/week7/propeller2.jpeg" alt="3D-printed propeller — attempt 2">
+                    <p class="video-label">Propeller attempt 2</p>
+                </div>
+            </div>
+
+            <h3>Prusa Slicer</h3>
+            <div class="photo-single">
+                <img src="./assets/week7/propeller-prusa.png" alt="Prusa slicer — propeller sliced and ready to print">
+            </div>
+            <p class="media-caption">Prusa slicer layout for the propeller print</p>
+
+            <h3>Interactive 3D Model</h3>
+            <div id="prop-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+
+            <div class="download-links">
+                <a class="download-btn" download href="./assets/week7/propeller.stl">↓ Propeller STL</a>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             CONTROL UI / SOFTWARE
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Control UI &amp; Motor Testing</h2>
+
+            <p>
+                Because the brushless motors have not arrived yet, I used the stepper motors from the
+                Useless Box (previous week) as stand-ins to validate the control software end-to-end.
+                This let me test the full communication stack — ESP32 firmware, Wi-Fi hosting, and
+                browser UI — without being blocked on hardware delivery.
+            </p>
+
+            <h3>Architecture</h3>
+            <p>
+                The website is hosted directly on the ESP32 microcontroller. The ESP32 creates its
+                own Wi-Fi access point (SSID: <code>DroneControl</code>); connecting to this network
+                and opening the ESP32's IP in a browser loads the full control interface. No external
+                server is involved — the ESP32 is both the network host and the motor controller.
+            </p>
+
+            <h3>Control Interface</h3>
+            <div class="photo-single">
+                <img src="./assets/week7/UIScreenshot.png" alt="Drone control UI hosted on the ESP32">
+            </div>
+            <p class="media-caption">
+                Control UI served by the ESP32 — accessed by connecting to the
+                <code>DroneControl</code> Wi-Fi network
+            </p>
+
+            <p>The interface is divided into several zones:</p>
             <ul>
-                <li><a href="#">Design Files</a></li>
-                <li><a href="#">Code Repository</a></li>
-                <li><a href="#">Documentation</a></li>
+                <li>
+                    <strong style="color:#eee;">FPV feed frame</strong> — the top area is reserved for
+                    a live video stream. This will be fed by an ESP32-CAM module in a future iteration,
+                    providing a first-person view directly in the browser without any additional app.
+                </li>
+                <li>
+                    <strong style="color:#eee;">Individual motor sliders</strong> — each of the four
+                    motors can be controlled independently, useful for diagnosing asymmetric thrust or
+                    testing a single motor after re-assembly.
+                </li>
+                <li>
+                    <strong style="color:#eee;">All-motors control</strong> — a master slider / input
+                    that sets all four motors simultaneously to the same throttle level.
+                </li>
+                <li>
+                    <strong style="color:#eee;">Hover mode</strong> — a toggle that puts all motors
+                    into a continuous run state at a fixed throttle setpoint, simulating a steady hover
+                    without requiring constant input.
+                </li>
+            </ul>
+
+            <h3>Motor Test Videos</h3>
+            <div class="video-grid">
+                <div>
+                    <img src="./assets/week7/hover.jpeg" alt="Hover mode — all motors running continuously">
+                    <p class="video-label">Hover mode — all motors running continuously</p>
+                </div>
+                <div>
+                    <img src="./assets/week7/individualmotorcontrol.jpeg" alt="Individual motor control via the UI">
+                    <p class="video-label">Individual motor control via the UI</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FIRMWARE
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Firmware</h2>
+
+            <p>
+                Three firmware modules run on the ESP32. Each is responsible for a distinct
+                subsystem: motor control, web server / UI hosting, and camera streaming.
+            </p>
+
+            <div class="code-tabs">
+                <div class="tab-bar">
+                    <button class="tab-btn active" onclick="showTab(event, 'tab-main')">firmware.ino</button>
+                    <button class="tab-btn" onclick="showTab(event, 'tab-servo')">ServoController.h</button>
+                    <button class="tab-btn" onclick="showTab(event, 'tab-server')">DroneServer.h</button>
+                    <button class="tab-btn" onclick="showTab(event, 'tab-ui')">index.h</button>
+                    <button class="tab-btn" onclick="showTab(event, 'tab-cam')">camera.ino</button>
+                </div>
+
+                <div id="tab-main" class="tab-panel active">
+                    <pre><code>/*
+ * Drone MVP — 4-Servo Controller
+ * Board  : ESP32-C3 (XIAO variant)
+ * Libs   : ESP32Servo, WebSockets (by Markus Sattler)
+ *
+ * Wiring (XIAO ESP32-C3):
+ *   Servo 0 (Front-Left)  → D2 / GPIO 4
+ *   Servo 1 (Front-Right) → D3 / GPIO 5
+ *   Servo 2 (Rear-Left)   → D4 / GPIO 6
+ *   Servo 3 (Rear-Right)  → D5 / GPIO 7
+ *   All servo power rails → external 5V BEC (NOT the XIAO 3.3V pin)
+ *   Common GND between XIAO and servo power supply
+ */
+
+#include "ServoController.h"
+#include "DroneServer.h"
+
+// ---------------------------------------------------------------------------
+// Config
+// ---------------------------------------------------------------------------
+
+const int     SERVO_PINS[ServoController::COUNT] = {4, 5, 6, 7};
+const int     PWM_MIN_US  = 500;
+const int     PWM_MAX_US  = 2400;
+const char*   AP_SSID     = "DroneControl";
+const char*   AP_PASSWORD = "drone1234";
+const IPAddress AP_IP(192, 168, 4, 1);
+
+// ---------------------------------------------------------------------------
+// Instances
+// ---------------------------------------------------------------------------
+
+ServoController servos(SERVO_PINS, PWM_MIN_US, PWM_MAX_US);
+DroneServer     drone(AP_SSID, AP_PASSWORD, AP_IP, servos);
+
+// ---------------------------------------------------------------------------
+// Arduino entry points
+// ---------------------------------------------------------------------------
+
+void setup() {
+  Serial.begin(115200);
+  servos.begin();
+  drone.begin();
+}
+
+void loop() {
+  drone.loop();
+}</code></pre>
+                </div>
+
+                <div id="tab-servo" class="tab-panel">
+                    <pre><code>#pragma once
+#include &lt;ESP32Servo.h&gt;
+
+class ServoController {
+public:
+  static const uint8_t COUNT = 4;
+
+  ServoController(const int pins[COUNT], int minUs, int maxUs)
+    : _minUs(minUs), _maxUs(maxUs) {
+    for (int i = 0; i &lt; COUNT; i++) _pins[i] = pins[i];
+  }
+
+  void begin() {
+    for (int i = 0; i &lt; COUNT; i++) {
+      _servos[i].setPeriodHertz(50);
+      _servos[i].attach(_pins[i], _minUs, _maxUs);
+      move(i, 90);
+    }
+  }
+
+  void move(uint8_t index, int angle) {
+    if (index &gt;= COUNT) return;
+    angle = constrain(angle, 0, 180);
+    _angles[index] = angle;
+    _servos[index].write(angle);
+    Serial.printf("Servo %d -&gt; %d deg\n", index, angle);
+  }
+
+  int getAngle(uint8_t index) const {
+    if (index &gt;= COUNT) return 0;
+    return _angles[index];
+  }
+
+private:
+  Servo   _servos[COUNT];
+  int     _pins[COUNT];
+  int     _angles[COUNT] = {90, 90, 90, 90};
+  int     _minUs, _maxUs;
+};</code></pre>
+                </div>
+
+                <div id="tab-server" class="tab-panel">
+                    <pre><code>#pragma once
+#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+#include &lt;WebSocketsServer.h&gt;
+#include "index.h"
+#include "ServoController.h"
+
+class DroneServer {
+public:
+  DroneServer(const char* ssid, const char* password, IPAddress ip, ServoController&amp; servos)
+    : _ssid(ssid), _password(password), _ip(ip), _servos(servos),
+      _http(80), _ws(81) {
+    _instance = this;
+  }
+
+  void begin() {
+    WiFi.mode(WIFI_AP);
+    WiFi.softAPConfig(_ip, _ip, IPAddress(255, 255, 255, 0));
+    WiFi.softAP(_ssid, _password);
+    Serial.print("AP IP: ");
+    Serial.println(WiFi.softAPIP());
+
+    _http.on("/", HTTP_GET, []() {
+      _instance-&gt;_http.send_P(200, "text/html", INDEX_HTML);
+    });
+    _http.begin();
+    Serial.println("HTTP server started on port 80");
+
+    _ws.onEvent(_wsEvent);
+    _ws.begin();
+    Serial.println("WebSocket server started on port 81");
+  }
+
+  void loop() {
+    _http.handleClient();
+    _ws.loop();
+  }
+
+private:
+  inline static DroneServer* _instance = nullptr;
+
+  static void _wsEvent(uint8_t clientId, WStype_t type, uint8_t* payload, size_t length) {
+    if (type == WStype_TEXT) {
+      _instance-&gt;_handleMessage(String((char*)payload));
+    } else if (type == WStype_CONNECTED) {
+      IPAddress ip = _instance-&gt;_ws.remoteIP(clientId);
+      Serial.printf("WS client %d connected from %s\n", clientId, ip.toString().c_str());
+    } else if (type == WStype_DISCONNECTED) {
+      Serial.printf("WS client %d disconnected\n", clientId);
+    }
+  }
+
+  void _handleMessage(String msg) {
+    int sep = msg.indexOf(':');
+    if (sep &lt; 1) return;
+    int index = msg.substring(0, sep).toInt();
+    int angle = msg.substring(sep + 1).toInt();
+    _servos.move(index, angle);
+  }
+
+  const char*      _ssid;
+  const char*      _password;
+  IPAddress        _ip;
+  ServoController&amp; _servos;
+  WebServer        _http;
+  WebSocketsServer _ws;
+};</code></pre>
+                </div>
+
+                <div id="tab-ui" class="tab-panel">
+                    <pre><code>/* index.h — the full control UI, stored in ESP32 flash and served at http://192.168.4.1/ */
+#pragma once
+
+const char INDEX_HTML[] PROGMEM = R"rawliteral(
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Drone Control&lt;/title&gt;
+  &lt;style&gt;
+    /* ... full CSS omitted for brevity — see source file ... */
+
+    body { font-family: 'Segoe UI', sans-serif; background: #0f0f0f; color: #e0e0e0; }
+    .fpv-screen { width:100%; aspect-ratio:16/9; background:#111; border-radius:12px; }
+    .master-card { border: 1px solid #2196f3; border-radius:12px; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    .card { background:#1c1c1c; border-radius:12px; padding:1.5rem; }
+    .btn-hover { border:1px solid #4caf50; color:#4caf50; }
+    .btn-hover.active { background:#4caf50; color:#fff; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;DRONE CONTROL&lt;/h1&gt;
+  &lt;div id="status" class="disconnected"&gt;Connecting...&lt;/div&gt;
+
+  &lt;!-- FPV feed (ESP32-CAM MJPEG stream) --&gt;
+  &lt;div class="fpv-wrap"&gt;
+    &lt;div class="fpv-screen"&gt;
+      &lt;img id="fpv-img" /&gt;
+      &lt;div id="fpv-placeholder"&gt;NO SIGNAL&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="fpv-url-row"&gt;
+      &lt;input id="fpv-url" placeholder="Stream URL — e.g. http://192.168.4.2/stream" /&gt;
+      &lt;button onclick="connectStream()"&gt;Connect&lt;/button&gt;
+      &lt;button onclick="disconnectStream()"&gt;Clear&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Master (all servos) --&gt;
+  &lt;div class="master-card"&gt;
+    &lt;h2&gt;ALL SERVOS&lt;/h2&gt;
+    &lt;div id="val-master"&gt;90°&lt;/div&gt;
+    &lt;input type="range" min="0" max="180" value="90" id="slider-master" /&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Individual servo cards (built dynamically) --&gt;
+  &lt;div class="grid" id="grid"&gt;&lt;/div&gt;
+
+  &lt;!-- Hover + center-all --&gt;
+  &lt;div class="btn-row"&gt;
+    &lt;button class="btn-action btn-hover" id="hover-btn" onclick="toggleHover()"&gt;Hover&lt;/button&gt;
+    &lt;button class="btn-action btn-center-all" onclick="centerAll()"&gt;Center All&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    // WebSocket on port 81 — sends "index:angle" strings to the ESP32
+    const ws = new WebSocket(`ws://${location.hostname}:81`);
+    ws.onopen  = () =&gt; { /* mark connected */ };
+    ws.onclose = () =&gt; { /* mark disconnected */ };
+
+    function sendServo(index, angle) {
+      if (ws.readyState === WebSocket.OPEN) ws.send(`${index}:${angle}`);
+    }
+
+    // Hover mode — sine-wave oscillation across all servos
+    let hoverTimer = null, hoverPhase = 0;
+    function toggleHover() {
+      if (hoverTimer) {
+        clearInterval(hoverTimer); hoverTimer = null; centerAll();
+      } else {
+        hoverTimer = setInterval(() =&gt; {
+          hoverPhase += 0.06;
+          const angle = Math.round(90 + 30 * Math.sin(hoverPhase));
+          for (let i = 0; i &lt; 4; i++) sendServo(i, angle);
+        }, 50);
+      }
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+)rawliteral";</code></pre>
+                </div>
+
+                <div id="tab-cam" class="tab-panel">
+                    <pre><code>/*
+ * ESP32-CAM — MJPEG Stream Server
+ * Board  : AI Thinker ESP32-CAM
+ *
+ * Connects to the DroneControl WiFi AP (created by the XIAO ESP32-C3)
+ * and serves an MJPEG stream at http://192.168.4.2/stream
+ *
+ * Enter that URL in the FPV frame on the control page.
+ *
+ * Flashing (one-time setup):
+ *   1. Bridge GPIO0 → GND on the ESP32-CAM before powering on.
+ *   2. Connect a USB-TTL adapter: TX→U0R, RX→U0T, GND→GND, 5V→5V.
+ *   3. Select board "AI Thinker ESP32-CAM" and flash.
+ *   4. Remove the GPIO0 bridge and press reset.
+ */
+
+#include "esp_camera.h"
+#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+
+const char* WIFI_SSID = "DroneControl";
+const char* WIFI_PASS = "drone1234";
+
+// Fixed IP on the drone AP so the FPV URL never changes
+const IPAddress CAM_IP(192, 168, 4, 2);
+const IPAddress GATEWAY(192, 168, 4, 1);
+const IPAddress SUBNET(255, 255, 255, 0);
+
+// AI-Thinker ESP32-CAM pin map
+#define PWDN_GPIO_NUM   32
+#define RESET_GPIO_NUM  -1
+#define XCLK_GPIO_NUM    0
+#define SIOD_GPIO_NUM   26
+#define SIOC_GPIO_NUM   27
+#define Y9_GPIO_NUM     35
+#define Y8_GPIO_NUM     34
+#define Y7_GPIO_NUM     39
+#define Y6_GPIO_NUM     36
+#define Y5_GPIO_NUM     21
+#define Y4_GPIO_NUM     19
+#define Y3_GPIO_NUM     18
+#define Y2_GPIO_NUM      5
+#define VSYNC_GPIO_NUM  25
+#define HREF_GPIO_NUM   23
+#define PCLK_GPIO_NUM   22
+
+WebServer server(80);
+
+bool initCamera() {
+  camera_config_t config;
+  config.ledc_channel = LEDC_CHANNEL_0;
+  config.ledc_timer   = LEDC_TIMER_0;
+  config.pin_d0 = Y2_GPIO_NUM; config.pin_d1 = Y3_GPIO_NUM;
+  config.pin_d2 = Y4_GPIO_NUM; config.pin_d3 = Y5_GPIO_NUM;
+  config.pin_d4 = Y6_GPIO_NUM; config.pin_d5 = Y7_GPIO_NUM;
+  config.pin_d6 = Y8_GPIO_NUM; config.pin_d7 = Y9_GPIO_NUM;
+  config.pin_xclk     = XCLK_GPIO_NUM;
+  config.pin_pclk     = PCLK_GPIO_NUM;
+  config.pin_vsync    = VSYNC_GPIO_NUM;
+  config.pin_href     = HREF_GPIO_NUM;
+  config.pin_sscb_sda = SIOD_GPIO_NUM;
+  config.pin_sscb_scl = SIOC_GPIO_NUM;
+  config.pin_pwdn     = PWDN_GPIO_NUM;
+  config.pin_reset    = RESET_GPIO_NUM;
+  config.xclk_freq_hz = 20000000;
+  config.pixel_format = PIXFORMAT_JPEG;
+  config.frame_size   = FRAMESIZE_VGA;   // 640×480
+  config.jpeg_quality = 12;              // 0=best, 63=worst
+  config.fb_count     = 2;
+
+  esp_err_t err = esp_camera_init(&amp;config);
+  if (err != ESP_OK) {
+    Serial.printf("Camera init failed: 0x%x\n", err);
+    return false;
+  }
+  Serial.println("Camera ready");
+  return true;
+}
+
+void handleStream() {
+  WiFiClient client = server.client();
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.sendHeader("Content-Type", "multipart/x-mixed-replace; boundary=frame");
+  server.send(200);
+
+  while (client.connected()) {
+    camera_fb_t* fb = esp_camera_fb_get();
+    if (!fb) { break; }
+    client.print("--frame\r\nContent-Type: image/jpeg\r\n");
+    client.printf("Content-Length: %u\r\n\r\n", fb-&gt;len);
+    client.write(fb-&gt;buf, fb-&gt;len);
+    client.print("\r\n");
+    esp_camera_fb_return(fb);
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  if (!initCamera()) return;
+
+  WiFi.mode(WIFI_STA);
+  WiFi.config(CAM_IP, GATEWAY, SUBNET);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+
+  while (WiFi.status() != WL_CONNECTED) { delay(500); Serial.print("."); }
+  Serial.printf("\nStream live at: http://%s/stream\n", WiFi.localIP().toString().c_str());
+
+  server.on("/stream", HTTP_GET, handleStream);
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             NEXT STEPS
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Next Steps</h2>
+            <ul>
+                <li>Mount the DarwinFPV 1104 motors onto the printed frame once they arrive</li>
+                <li>Order micro propellers (2.5″ – 3″) online — printing at this resolution is not viable</li>
+                <li>Wire up ESCs and test the brushless motor control path through the existing UI</li>
+                <li>Integrate the ESP32-CAM for the FPV feed in the browser interface</li>
+                <li>Add an IMU (MPU-6050) and start writing the PID stabilisation loop</li>
             </ul>
         </div>
+
     </div>
 
+    <!-- Three.js STL viewers -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script>
+        function init3DViewer(containerId, modelPath, color) {
+            color = color || 0xaaaacc;
+            var container = document.getElementById(containerId);
+            if (!container) return;
+
+            var scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a0a);
+
+            var camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 2000);
+            camera.position.set(0, 0, 200);
+
+            var renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            var controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+            var dir1 = new THREE.DirectionalLight(0xffffff, 0.8);
+            dir1.position.set(1, 2, 3);
+            scene.add(dir1);
+            var dir2 = new THREE.DirectionalLight(0xffffff, 0.4);
+            dir2.position.set(-2, -1, -1);
+            scene.add(dir2);
+
+            var loader = new THREE.STLLoader();
+            loader.load(modelPath, function(geometry) {
+                geometry.computeBoundingBox();
+                var center = new THREE.Vector3();
+                geometry.boundingBox.getCenter(center);
+                geometry.translate(-center.x, -center.y, -center.z);
+
+                var size = new THREE.Vector3();
+                geometry.boundingBox.getSize(size);
+                var maxDim = Math.max(size.x, size.y, size.z);
+                camera.position.set(0, 0, maxDim * 1.8);
+                controls.maxDistance = maxDim * 10;
+                controls.minDistance = maxDim * 0.1;
+
+                var mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
+                    color: color,
+                    specular: 0x333333,
+                    shininess: 40
+                }));
+                scene.add(mesh);
+            });
+
+            window.addEventListener('resize', function() {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            (function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            })();
+        }
+
+        window.addEventListener('load', function() {
+            init3DViewer('frame-viewer', 'assets/week7/droneframe.stl',  0xd4af37);
+            init3DViewer('prop-viewer',  'assets/week7/propeller.stl',  0xaaaacc);
+        });
+    </script>
+
+    <!-- Code tab switcher -->
+    <script>
+        function showTab(evt, tabId) {
+            var panels = document.querySelectorAll('.tab-panel');
+            panels.forEach(function(p) { p.classList.remove('active'); });
+            var buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(function(b) { b.classList.remove('active'); });
+            document.getElementById(tabId).classList.add('active');
+            evt.target.classList.add('active');
+        }
+    </script>
+
+    <!-- Game of Life background -->
     <script>
         const canvas = document.getElementById('gameOfLife');
         const ctx = canvas.getContext('2d');
