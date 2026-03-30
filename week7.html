@@ -201,7 +201,15 @@
             display: block;
         }
 
-        .photo-single img,
+        .photo-single img {
+            max-width: 100%;
+            width: auto;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+            margin: 20px auto;
+        }
+
         .photo-single video {
             width: 100%;
             border-radius: 4px;
@@ -375,6 +383,23 @@
             opacity: 0.15;
         }
 
+        .update-notice {
+            background: rgba(212, 175, 55, 0.07);
+            border: 1px solid #d4af37;
+            border-radius: 4px;
+            padding: 14px 22px;
+            margin-bottom: 50px;
+            color: #d4af37;
+            font-size: 0.92em;
+            letter-spacing: 0.4px;
+        }
+
+        .update-notice a {
+            color: #d4af37;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2em; }
             h2 { font-size: 1.2em; }
@@ -391,6 +416,11 @@
         <div class="header">
             <div class="week-number">WEEK 07</div>
             <h1>DIY Drone MVP</h1>
+        </div>
+
+        <div class="update-notice">
+            ↓ This page has been updated since the first submission on Thursday, March 26 —
+            <a href="#update">jump to the latest update (March 29)</a>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════
@@ -661,7 +691,7 @@ const int     SERVO_PINS[ServoController::COUNT] = {4, 5, 6, 7};
 const int     PWM_MIN_US  = 500;
 const int     PWM_MAX_US  = 2400;
 const char*   AP_SSID     = "DroneControl";
-const char*   AP_PASSWORD = "drone1234";
+const char*   AP_PASSWORD = "********";
 const IPAddress AP_IP(192, 168, 4, 1);
 
 // ---------------------------------------------------------------------------
@@ -905,7 +935,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
 #include &lt;WebServer.h&gt;
 
 const char* WIFI_SSID = "DroneControl";
-const char* WIFI_PASS = "drone1234";
+const char* WIFI_PASS = "********";
 
 // Fixed IP on the drone AP so the FPV URL never changes
 const IPAddress CAM_IP(192, 168, 4, 2);
@@ -1018,6 +1048,569 @@ void loop() {
             </ul>
         </div>
 
+        <div class="divider"></div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             UPDATE
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section" id="update">
+            <h2>Update — March 29 <span class="status-badge">LATEST</span></h2>
+
+            <!-- ── Camera ─────────────────────────────────────────── -->
+            <h3>FPV Camera — Seeed Studio XIAO ESP32S3 Sense</h3>
+            <p>
+                The FPV feed is now live. A <strong style="color:#eee;">Seeed Studio XIAO ESP32S3 Sense</strong>
+                runs as a Wi-Fi client, connecting to the <code>DroneControl</code> access point created by the
+                main ESP32. It streams MJPEG frames over HTTP and the control website fetches them directly
+                into the FPV pane — no extra app or relay server needed.
+            </p>
+
+            <div class="photo-single">
+                <video controls playsinline>
+                    <source src="./assets/week7/ScreenRecordingOfVideoFeed.mov" type="video/mp4">
+                </video>
+            </div>
+            <p class="media-caption">Screen recording — live FPV stream in the browser control interface</p>
+
+            <div class="photo-single">
+                <img src="./assets/week7/Seeed Studio Xiao ESP32S3 Sense.jpeg" alt="XIAO ESP32S3 Sense camera module">
+            </div>
+            <p class="media-caption">Seeed Studio XIAO ESP32S3 Sense</p>
+
+            <!-- ── Brushless motors & frame ───────────────────────── -->
+            <h3>Brushless Motors &amp; Frame Assembly</h3>
+            <p>
+                The brushless motors finally arrived and are now mounted on the drone frame.
+                The photos below show the assembly — motor positions mirror the four-arm layout
+                of the printed frame.
+            </p>
+
+            <div class="photo-single">
+                <img src="./assets/week7/droneframewithmountedmotors.jpeg" alt="Brushless motors mounted on frame">
+            </div>
+            <p class="media-caption">Brushless motors mounted on the printed frame</p>
+
+            <h3>Updated Frame Design</h3>
+            <p>
+                After mounting the motors it became clear the original hole layout needed adjustment.
+                Two changes were made: the mounting holes were <strong style="color:#eee;">rotated 45°</strong>
+                to better align with the motor bolt pattern, and small
+                <strong style="color:#eee;">inset recesses</strong> were added around each hole to seat
+                the motor shaft flush with the arm surface.
+            </p>
+
+            <div id="updated-frame-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+
+            <div class="download-links">
+                <a class="download-btn" download href="./assets/week7/superdroneno3.stl">↓ Updated Frame STL</a>
+            </div>
+
+            <!-- ── ESC test ───────────────────────────────────────── -->
+            <h3>ESC Motor Test — HobbyKing 20A UBEC</h3>
+            <p>
+                I attempted to spin one brushless motor using a
+                <strong style="color:#eee;">HobbyKing 20A UBEC ESC</strong>, but could not get it
+                to arm correctly. The root cause was insufficient battery voltage: the only cells on
+                hand were 3.7 V single-cell LiPos. I tried serialising three of them with copper tape
+                to reach ~11 V, but the connection was not reliable enough to supply the current the
+                ESC required to arm.
+            </p>
+
+            <div class="photo-grid">
+                <div>
+                    <img src="./assets/week7/hobbyking20Ahubec.jpeg" alt="HobbyKing 20A UBEC ESC">
+                    <p class="video-label">HobbyKing 20A UBEC ESC</p>
+                </div>
+                <div>
+                    <img src="./assets/week7/birdseyeview.jpeg" alt="Bird's-eye view of the ESC wired to the motors">
+                    <p class="video-label">Bird's-eye view — ESC connected to motors</p>
+                </div>
+            </div>
+
+            <!-- ── Updated code ───────────────────────────────────── -->
+            <h3>Updated Firmware</h3>
+            <p>
+                Key changes from the original: PWM range tightened to the standard ESC window
+                (1000 – 2000 µs), servos now initialise to 0° (throttle-off), and the camera
+                firmware has been completely rewritten for the XIAO ESP32S3 Sense
+                (different pin map, PSRAM-aware, task-per-client streaming).
+            </p>
+
+            <div class="code-tabs">
+                <div class="tab-bar">
+                    <button class="upd-tab-btn tab-btn active" onclick="showUpdTab(event,'upd-main')">firmware.ino</button>
+                    <button class="upd-tab-btn tab-btn" onclick="showUpdTab(event,'upd-servo')">ServoController.h</button>
+                    <button class="upd-tab-btn tab-btn" onclick="showUpdTab(event,'upd-server')">DroneServer.h</button>
+                    <button class="upd-tab-btn tab-btn" onclick="showUpdTab(event,'upd-ui')">index.h</button>
+                    <button class="upd-tab-btn tab-btn" onclick="showUpdTab(event,'upd-cam')">camera.ino</button>
+                </div>
+
+                <div id="upd-main" class="upd-tab-panel tab-panel active">
+                    <pre><code>/*
+ * Drone MVP — 4-Servo Controller
+ * Board  : ESP32-C3 (XIAO variant)
+ * Libs   : ESP32Servo, WebSockets (by Markus Sattler)
+ *
+ * Wiring (XIAO ESP32-C3):
+ *   Servo 0 (Front-Left)  → D2 / GPIO 4
+ *   Servo 1 (Front-Right) → D3 / GPIO 5
+ *   Servo 2 (Rear-Left)   → D4 / GPIO 6
+ *   Servo 3 (Rear-Right)  → D5 / GPIO 7
+ *   All servo power rails → external 5V BEC (NOT the XIAO 3.3V pin)
+ *   Common GND between XIAO and servo power supply
+ */
+
+#include "ServoController.h"
+#include "DroneServer.h"
+
+const int     SERVO_PINS[ServoController::COUNT] = {4, 5, 6, 7};
+const int     PWM_MIN_US  = 1000;
+const int     PWM_MAX_US  = 2000;
+const char*   AP_SSID     = "DroneControl";
+const char*   AP_PASSWORD = "********";
+const IPAddress AP_IP(192, 168, 4, 1);
+
+ServoController servos(SERVO_PINS, PWM_MIN_US, PWM_MAX_US);
+DroneServer     drone(AP_SSID, AP_PASSWORD, AP_IP, servos);
+
+void setup() {
+  Serial.begin(115200);
+  servos.begin();
+  drone.begin();
+}
+
+void loop() {
+  drone.loop();
+}</code></pre>
+                </div>
+
+                <div id="upd-servo" class="upd-tab-panel tab-panel">
+                    <pre><code>#pragma once
+#include &lt;ESP32Servo.h&gt;
+
+class ServoController {
+public:
+  static const uint8_t COUNT = 4;
+
+  ServoController(const int pins[COUNT], int minUs, int maxUs)
+    : _minUs(minUs), _maxUs(maxUs) {
+    for (int i = 0; i &lt; COUNT; i++) _pins[i] = pins[i];
+  }
+
+  void begin() {
+    for (int i = 0; i &lt; COUNT; i++) {
+      _servos[i].setPeriodHertz(50);
+      _servos[i].attach(_pins[i], _minUs, _maxUs);
+      move(i, 0);
+    }
+  }
+
+  void move(uint8_t index, int angle) {
+    if (index &gt;= COUNT) return;
+    angle = constrain(angle, 0, 180);
+    _angles[index] = angle;
+    _servos[index].write(angle);
+    Serial.printf("Servo %d -&gt; %d deg\n", index, angle);
+  }
+
+  int getAngle(uint8_t index) const {
+    if (index &gt;= COUNT) return 0;
+    return _angles[index];
+  }
+
+private:
+  Servo   _servos[COUNT];
+  int     _pins[COUNT];
+  int     _angles[COUNT] = {0, 0, 0, 0};
+  int     _minUs, _maxUs;
+};</code></pre>
+                </div>
+
+                <div id="upd-server" class="upd-tab-panel tab-panel">
+                    <pre><code>#pragma once
+#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+#include &lt;WebSocketsServer.h&gt;
+#include "index.h"
+#include "ServoController.h"
+
+class DroneServer {
+public:
+  DroneServer(const char* ssid, const char* password, IPAddress ip, ServoController&amp; servos)
+    : _ssid(ssid), _password(password), _ip(ip), _servos(servos),
+      _http(80), _ws(81) {
+    _instance = this;
+  }
+
+  void begin() {
+    WiFi.mode(WIFI_AP);
+    WiFi.softAPConfig(_ip, _ip, IPAddress(255, 255, 255, 0));
+    WiFi.softAP(_ssid, _password);
+    Serial.print("AP IP: ");
+    Serial.println(WiFi.softAPIP());
+
+    _http.on("/", HTTP_GET, []() {
+      _instance-&gt;_http.send_P(200, "text/html", INDEX_HTML);
+    });
+    _http.begin();
+
+    _ws.onEvent(_wsEvent);
+    _ws.begin();
+  }
+
+  void loop() {
+    _http.handleClient();
+    _ws.loop();
+  }
+
+private:
+  inline static DroneServer* _instance = nullptr;
+
+  static void _wsEvent(uint8_t clientId, WStype_t type, uint8_t* payload, size_t length) {
+    if (type == WStype_TEXT) {
+      _instance-&gt;_handleMessage(String((char*)payload));
+    } else if (type == WStype_CONNECTED) {
+      IPAddress ip = _instance-&gt;_ws.remoteIP(clientId);
+      Serial.printf("WS client %d connected from %s\n", clientId, ip.toString().c_str());
+    } else if (type == WStype_DISCONNECTED) {
+      Serial.printf("WS client %d disconnected\n", clientId);
+    }
+  }
+
+  void _handleMessage(String msg) {
+    int sep = msg.indexOf(':');
+    if (sep &lt; 1) return;
+    int index = msg.substring(0, sep).toInt();
+    int angle = msg.substring(sep + 1).toInt();
+    _servos.move(index, angle);
+  }
+
+  const char*      _ssid;
+  const char*      _password;
+  IPAddress        _ip;
+  ServoController&amp; _servos;
+  WebServer        _http;
+  WebSocketsServer _ws;
+};</code></pre>
+                </div>
+
+                <div id="upd-ui" class="upd-tab-panel tab-panel">
+                    <pre><code>#pragma once
+
+const char INDEX_HTML[] PROGMEM = R"rawliteral(
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Drone Control&lt;/title&gt;
+  &lt;style&gt;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f; color: #e0e0e0;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh; padding: 2rem 1rem; gap: 1.5rem;
+    }
+    h1 { font-size: 1.6rem; letter-spacing: 0.1em; color: #fff; }
+    #status { font-size: 0.85rem; color: #888; }
+    #status.connected    { color: #4caf50; }
+    #status.disconnected { color: #f44336; }
+    .fpv-wrap { width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 0.6rem; }
+    .fpv-screen {
+      width: 100%; aspect-ratio: 16/9; background: #111;
+      border: 1px solid #2a2a2a; border-radius: 12px;
+      overflow: hidden; display: flex; align-items: center;
+      justify-content: center; position: relative;
+    }
+    .fpv-screen img { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .fpv-no-signal { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: #333; font-size: 0.9rem; }
+    .fpv-no-signal svg { opacity: 0.3; }
+    .master-card {
+      width: 100%; max-width: 640px; background: #1c1c1c;
+      border: 1px solid #2196f3; border-radius: 12px;
+      padding: 1.2rem 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+    }
+    .master-card h2 { font-size: 0.85rem; letter-spacing: 0.12em; color: #2196f3; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; width: 100%; max-width: 640px; }
+    .card {
+      background: #1c1c1c; border: 1px solid #2a2a2a; border-radius: 12px;
+      padding: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .card h2 { font-size: 1rem; color: #aaa; }
+    .angle-display { font-size: 2.4rem; font-weight: 700; color: #fff; min-width: 4ch; text-align: center; }
+    .angle-display span { font-size: 1rem; color: #666; }
+    input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: #333; outline: none; cursor: pointer; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #2196f3; cursor: pointer; }
+    .btn-center { padding: 0.4rem 1rem; font-size: 0.8rem; border: 1px solid #333; border-radius: 6px; background: #252525; color: #aaa; cursor: pointer; }
+    .btn-row { display: flex; gap: 1rem; }
+    .btn-action { padding: 0.7rem 2rem; font-size: 0.95rem; border-radius: 8px; cursor: pointer; }
+    .btn-hover { border: 1px solid #4caf50; background: transparent; color: #4caf50; }
+    .btn-hover:hover, .btn-hover.active { background: #4caf50; color: #fff; }
+    .btn-center-all { border: 1px solid #2196f3; background: transparent; color: #2196f3; }
+    .btn-center-all:hover { background: #2196f3; color: #fff; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;DRONE CONTROL&lt;/h1&gt;
+  &lt;div id="status" class="disconnected"&gt;Connecting...&lt;/div&gt;
+
+  &lt;div class="fpv-wrap"&gt;
+    &lt;div class="fpv-screen"&gt;
+      &lt;img id="fpv-img" src="http://192.168.4.2/stream" style="display:block;width:100%;height:100%;object-fit:cover;" /&gt;
+      &lt;div class="fpv-no-signal" id="fpv-placeholder" style="display:none;"&gt;
+        &lt;svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"&gt;
+          &lt;path d="M15 10l4.553-2.07A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.9L15 14M3 8h12v8H3z" stroke-linecap="round" stroke-linejoin="round"/&gt;
+        &lt;/svg&gt;
+        NO SIGNAL
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="master-card"&gt;
+    &lt;h2&gt;ALL SERVOS&lt;/h2&gt;
+    &lt;div class="angle-display" id="val-master"&gt;0&lt;span&gt;&amp;deg;&lt;/span&gt;&lt;/div&gt;
+    &lt;input type="range" min="0" max="180" value="0" id="slider-master" /&gt;
+  &lt;/div&gt;
+
+  &lt;div class="grid" id="grid"&gt;&lt;/div&gt;
+
+  &lt;div class="btn-row"&gt;
+    &lt;button class="btn-action btn-hover" id="hover-btn" onclick="toggleHover()"&gt;Hover&lt;/button&gt;
+    &lt;button class="btn-action btn-center-all" onclick="centerAll()"&gt;Center All&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    const SERVO_LABELS = ['Front-Left', 'Front-Right', 'Rear-Left', 'Rear-Right'];
+    const sliders = [], displays = [];
+
+    const grid = document.getElementById('grid');
+    for (let i = 0; i &lt; 4; i++) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `&lt;h2&gt;${SERVO_LABELS[i]}&lt;/h2&gt;&lt;div class="angle-display" id="val${i}"&gt;0&lt;span&gt;&amp;deg;&lt;/span&gt;&lt;/div&gt;&lt;input type="range" min="0" max="180" value="0" id="slider${i}" /&gt;&lt;button class="btn-center" onclick="centerServo(${i})"&gt;Center&lt;/button&gt;`;
+      grid.appendChild(card);
+      const s = document.getElementById(`slider${i}`);
+      const d = document.getElementById(`val${i}`);
+      sliders.push(s); displays.push(d);
+      s.addEventListener('input', () =&gt; { d.innerHTML = s.value + '&lt;span&gt;&amp;deg;&lt;/span&gt;'; sendServo(i, +s.value); });
+    }
+
+    const masterSlider = document.getElementById('slider-master');
+    const masterDisplay = document.getElementById('val-master');
+    masterSlider.addEventListener('input', () =&gt; {
+      const a = +masterSlider.value;
+      masterDisplay.innerHTML = a + '&lt;span&gt;&amp;deg;&lt;/span&gt;';
+      for (let i = 0; i &lt; 4; i++) { sliders[i].value = a; displays[i].innerHTML = a + '&lt;span&gt;&amp;deg;&lt;/span&gt;'; sendServo(i, a); }
+    });
+
+    const ws = new WebSocket(`ws://${location.hostname}:81`);
+    const statusEl = document.getElementById('status');
+    ws.onopen  = () =&gt; { statusEl.textContent = 'Connected';                         statusEl.className = 'connected'; };
+    ws.onclose = () =&gt; { statusEl.textContent = 'Disconnected — reload to reconnect'; statusEl.className = 'disconnected'; };
+    ws.onerror = () =&gt; { statusEl.textContent = 'Connection error';                  statusEl.className = 'disconnected'; };
+
+    function sendServo(i, a) { if (ws.readyState === WebSocket.OPEN) ws.send(`${i}:${a}`); }
+    function setAngle(i, a)  { sliders[i].value = a; displays[i].innerHTML = a + '&lt;span&gt;&amp;deg;&lt;/span&gt;'; sendServo(i, a); }
+    function centerServo(i)  { setAngle(i, 90); }
+    function centerAll() {
+      masterSlider.value = 90;
+      masterDisplay.innerHTML = '90&lt;span&gt;&amp;deg;&lt;/span&gt;';
+      for (let i = 0; i &lt; 4; i++) centerServo(i);
+    }
+
+    let hoverTimer = null, hoverPhase = 0;
+    function toggleHover() {
+      const btn = document.getElementById('hover-btn');
+      if (hoverTimer) {
+        clearInterval(hoverTimer); hoverTimer = null;
+        btn.textContent = 'Hover'; btn.classList.remove('active'); centerAll();
+      } else {
+        hoverPhase = 0; btn.textContent = 'Stop Hover'; btn.classList.add('active');
+        hoverTimer = setInterval(() =&gt; {
+          hoverPhase += 0.06;
+          const a = Math.round(90 + 30 * Math.sin(hoverPhase));
+          masterSlider.value = a; masterDisplay.innerHTML = a + '&lt;span&gt;&amp;deg;&lt;/span&gt;';
+          for (let i = 0; i &lt; 4; i++) setAngle(i, a);
+        }, 50);
+      }
+    }
+
+    (function retryStream() {
+      const img = document.getElementById('fpv-img');
+      const ph  = document.getElementById('fpv-placeholder');
+      img.onerror = () =&gt; {
+        img.style.display = 'none'; ph.style.display = 'flex';
+        setTimeout(() =&gt; { img.src = 'http://192.168.4.2/stream?' + Date.now(); img.style.display = 'block'; ph.style.display = 'none'; }, 3000);
+      };
+    })();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+)rawliteral";</code></pre>
+                </div>
+
+                <div id="upd-cam" class="upd-tab-panel tab-panel">
+                    <pre><code>/*
+ * XIAO ESP32-S3 Sense — MJPEG Stream Server
+ * Board  : XIAO ESP32S3 (Seeed Studio)
+ *
+ * Connects to the DroneControl WiFi AP and serves an MJPEG stream
+ * at http://192.168.4.2/stream
+ *
+ * Board settings (Arduino IDE):
+ *   Board            : XIAO_ESP32S3
+ *   PSRAM            : OPI PSRAM   ← required
+ *   USB CDC On Boot  : Enabled
+ *   Partition Scheme : Huge APP (3MB No OTA/1MB SPIFFS)
+ */
+
+#include "esp_camera.h"
+#include &lt;WiFi.h&gt;
+
+const char*     WIFI_SSID = "DroneControl";
+const char*     WIFI_PASS = "********";
+
+const IPAddress CAM_IP (192, 168, 4, 2);
+const IPAddress GATEWAY(192, 168, 4, 1);
+const IPAddress SUBNET (255, 255, 255, 0);
+
+// XIAO ESP32-S3 Sense pin map
+#define PWDN_GPIO_NUM   -1
+#define RESET_GPIO_NUM  -1
+#define XCLK_GPIO_NUM   10
+#define SIOD_GPIO_NUM   40
+#define SIOC_GPIO_NUM   39
+#define Y9_GPIO_NUM     48
+#define Y8_GPIO_NUM     11
+#define Y7_GPIO_NUM     12
+#define Y6_GPIO_NUM     14
+#define Y5_GPIO_NUM     16
+#define Y4_GPIO_NUM     18
+#define Y3_GPIO_NUM     17
+#define Y2_GPIO_NUM     15
+#define VSYNC_GPIO_NUM  38
+#define HREF_GPIO_NUM   47
+#define PCLK_GPIO_NUM   13
+
+WiFiServer server(80);
+
+bool initCamera() {
+  camera_config_t config;
+  config.ledc_channel = LEDC_CHANNEL_0;  config.ledc_timer = LEDC_TIMER_0;
+  config.pin_d0 = Y2_GPIO_NUM;  config.pin_d1 = Y3_GPIO_NUM;
+  config.pin_d2 = Y4_GPIO_NUM;  config.pin_d3 = Y5_GPIO_NUM;
+  config.pin_d4 = Y6_GPIO_NUM;  config.pin_d5 = Y7_GPIO_NUM;
+  config.pin_d6 = Y8_GPIO_NUM;  config.pin_d7 = Y9_GPIO_NUM;
+  config.pin_xclk = XCLK_GPIO_NUM;  config.pin_pclk  = PCLK_GPIO_NUM;
+  config.pin_vsync = VSYNC_GPIO_NUM; config.pin_href  = HREF_GPIO_NUM;
+  config.pin_sscb_sda = SIOD_GPIO_NUM; config.pin_sscb_scl = SIOC_GPIO_NUM;
+  config.pin_pwdn = PWDN_GPIO_NUM;   config.pin_reset = RESET_GPIO_NUM;
+  config.xclk_freq_hz = 20000000;
+  config.pixel_format = PIXFORMAT_JPEG;
+  config.grab_mode    = CAMERA_GRAB_LATEST;
+
+  if (psramFound()) {
+    config.frame_size = FRAMESIZE_VGA; config.jpeg_quality = 12;
+    config.fb_count = 2; config.fb_location = CAMERA_FB_IN_PSRAM;
+  } else {
+    config.frame_size = FRAMESIZE_QVGA; config.jpeg_quality = 16;
+    config.fb_count = 1; config.fb_location = CAMERA_FB_IN_DRAM;
+  }
+
+  esp_err_t err = esp_camera_init(&amp;config);
+  if (err != ESP_OK) { Serial.printf("Camera init failed: 0x%x\n", err); return false; }
+  return true;
+}
+
+void streamClient(WiFiClient&amp; client) {
+  client.print(
+    "HTTP/1.1 200 OK\r\n"
+    "Access-Control-Allow-Origin: *\r\n"
+    "Content-Type: multipart/x-mixed-replace; boundary=frame\r\n\r\n"
+  );
+  while (client.connected()) {
+    camera_fb_t* fb = esp_camera_fb_get();
+    if (!fb) break;
+    client.printf("--frame\r\nContent-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n", fb-&gt;len);
+    client.write(fb-&gt;buf, fb-&gt;len);
+    client.print("\r\n");
+    esp_camera_fb_return(fb);
+  }
+}
+
+void clientTask(void* arg) {
+  WiFiClient* client = (WiFiClient*)arg;
+  String reqLine = client-&gt;readStringUntil('\n');
+  while (client-&gt;available()) {
+    String line = client-&gt;readStringUntil('\n');
+    if (line == "\r" || line.length() == 0) break;
+  }
+  if (reqLine.indexOf("/stream") &gt;= 0) {
+    streamClient(*client);
+  } else {
+    client-&gt;print("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
+      "&lt;html&gt;&lt;body style='margin:0;background:#000'&gt;"
+      "&lt;img src='/stream' style='width:100%;height:100vh;object-fit:contain'/&gt;"
+      "&lt;/body&gt;&lt;/html&gt;");
+  }
+  client-&gt;stop();
+  delete client;
+  vTaskDelete(NULL);
+}
+
+void setup() {
+  Serial.begin(115200);
+  if (!initCamera()) { while (true) delay(1000); }
+  WiFi.mode(WIFI_STA);
+  WiFi.config(CAM_IP, GATEWAY, SUBNET);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  while (WiFi.status() != WL_CONNECTED) { delay(500); Serial.print("."); }
+  Serial.printf("\nStream at: http://%s/stream\n", WiFi.localIP().toString().c_str());
+  server.begin();
+}
+
+void loop() {
+  WiFiClient client = server.accept();
+  if (client) {
+    WiFiClient* c = new WiFiClient(client);
+    xTaskCreate(clientTask, "cam_client", 4096, c, 1, NULL);
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ── What's next ────────────────────────────────────── -->
+            <h3>What's Next</h3>
+            <div class="highlight">
+                <p>
+                    An <strong style="color:#eee;">AIO (All-In-One) flight controller board</strong> is
+                    on order. It integrates the ESCs, power distribution, and an IMU on a single board,
+                    which should finally allow proper closed-loop control of all four brushless motors.
+                </p>
+            </div>
+            <ul>
+                <li>
+                    <strong style="color:#eee;">AIO board</strong> — waiting on delivery; will replace
+                    the individual ESC + breadboard wiring with a single integrated board
+                </li>
+                <li>
+                    <strong style="color:#eee;">Gyroscope / IMU</strong> — needed for stabilisation;
+                    will be integrated once the AIO board arrives (many AIO boards include one)
+                </li>
+                <li>
+                    <strong style="color:#eee;">Propellers</strong> — must be ordered online; printed
+                    propellers at this scale come out too thin and snap immediately
+                </li>
+            </ul>
+
+            <div class="photo-single">
+                <img src="./assets/week7/blueprintdrone.png" alt="Blueprint of the target drone design">
+            </div>
+            <p class="media-caption">Blueprint — target drone configuration</p>
+        </div>
+
     </div>
 
     <!-- Three.js STL viewers -->
@@ -1089,13 +1682,21 @@ void loop() {
         }
 
         window.addEventListener('load', function() {
-            init3DViewer('frame-viewer', 'assets/week7/droneframe.stl',  0xd4af37);
-            init3DViewer('prop-viewer',  'assets/week7/propeller.stl',  0xaaaacc);
+            init3DViewer('frame-viewer',         'assets/week7/droneframe.stl',        0xd4af37);
+            init3DViewer('prop-viewer',          'assets/week7/propeller.stl',         0xaaaacc);
+            init3DViewer('updated-frame-viewer', 'assets/week7/superdroneno3.stl', 0xd4af37);
         });
     </script>
 
     <!-- Code tab switcher -->
     <script>
+        function showUpdTab(evt, tabId) {
+            document.querySelectorAll('.upd-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+            document.querySelectorAll('.upd-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            document.getElementById(tabId).classList.add('active');
+            evt.target.classList.add('active');
+        }
+
         function showTab(evt, tabId) {
             var panels = document.querySelectorAll('.tab-panel');
             panels.forEach(function(p) { p.classList.remove('active'); });
