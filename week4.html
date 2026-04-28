@@ -172,6 +172,29 @@
         .placeholder-img  { height: 300px; }
         .placeholder-vid  { height: 360px; }
 
+        details.code-toggle { margin: 30px 0; }
+        details.code-toggle summary {
+            cursor: pointer;
+            list-style: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #d4af37;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            user-select: none;
+            margin-bottom: 0;
+        }
+        details.code-toggle summary::-webkit-details-marker { display: none; }
+        details.code-toggle summary::before {
+            content: '▶';
+            font-size: 0.75em;
+            transition: transform 0.2s ease;
+        }
+        details.code-toggle[open] summary::before { transform: rotate(90deg); }
+        details.code-toggle pre { margin-top: 15px; }
+
         .circuit-wrap {
             margin: 30px 0;
             border: 1px solid #222;
@@ -294,6 +317,8 @@
 
         <div class="section">
             <h2>Code</h2>
+            <details class="code-toggle">
+                <summary>view source</summary>
             <pre><code>#include &lt;SPI.h&gt;
 #include &lt;Wire.h&gt;
 #include &lt;Adafruit_GFX.h&gt;
@@ -493,6 +518,7 @@ void loop() {
   display.display();
   delay(16);
 }</code></pre>
+            </details>
         </div>
 
         <div class="section">
