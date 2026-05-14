@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Project - PS70</title>
+    <title>Final Project - DIY Drone - PS70</title>
     <style>
         * {
             margin: 0;
@@ -82,80 +82,302 @@
             margin-bottom: 20px;
         }
 
+        h3 {
+            color: #eee;
+            font-size: 1.15em;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
         ul, ol {
             color: #ccc;
-            font-size: 1.05em;
+            font-size: 1.02em;
             font-weight: 300;
-            margin-left: 40px;
+            margin-left: 30px;
             margin-bottom: 20px;
         }
 
         li {
-            margin-bottom: 10px;
-        }
-
-        code {
-            background: #111;
-            color: #d4af37;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-        }
-
-        pre {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 5px;
-            padding: 25px;
-            overflow-x: auto;
-            margin: 30px 0;
-        }
-
-        pre code {
-            background: none;
-            color: #ccc;
-            padding: 0;
+            margin-bottom: 8px;
         }
 
         a {
             color: #d4af37;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         a:hover {
             color: #fff;
         }
 
-        .divider {
-            height: 1px;
-            background: #222;
-            margin: 60px 0;
+        /* Material list */
+        .material-list {
+            list-style: none;
+            margin-left: 0;
         }
 
-        blockquote {
-            border-left: 2px solid #d4af37;
-            padding-left: 20px;
-            margin: 30px 0;
-            color: #999;
-            font-style: italic;
+        .material-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
         }
 
-        .highlight {
-            background: rgba(212, 175, 55, 0.05);
-            border: 1px solid #d4af37;
-            border-radius: 5px;
-            padding: 30px;
-            margin: 40px 0;
+        .material-list li:last-child {
+            border-bottom: none;
         }
 
-        .highlight h3 {
-            color: #d4af37;
+        .material-thumb {
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            object-fit: cover;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            display: block;
+        }
+
+        .material-thumb-placeholder {
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            background: #0a0a0a;
+            border: 1px dashed #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            font-size: 0.7em;
+            letter-spacing: 0.5px;
+            text-align: center;
+            padding: 4px;
+        }
+
+        .material-body {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .material-name {
+            color: #eee;
             font-weight: 300;
-            font-size: 1.2em;
+            display: block;
+        }
+
+        .material-link {
+            color: #d4af37;
+            font-size: 0.88em;
+            letter-spacing: 0.5px;
+        }
+
+        .placeholder-link {
+            color: #555;
+            font-size: 0.85em;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        /* 3D viewer */
+        .viewer-3d {
+            width: 100%;
+            height: 420px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
+            cursor: grab;
+        }
+
+        .viewer-3d:active {
+            cursor: grabbing;
+        }
+
+        .viewer-controls {
+            color: #555;
+            font-size: 0.82em;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Photo / media */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .photo-grid img,
+        .photo-grid video {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+        }
+
+        .photo-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .photo-row.two-col {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .photo-row figure {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-row img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+            background: #0a0a0a;
+        }
+
+        .photo-row figcaption {
+            color: #666;
+            font-size: 0.85em;
+            text-align: center;
+            margin-top: 10px;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 600px) {
+            .photo-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-embed {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            aspect-ratio: 16 / 9;
+            margin: 20px auto;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #222;
+            background: #000;
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .photo-single img {
+            max-width: 100%;
+            width: auto;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .photo-single.small img {
+            max-width: 360px;
+            width: 100%;
+        }
+
+        .photo-single.small video {
+            max-width: 480px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .photo-single video {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: block;
+            margin: 20px 0;
+        }
+
+        .media-caption {
+            color: #666;
+            font-size: 0.85em;
+            text-align: center;
+            margin-top: -8px;
+            margin-bottom: 25px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Placeholder for missing media */
+        .placeholder-media {
+            border: 1px dashed #333;
+            border-radius: 4px;
+            color: #555;
+            text-align: center;
+            padding: 60px 20px;
+            margin: 20px 0;
+            font-size: 0.9em;
             letter-spacing: 1px;
-            margin-bottom: 15px;
+            background: #0a0a0a;
+        }
+
+        /* Download buttons */
+        .download-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            display: inline-block;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 18px;
+            border-radius: 3px;
+            font-size: 0.88em;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #fff;
+        }
+
+        /* SVG sketch container */
+        .sketch {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .sketch svg {
+            display: block;
+            width: 100%;
+            height: auto;
         }
 
         #gameOfLife {
@@ -177,7 +399,7 @@
                 font-size: 1.2em;
             }
 
-            p, ul, ol {
+            p {
                 font-size: 1em;
             }
         }
@@ -190,56 +412,582 @@
 
         <div class="header">
             <div class="week-number">FINAL PROJECT</div>
-            <h1>Final Project Proposal</h1>
+            <h1>DIY Drone</h1>
         </div>
 
         <div class="section">
-            <h2>Current Leaderboard of Ideas</h2>
+            <h2>Abstract</h2>
+            <p>I built a 70mm DIY drone with a self-built carbon fiber frame and self-printed propellers. Beyond designing these parts, the main challenges were connecting the components, finding fitting motors and a fitting flight controller board, mounting the board on the frame, finding the right battery, connecting the battery to the board, and debugging the board.</p>
+            <p>Another big challenge was finding and connecting a remote controller, along with wire management and soldering on the very small pads on the board. Debugging was also difficult. It took many iterations to arrive at the right frame and the right propellers, and to find the right technique for soldering on the pads.</p>
+            <p>I initially planned to add an FPV camera as well, but due to time constraints — since everything else took so long — I decided not to.</p>
+            <div class="photo-single">
+                <img src="assets/final/thumbs/setup.jpeg" alt="Whole setup: drone, flight control debugging software, and remote control">
+            </div>
+            <p class="media-caption">Whole set up: Drone on the left plus flight control debugging software and remote control.</p>
+        </div>
 
-            <div class="highlight">
-                <h3>Human-LLM Interface for Math</h3>
-                <p>A portable blackboard drawing/writing mechanism that can fit to any blackboard and is linked to an LLM, with integrated loudspeaker capabilities.</p>
+        <!-- ═══════════════════════════════════════════════════════════
+             MATERIAL LIST
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Material List</h2>
+            <p>Every component used in the build, with links to the source.</p>
+            <ul class="material-list">
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/fc.jpg" alt="Happymodel Crux F405HD AIO">
+                    <div class="material-body">
+                        <span class="material-name">Happymodel Crux F405HD ELRS AIO (3-in-1 flight controller)</span>
+                    </div>
+                    <a class="material-link" href="https://www.defiancerc.com/products/happymodel-crux-f405hd-elrs-aio-3-in-1-flight-controller" target="_blank" rel="noopener">DefianceRC ↗</a>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/motors.jpg" alt="1104 4300KV micro brushless motor">
+                    <div class="material-body">
+                        <span class="material-name">1104 Micro Brushless Motors, 4300 KV (×4) — 1S–3S compatible, FPV racing quadcopter spec</span>
+                    </div>
+                    <a class="material-link" href="https://www.amazon.com/dp/B0CYCBS5WZ" target="_blank" rel="noopener">Amazon ↗</a>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/battery.jpg" alt="Ovonic LiPo battery">
+                    <div class="material-body">
+                        <span class="material-name">Ovonic 11.1V 450mAh 3S LiPo battery</span>
+                    </div>
+                    <a class="material-link" href="https://www.amazon.com/OVONIC-11-1V-450mAh-Lipo-Battery/dp/B0D3F6FYK9" target="_blank" rel="noopener">Amazon ↗</a>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/jst_connector_stock.jpg" alt="JST-style battery balancer / pigtail connector">
+                    <div class="material-body">
+                        <span class="material-name">Battery connector / pigtail</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/carbon_fiber_stock.jpg" alt="Woven carbon fiber fabric">
+                    <div class="material-body">
+                        <span class="material-name">Carbon fiber sheet (frame stock)</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/resin_stock.jpg" alt="SLA-printed resin part">
+                    <div class="material-body">
+                        <span class="material-name">SLA photopolymer resin (3D-printed props)</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/t8l.jpg" alt="RadioMaster T8L controller">
+                    <div class="material-body">
+                        <span class="material-name">RadioMaster T8L radio controller</span>
+                    </div>
+                    <a class="material-link" href="https://www.amazon.com/dp/B0GMLWKPVV" target="_blank" rel="noopener">Amazon ↗</a>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/elrs_receiver.png" alt="ELRS radio receiver with antenna">
+                    <div class="material-body">
+                        <span class="material-name">ELRS radio receiver + antenna</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/kapton_tape_stock.jpg" alt="Kapton (polyimide) heat-resistant tape">
+                    <div class="material-body">
+                        <span class="material-name">Heat-resistant Kapton tape</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/solder_stock.jpg" alt="Spool of solder wire">
+                    <div class="material-body">
+                        <span class="material-name">Solder + flux</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/hotglue_stock.jpg" alt="Hot glue gun">
+                    <div class="material-body">
+                        <span class="material-name">Hot glue</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/screws_stock.jpg" alt="Assortment of small machine screws">
+                    <div class="material-body">
+                        <span class="material-name">M2 screws &amp; standoffs</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/wire_stock.jpg" alt="Copper wires">
+                    <div class="material-body">
+                        <span class="material-name">Wires</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+                <li>
+                    <img class="material-thumb" src="assets/final/thumbs/cabletie_stock.jpg" alt="Assortment of cable ties">
+                    <div class="material-body">
+                        <span class="material-name">Cable binders / zip ties</span>
+                    </div>
+                    <span class="placeholder-link">sourced from lab</span>
+                </li>
+            </ul>
+            <p style="color:#555; font-size:0.8em; margin-top:14px;">Thumbnails for the battery connector, carbon fiber, filament, Kapton tape, solder, hot glue, screws, wires, and cable ties are stock photos from <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener" style="color:#888;">Wikimedia Commons</a> under their respective Creative Commons licenses.</p>
+        </div>
 
-                <blockquote>
-                    <strong>Motivation:</strong> Current computer-based LLM interfaces are not conducive for mathematical work. Studies show that working on a blackboard makes mathematical thinking easier and better. An audio and visual interface allows for a lecture-style interaction, and potentially enables "discussions" with the LLM similar to conversations with a real teacher.
-                </blockquote>
+        <!-- ═══════════════════════════════════════════════════════════
+             COMPONENT SKETCH
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Component Diagram</h2>
+            <p>Top-down sketch of the drone with each component labeled. Wires are not shown in the sketch.</p>
+            <div class="sketch">
+                <svg viewBox="-100 0 1000 720" xmlns="http://www.w3.org/2000/svg">
+                    <!-- ===================================================
+                         CARBON FIBER FRAME — from finalframe.dxf
+                         Plus-shape, 76×76 mm, 14 mm arm width,
+                         2 mm fillets, 10 mm flat motor-mount tips.
+                    =================================================== -->
+                    <g id="frame">
+                        <path d="M 666 301 L 449 301 L 449 84 L 351 84 L 351 301 L 134 301 L 134 399 L 351 399 L 351 616 L 449 616 L 449 399 L 666 399 Z"
+                              fill="#141414" stroke="#9a8a4a" stroke-width="1.5"/>
 
-                <p><strong>Key Features:</strong></p>
-                <ul>
-                    <li>Portable mechanism that attaches to any existing blackboard</li>
-                    <li>Real-time handwriting and drawing recognition</li>
-                    <li>LLM integration for mathematical problem-solving and explanations</li>
-                    <li>Audio output via loudspeaker for verbal explanations</li>
-                    <li>Supports interactive, dialogue-based learning</li>
-                </ul>
+                        <!-- Motor mounting screw pattern: 4 holes around each of 4 motors -->
+                        <g fill="#000" stroke="#3a3a3a" stroke-width="0.5">
+                            <circle cx="158.5" cy="371.0" r="1.1"/>
+                            <circle cx="158.5" cy="329.0" r="1.1"/>
+                            <circle cx="200.5" cy="371.0" r="1.1"/>
+                            <circle cx="200.5" cy="329.0" r="1.1"/>
+                            <circle cx="599.5" cy="371.0" r="1.1"/>
+                            <circle cx="599.5" cy="329.0" r="1.1"/>
+                            <circle cx="641.5" cy="371.0" r="1.1"/>
+                            <circle cx="641.5" cy="329.0" r="1.1"/>
+                            <circle cx="379.0" cy="150.5" r="1.1"/>
+                            <circle cx="379.0" cy="108.5" r="1.1"/>
+                            <circle cx="421.0" cy="150.5" r="1.1"/>
+                            <circle cx="421.0" cy="108.5" r="1.1"/>
+                            <circle cx="379.0" cy="591.5" r="1.1"/>
+                            <circle cx="379.0" cy="549.5" r="1.1"/>
+                            <circle cx="421.0" cy="591.5" r="1.1"/>
+                            <circle cx="421.0" cy="549.5" r="1.1"/>
+                        </g>
 
-                <p><strong>Why this matters:</strong> Combining the tactile, spatial benefits of blackboard work with the computational power of LLMs could create a more natural and effective interface for mathematical learning and problem-solving.</p>
+                        <!-- Motor shaft holes (4 arm tips) + FC mount holes (4 on inner arms) -->
+                        <g fill="#000" stroke="#6a5a2a" stroke-width="0.8">
+                            <circle cx="179.5" cy="350.0" r="5.2"/>
+                            <circle cx="620.5" cy="350.0" r="5.2"/>
+                            <circle cx="400.0" cy="129.5" r="5.2"/>
+                            <circle cx="400.0" cy="570.5" r="5.2"/>
+                            <circle cx="301.0" cy="350.0" r="5.2"/>
+                            <circle cx="499.0" cy="350.0" r="5.2"/>
+                            <circle cx="400.0" cy="251.0" r="5.2"/>
+                            <circle cx="400.0" cy="449.0" r="5.2"/>
+                        </g>
+                    </g>
+
+                    <!-- ===================================================
+                         PROPELLERS (drawn under motors)
+                    =================================================== -->
+                    <g opacity="0.32" fill="none" stroke="#d4af37" stroke-width="1.5">
+                        <ellipse cx="400" cy="129.5" rx="105" ry="13" transform="rotate(25 400 129.5)"/>
+                        <ellipse cx="400" cy="570.5" rx="105" ry="13" transform="rotate(-25 400 570.5)"/>
+                        <ellipse cx="179.5" cy="350" rx="105" ry="13" transform="rotate(-25 179.5 350)"/>
+                        <ellipse cx="620.5" cy="350" rx="105" ry="13" transform="rotate(25 620.5 350)"/>
+                    </g>
+
+                    <!-- ===================================================
+                         BRUSHLESS MOTORS at the 4 arm tips
+                    =================================================== -->
+                    <g>
+                        <circle cx="179.5" cy="350" r="28" fill="#2a2a2a" stroke="#d4af37" stroke-width="1.8"/>
+                        <circle cx="179.5" cy="350" r="9" fill="#d4af37"/>
+                        <circle cx="620.5" cy="350" r="28" fill="#2a2a2a" stroke="#d4af37" stroke-width="1.8"/>
+                        <circle cx="620.5" cy="350" r="9" fill="#d4af37"/>
+                        <circle cx="400" cy="129.5" r="28" fill="#2a2a2a" stroke="#d4af37" stroke-width="1.8"/>
+                        <circle cx="400" cy="129.5" r="9" fill="#d4af37"/>
+                        <circle cx="400" cy="570.5" r="28" fill="#2a2a2a" stroke="#d4af37" stroke-width="1.8"/>
+                        <circle cx="400" cy="570.5" r="9" fill="#d4af37"/>
+                    </g>
+
+                    <!-- ===================================================
+                         FLIGHT CONTROLLER (20×20 mount pattern, diamond)
+                    =================================================== -->
+                    <g transform="rotate(45 400 350)">
+                        <rect x="332" y="282" width="136" height="136" fill="#0a3a1a" stroke="#2c7a4a" stroke-width="2"/>
+                        <rect x="378" y="328" width="44" height="44" fill="#0a0a0a" stroke="#444" stroke-width="1"/>
+                        <circle cx="342" cy="292" r="2.5" fill="#888"/>
+                        <circle cx="458" cy="292" r="2.5" fill="#888"/>
+                        <circle cx="342" cy="408" r="2.5" fill="#888"/>
+                        <circle cx="458" cy="408" r="2.5" fill="#888"/>
+                    </g>
+
+                    <!-- ===================================================
+                         LIPO BATTERY (translucent, sits on top of FC)
+                    =================================================== -->
+                    <rect x="315" y="305" width="170" height="62" fill="#3a1f1f" stroke="#a04848" stroke-width="2" opacity="0.72"/>
+                    <text x="400" y="343" text-anchor="middle" font-family="Helvetica" font-size="14" fill="#e8c8c8" letter-spacing="2" opacity="0.85">LiPo 3S</text>
+
+                    <!-- ===================================================
+                         ANTENNA / RX (off the FC, trailing diagonally)
+                    =================================================== -->
+                    <line x1="475" y1="385" x2="560" y2="445" stroke="#888" stroke-width="2"/>
+                    <circle cx="560" cy="445" r="5" fill="#d4af37"/>
+
+                    <!-- ===================================================
+                         LABELS WITH LEADER LINES
+                    =================================================== -->
+                    <g font-family="Helvetica" font-size="13" fill="#d4af37" letter-spacing="1">
+                        <!-- Brushless motor -->
+                        <line x1="178" y1="324" x2="80" y2="220" stroke="#555" stroke-width="1"/>
+                        <text x="75" y="212" text-anchor="end">BRUSHLESS MOTOR</text>
+
+                        <!-- Propeller -->
+                        <line x1="487" y1="100" x2="650" y2="60" stroke="#555" stroke-width="1"/>
+                        <text x="655" y="56">PROPELLER (3D-printed)</text>
+
+                        <!-- Carbon fiber frame -->
+                        <line x1="148" y1="385" x2="70" y2="430" stroke="#555" stroke-width="1"/>
+                        <text x="65" y="442" text-anchor="end">CARBON FIBER FRAME</text>
+
+                        <!-- Flight controller -->
+                        <line x1="455" y1="395" x2="720" y2="300" stroke="#555" stroke-width="1"/>
+                        <text x="725" y="304">FLIGHT CONTROLLER</text>
+
+                        <!-- LiPo battery -->
+                        <line x1="320" y1="312" x2="80" y2="540" stroke="#555" stroke-width="1"/>
+                        <text x="75" y="555" text-anchor="end">LIPO BATTERY</text>
+
+                        <!-- Antenna / RX -->
+                        <line x1="560" y1="445" x2="730" y2="495" stroke="#555" stroke-width="1"/>
+                        <text x="735" y="500">ANTENNA / RX</text>
+
+                        <!-- Motor mount holes -->
+                        <line x1="200" y1="371" x2="80" y2="620" stroke="#555" stroke-width="1"/>
+                        <text x="75" y="635" text-anchor="end">MOTOR MOUNT HOLES</text>
+
+                        <!-- FC standoff holes -->
+                        <line x1="400" y1="251" x2="720" y2="170" stroke="#555" stroke-width="1"/>
+                        <text x="725" y="174">FC STANDOFF HOLES</text>
+                        <text x="725" y="190" font-size="10" fill="#888" letter-spacing="0.5">(20×20 mm pattern)</text>
+                    </g>
+                </svg>
             </div>
         </div>
 
-        <div class="divider"></div>
-
+        <!-- ═══════════════════════════════════════════════════════════
+             FINAL DRONE PHOTO
+        ════════════════════════════════════════════════════════════ -->
         <div class="section">
-            <h2>Other Ideas</h2>
+            <h2>The Finished Drone</h2>
+            <div class="photo-single">
+                <img src="assets/final/thumbs/Finished.png" alt="The finished DIY drone">
+            </div>
+            <p class="media-caption">The final build.</p>
 
-            <ol style="list-style-position: outside; padding-left: 20px;">
-                <li style="margin-bottom: 40px;">
-                    <h3 style="color: #ccc; font-size: 1.2em; font-weight: 300; margin-bottom: 15px;">Low Tech Anti-Drone System</h3>
-                    <p>An accessible anti-drone defense system using low-tech components.</p>
-                </li>
+            <h3>Components, disassembled</h3>
+            <div class="photo-row two-col">
+                <figure>
+                    <img src="assets/final/thumbs/CarbonFrame.png" alt="Carbon fiber frame">
+                    <figcaption>Carbon fiber frame, waterjet-cut.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/final/thumbs/ResinPropeller.png" alt="3D-printed resin propeller">
+                    <figcaption>3D-printed resin propeller.</figcaption>
+                </figure>
+            </div>
+            <div class="photo-row">
+                <figure>
+                    <img src="assets/final/thumbs/motors.jpg" alt="Brushless motors">
+                    <figcaption>Brushless motors (×4).</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/final/thumbs/fc.jpg" alt="Happymodel Crux F405HD ELRS AIO flight controller">
+                    <figcaption>Happymodel Crux F405HD ELRS AIO — 3-in-1 flight controller.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/final/thumbs/battery.jpg" alt="Ovonic 11.1V 450mAh 3S LiPo battery">
+                    <figcaption>Ovonic 11.1V 450mAh 3S LiPo battery.</figcaption>
+                </figure>
+            </div>
+        </div>
 
-                <li style="margin-bottom: 40px;">
-                    <h3 style="color: #ccc; font-size: 1.2em; font-weight: 300; margin-bottom: 15px;">Sensor Network</h3>
-                    <p>A sensor network with strict energy, communication, and visibility constraints.</p>
-                </li>
+        <!-- ═══════════════════════════════════════════════════════════
+             MOTOR + BOARD SELECTION
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Choosing the Motors and Flight Controller</h2>
 
-                <li style="margin-bottom: 40px;">
-                    <h3 style="color: #ccc; font-size: 1.2em; font-weight: 300; margin-bottom: 15px;">Wrestling Drone</h3>
-                    <p>Similar to "Beyblade" but in the air with two drones competing against each other.</p>
-                </li>
+            <h3>Why 70 mm</h3>
+            <p>I picked the 70 mm class because I wanted to <strong>iterate as quickly as possible</strong> on the frame and the propellers. The smaller the airframe, the cheaper and faster each iteration: less filament per prop, less carbon fiber per frame, less waterjet time, and lower stakes when something snaps or doesn't fly. So I went with the smallest build that could still physically fit four motors, a flight controller, and a battery.</p>
+
+            <h3>Why I didn't build my own board</h3>
+            <p>I initially thought about building my own flight controller around an ESP32. After looking into it, I dropped that plan for two reasons.</p>
+            <p>The first reason is <strong>loop frequency</strong>. A hobby-grade ESP32 flight controller typically runs its gyro / PID feedback loop somewhere between <strong>250 Hz and 1 kHz</strong>, limited by I²C/SPI bus speed to the IMU and by firmware overhead. A 70 mm-class drone is small, light, and twitchy — that loop rate is not fast enough to stabilize it reliably. A commercial flight controller running <a href="https://betaflight.com/" target="_blank" rel="noopener">Betaflight</a> on a dedicated STM32 F4/F7/H7 MCU runs the gyro loop at <strong>8 kHz</strong> by default (see Betaflight's <a href="https://betaflight.com/docs/wiki/configurator/cli-tab" target="_blank" rel="noopener">PID &amp; looptime documentation</a>), with modern F7/H7 boards going up to <strong>32 kHz gyro and 16 kHz PID</strong> — roughly <strong>8× to 30× faster</strong> than what a DIY ESP32 board realistically achieves.</p>
+            <p>The second reason is the <strong>firmware itself</strong>. A flight controller isn't just a microcontroller and an IMU — it needs gyro filtering, a PID feedback loop, motor mixing, an ESC protocol driver (DShot), a receiver protocol driver (ELRS/CRSF), failsafe logic, and tuning. Writing all of that from scratch is a massive project on its own, and Betaflight has had years of community work poured into the filtering and tuning alone.</p>
+            <p>So I went with an <strong>All-In-One (AIO) board</strong> that ships with Betaflight preloaded. I picked the Happymodel Crux F405HD ELRS AIO specifically for <strong>price and availability</strong> — it was the cheapest 70 mm-class AIO I could actually get hold of with the ELRS receiver already integrated.</p>
+
+            <h3>Earlier attempts &amp; mounting</h3>
+            <p>Before settling on the AIO, I briefly experimented with a separate flight controller + <strong>standalone ESC</strong> stack, but abandoned that direction (see the first two photos below).</p>
+            <p>The third photo shows the AIO mounted on the (earlier X-shaped) carbon fiber frame with <strong>matches</strong> as standoffs. I originally wanted to mount the board with screws, and that's what I used in the earlier PLA frame iterations. On the carbon fiber frame, though, the mount holes came out too small for the screws — a problem that persisted even after I significantly enlarged the holes — and I stopped trying to fix it after the waterjet stopped working.</p>
+            <div class="photo-row">
+                <figure>
+                    <img src="assets/final/thumbs/earlyattemptswithexternalESC.png" alt="Early board attempt with an external ESC">
+                    <figcaption>Early attempt: separate FC + external ESC stack, before switching to an AIO board.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/final/thumbs/external_esc.png" alt="Standalone external ESC">
+                    <figcaption>The standalone external ESC from that early configuration.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/final/thumbs/toothpickmount.png" alt="AIO sandwiched between carbon fiber plates with matches as standoffs">
+                    <figcaption>The AIO mounted on the earlier X-frame with <strong>matches</strong> as standoffs — workaround after the carbon fiber mount holes came out too small for screws.</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FRAME ITERATIONS
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Frame Iterations</h2>
+            <p>The frame went through several prototypes. The picture below shows a selection of them — I had more, but not all survived. They are arranged <strong>chronologically from left to right</strong>.</p>
+            <div class="photo-single">
+                <img src="assets/final/thumbs/framechronicle.png" alt="Chronological selection of frame prototypes, left to right">
+            </div>
+            <p class="media-caption">Selection of frame prototypes, chronological left → right.</p>
+
+            <ol>
+                <li><strong>v1 — naive PLA print.</strong> A first pass just to see the geometry in physical form. No reinforcement, no thought to motor-shaft clearance.</li>
+                <li><strong>v2 — reinforced holes &amp; motor-shaft sinks.</strong> Added more material around the mounting holes so they wouldn't crack, and a small sink on each arm because I realized the motor shaft needs a bit of extra clearance at its bottom.</li>
+                <li><strong>v3 — rotated motor-mount pattern.</strong> Turned the motor mounting holes <strong>45°</strong> so the motor wires exit in a direction that doesn't fight the arm geometry.</li>
+                <li><strong>v4 — AIO mounting holes &amp; battery slits.</strong> Added mounting holes for the AIO flight controller and slits for battery straps. The slits forced the arms to get wider to keep enough material around them.</li>
+                <li><strong>v5+ — switch to carbon fiber.</strong> PLA frames vibrate too much and bend/break too easily for a real drone, so I switched the stock to carbon fiber. I dropped the battery-strap slits again on this version — I now strap the battery diagonally with cable ties instead.</li>
+                <li><strong>Final — waterjet-cut carbon fiber.</strong> Reintroduced the motor-shaft "sinks" from v2, but because the part is waterjet-cut from a flat sheet they can't be partial-depth recesses — they have to be actual through-holes. This is the geometry in <em>finalframe.dxf</em>.</li>
             </ol>
         </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PROPELLERS
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Propellers</h2>
+            <p>I decided to 3D-print the propellers myself instead of ordering them. The picture below shows the versions I kept, <strong>chronologically left → right</strong>. There were many more iterations than this; most of them never came out as proper propellers and are shown further down.</p>
+
+            <div class="photo-single">
+                <img src="assets/final/thumbs/propellerchronicle.png" alt="Chronological selection of propeller iterations, left to right">
+            </div>
+            <p class="media-caption">Propeller iterations, chronological left → right.</p>
+
+            <ol>
+                <li><strong>v1 — Prusa FDM, original scale.</strong> The leftmost propeller. The Prusa simply didn't have the resolution to resolve the blade geometry — the print was nowhere close to what the design called for.</li>
+                <li><strong>v2 — Prusa FDM, scaled up.</strong> Scaled up to give the printer more room. Still too coarse to come out smooth, and the blades remained too thin for the FDM nozzle. This was the cue to abandon FDM and switch print technologies.</li>
+                <li><strong>v3 — resin, downloaded CAD.</strong> Before redesigning I read <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12158054/" target="_blank" rel="noopener">Popișter (2025), <em>"Experimental Study of Comprehensive Performance Analysis Regarding the Dynamical/Mechanical Aspects of 3D-Printed UAV Propellers and Sound Footprint"</em></a>, which fabricated six propeller variants in TPU, PETG, and photopolymer resin (in toroidal and tri-blade configurations) and tested thrust, acoustic emissions, compression strength, and motor thermal load. The main takeaway for me: <strong>resin propellers produced the highest thrust</strong>, and 3D-printed polymer propellers are viable for hobbyist UAVs. The paper doesn't release the CAD, so I searched the web for a comparable design — this is the third propeller in the picture. The surface came out far smoother on resin, which reinforced the print-tech decision. The geometry itself, however, didn't make much aerodynamic sense — visible in the print and obvious once it was spun up on the actual motor.</li>
+                <li><strong>v4 — two-blade, Claude-generated STL (final).</strong> Between v3 and v4 I iterated with the <a href="https://github.com/RaulBejarano/Ultimate-Toroidal-Propeller-Generator" target="_blank" rel="noopener">Ultimate Toroidal Propeller Generator</a> — an open-source OpenSCAD project that produces parameterized toroidal propeller STLs (blade count, CW/CCW rotation, hub geometry, NACA airfoil profiles, chord lengths, and attack angles at multiple keyframes along a Catmull–Rom toroidal path). The resin printer kept struggling with the thin connecting loops of the toroidal geometry, though. So I switched back to a conventional two-blade design and had Claude Code generate the STL directly — which it did surprisingly well. I bumped <strong>blade thickness and edge thickness</strong> so the resin printer could resolve the features, then tested different attack angles and support configurations. The fourth version — embedded below as <em>finalpropeller.stl</em> — turned out to displace air notably better in empirical tests spun up on the actual motor. Final specs: <strong>40 mm prop diameter</strong>, <strong>1.5 mm shaft (hub) bore</strong>.</li>
+            </ol>
+
+            <h3>Failed prints</h3>
+            <p>Most resin propeller iterations did not actually print as proper propellers — thin features, under-supported overhangs, and toroidal joins that the printer just couldn't resolve.</p>
+            <div class="photo-row two-col">
+                <figure>
+                    <img src="assets/final/thumbs/unscuccesfulresinpropellerprints.png" alt="Failed resin propeller prints">
+                    <figcaption>Failed resin propeller prints.</figcaption>
+                </figure>
+                <figure>
+                    <img src="assets/final/thumbs/moreunsuccessfulresinpropellerprints.png" alt="More failed resin propeller prints">
+                    <figcaption>More failed resin propeller prints.</figcaption>
+                </figure>
+            </div>
+
+            <h3>3D Model</h3>
+            <div id="prop-viewer" class="viewer-3d"></div>
+            <p class="viewer-controls">Click and drag to rotate &nbsp;•&nbsp; Scroll to zoom &nbsp;•&nbsp; Right-click drag to pan</p>
+            <div class="download-links">
+                <a class="download-btn" href="assets/final/thumbs/finalpropeller.stl" download>↓ Propeller STL (finalpropeller.stl)</a>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             SOLDERING
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Soldering Technique</h2>
+            <div class="photo-single small">
+                <img src="assets/final/thumbs/tinysolderingpads.png" alt="Close-up of the tiny solder pads on the AIO flight controller">
+            </div>
+            <p class="media-caption">The AIO board, close-up of the solder pads.</p>
+            <p>The soldering pads on the AIO board are <strong>extremely small</strong> and have almost no space between them. This made soldering extremely difficult. I spent hours on them. I asked Aadit and Bobby for help and both of them tried for hours too — we all failed.</p>
+            <p>Then I did some research online and learned about <strong>heat-resistant tape</strong> (Kapton / polyimide tape, pictured below). I used the tape to cover the neighboring pads, and from that point on the soldering became child's play (not really, but much easier).</p>
+            <div class="photo-single small">
+                <img src="assets/final/thumbs/kapton_tape_stock.jpg" alt="Three rolls of Kapton (polyimide) heat-resistant tape in different widths">
+            </div>
+            <p class="media-caption">Kapton (polyimide) heat-resistant tape — stock photo. By Dsimic, <a href="https://commons.wikimedia.org/wiki/File:Kapton_tapes,_three_rolls_of_different_widths.jpg" target="_blank" rel="noopener">via Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>.</p>
+            <p>I also had to solder wires together and re-solder connections to the motors. In that process I used <strong>heat-shrinks</strong> to insulate and tidy the joints. And because my connections to the board still kept breaking under vibration, I used <strong>hot glue and tape to reinforce</strong> them.</p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             BATTERY
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Battery</h2>
+            <div class="photo-single small">
+                <img src="assets/final/thumbs/battery.jpg" alt="Ovonic 11.1V 450mAh 3S LiPo battery">
+            </div>
+            <p class="media-caption">Ovonic 11.1V 450mAh 3S LiPo — the battery I ended up ordering.</p>
+            <p>We did not have an 11.1V battery in lab. I initially tried using <strong>3.7V single-cell batteries</strong>, but the form factor that gave the needed capacity was simply too big for the drone. That is why I ordered the multi-cell 3S LiPo above.</p>
+            <p>Nathan gave me a short safety training on how to handle LiPos — puncture, short, thermal runaway, fire risk — and gave me the <strong>LiPo balance charger</strong> below to charge and discharge the pack safely.</p>
+            <div class="photo-single small">
+                <img src="assets/final/thumbs/LiProBalanceCharger.png" alt="LiPo balance charger">
+            </div>
+            <p class="media-caption">LiPo balance charger (loaned from the lab) — for charging and safe discharging.</p>
+            <p>One of the bigger issues was actually <strong>connecting the battery to the board reliably and safely</strong>. Soldering the battery leads directly to the FC is both unsafe and unwise — every plug/unplug cycle stresses the joint, and a shorted or damaged pack with no way to disconnect is a fire waiting to happen. So I built a <strong>custom wire-to-socket-pin connection</strong> instead, visible in some of the photos further up the page.</p>
+            <p>For mounting, I used <strong>cable binders to strap the battery to the frame</strong> diagonally — the solution that replaced the earlier battery-strap slits in the PLA frame iterations.</p>
+            <div class="photo-single small">
+                <img src="assets/final/thumbs/cablebinderbatterystraps.png" alt="LiPo battery strapped to the frame diagonally with cable binders">
+            </div>
+            <p class="media-caption">Battery strapped diagonally to the carbon fiber frame with cable binders.</p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             CONTROLLING THE DRONE
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Controlling the Drone</h2>
+
+            <h3>Betaflight</h3>
+            <p><a href="https://betaflight.com/" target="_blank" rel="noopener">Betaflight</a> is the open-source firmware that runs on the AIO. It handles gyro filtering, the PID feedback loop, motor mixing, the DShot ESC protocol, and the receiver protocol, and exposes everything through the <strong>Betaflight Configurator</strong> app — where you flash firmware, map motors, set gyro orientation, configure failsafe, and tune PIDs. I used Betaflight heavily for <strong>debugging, especially the motors</strong> (motor mapping, spin direction, identifying dead or mis-wired motors via the Motors tab).</p>
+            <div class="photo-single">
+                <video src="assets/final/thumbs/betaflight.mov" controls playsinline preload="metadata"></video>
+            </div>
+            <p class="media-caption">Betaflight walkthrough.</p>
+
+            <h3>RadioMaster T8L</h3>
+            <div class="photo-single small">
+                <img src="assets/final/thumbs/t8l.jpg" alt="RadioMaster T8L radio controller">
+            </div>
+            <p class="media-caption">RadioMaster T8L — compact ExpressLRS 2.4 GHz transmitter (<a href="https://radiomasterrc.com/products/t8l-radio-controller" target="_blank" rel="noopener">product page</a>, <a href="https://radiomasterrc.com/pages/user-manuals" target="_blank" rel="noopener">official manuals</a>).</p>
+            <p>The <a href="https://radiomasterrc.com/products/t8l-radio-controller" target="_blank" rel="noopener">T8L</a> is a screenless ExpressLRS 2.4 GHz radio that bound directly to the AIO's onboard ELRS receiver. It's configured through RadioMaster's web-based UI rather than an on-device menu.</p>
+
+            <h3>Why not just use an ESC or a laptop to fly?</h3>
+            <p>An ESC alone only drives a single motor at a commanded throttle — there's no controller in the loop to mix yaw, pitch, and roll across four motors or to react to the gyro, so it can't stabilize a drone. A laptop tethered to the FC over USB can <em>arm</em> the board and ramp motors on the bench (useful for testing), but as an in-flight controller it fails on three counts: USB-serial latency is too high to feed an 8 kHz PID loop responsively, keyboards and mice can't smoothly modulate throttle and stick deflection, and there's no wireless link — you'd have to chase the drone with the laptop attached. A dedicated 2.4 GHz radio solves all three.</p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             CHALLENGES
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Challenges</h2>
+            <p>The biggest blocker right now: <strong>three of my four motors failed</strong>, so I have not been able to actually get the drone in the air. I have ordered new motors and expect the drone to fly as soon as they arrive.</p>
+            <p>The build hit a lot of other walls along the way, most of which are documented in their own sections above. To summarize: the <strong>flight controller pads</strong> are tiny and almost impossible to solder cleanly until I learned the Kapton-tape masking trick (with hours of failed attempts before that, including help from Aadit and Bobby). The <strong>frame</strong> went through six iterations from naive PLA to waterjet-cut carbon fiber, and even the final carbon frame had mount holes that came out too small for screws (which is why the AIO ended up mounted with matches as standoffs on the X-frame). The <strong>propellers</strong> went through four kept versions plus many failed prints — FDM didn't have the resolution, resin worked but the toroidal geometry kept failing at thin joins, until I converged on a beefier two-blade design. The <strong>battery</strong> wasn't available in the right voltage in lab; single-cells were too bulky, so I ordered a 3S LiPo, learned to handle it safely with Nathan's training, and built a custom wire-to-socket-pin connector because soldering battery leads directly to the FC is a fire risk. And the overall debugging — power, signal, firmware, mechanical — was the kind of "nothing works, isolate one variable at a time" grind that ate most of the time on this project.</p>
+            <p>Separately: <strong>waterjet-cutting carbon fiber</strong> has very different kerf behavior than 3D printing, so holes and slots come out tighter or looser than the CAD; I had to adjust dimensions in the DXF to compensate, and even then the screw holes were the wrong size.</p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FUTURE OUTLOOK
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Future Outlook</h2>
+            <ul>
+                <li><strong>FPV.</strong> Adding the FPV camera and 5.8&nbsp;GHz video transmitter (VTX) that I dropped from this build for time. With a small FPV cam on the front of the frame, a VTX wired into the AIO's video pad, and FPV goggles on the pilot side, the drone becomes actually flyable beyond line-of-sight and unlocks the whole reason small quads are fun to build in the first place.</li>
+                <li>Tuning PIDs properly once the airframe is reliable</li>
+                <li>Iterating on prop design with the data I now have</li>
+                <li>Possibly a larger build with what I've learned about kerf, soldering, and battery handling</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FILES
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <h2>Files</h2>
+            <div class="download-links">
+                <a class="download-btn" href="assets/final/thumbs/finalframe.dxf" download>↓ Frame DXF (finalframe.dxf)</a>
+                <a class="download-btn" href="assets/final/thumbs/finalpropeller.stl" download>↓ Propeller STL (finalpropeller.stl)</a>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             CLOSING VIDEO
+        ════════════════════════════════════════════════════════════ -->
+        <div class="section">
+            <div class="photo-single small">
+                <video src="assets/final/thumbs/onemotorspins.mov" controls playsinline preload="metadata"></video>
+            </div>
+            <p class="media-caption">One of the four motors spinning up on the bench — the only one of the original four still alive. Replacement motors on the way.</p>
+        </div>
     </div>
+
+    <!-- Three.js STL viewers -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script>
+        function init3DViewer(containerId, modelPath, color = 0xd4af37) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a0a);
+
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 2000);
+            camera.position.set(0, 0, 200);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+            const dir1 = new THREE.DirectionalLight(0xffffff, 0.8);
+            dir1.position.set(1, 2, 3);
+            scene.add(dir1);
+            const dir2 = new THREE.DirectionalLight(0xffffff, 0.4);
+            dir2.position.set(-2, -1, -1);
+            scene.add(dir2);
+
+            const loader = new THREE.STLLoader();
+            loader.load(modelPath, function(geometry) {
+                geometry.computeBoundingBox();
+                const center = new THREE.Vector3();
+                geometry.boundingBox.getCenter(center);
+                geometry.translate(-center.x, -center.y, -center.z);
+
+                const size = new THREE.Vector3();
+                geometry.boundingBox.getSize(size);
+                const maxDim = Math.max(size.x, size.y, size.z);
+                camera.position.set(0, 0, maxDim * 1.8);
+                controls.maxDistance = maxDim * 10;
+                controls.minDistance = maxDim * 0.1;
+
+                const mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
+                    color: color,
+                    specular: 0x333333,
+                    shininess: 40
+                }));
+                scene.add(mesh);
+            });
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            (function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            })();
+        }
+
+        window.addEventListener('load', function() {
+            // Uncomment / add paths once the STL files are added to assets/final/
+            init3DViewer('prop-viewer', 'assets/final/thumbs/finalpropeller.stl', 0xd4af37);
+        });
+    </script>
 
     <script>
         const canvas = document.getElementById('gameOfLife');
@@ -247,7 +995,7 @@
 
         let width, height, cellSize, cols, rows;
         let grid, nextGrid;
-        let hue = 45; // Starting hue (golden)
+        let hue = 45;
         let zoom = 1;
         const minZoom = 0.5;
         const maxZoom = 3;
@@ -315,17 +1063,14 @@
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, width, height);
 
-            // Gradually change hue over time (faster)
             hue = (hue + 1) % 360;
 
-            // Animate gradient movement and rotation (faster)
             gradientAngle += 2;
             gradientOffsetX += 0.3;
             gradientOffsetY += 0.2;
             patternPhase += 0.02;
 
-            // Morph between circular and linear patterns
-            const morphFactor = (Math.sin(patternPhase) + 1) / 2; // 0 to 1
+            const morphFactor = (Math.sin(patternPhase) + 1) / 2;
 
             const centerX = cols / 2;
             const centerY = rows / 2;
@@ -333,19 +1078,16 @@
             for (let i = 0; i < cols; i++) {
                 for (let j = 0; j < rows; j++) {
                     if (grid[i][j] === 1) {
-                        // Linear gradient (rotating)
                         const angleRad = gradientAngle * Math.PI / 180;
                         const rotatedX = (i + gradientOffsetX) * Math.cos(angleRad) - (j + gradientOffsetY) * Math.sin(angleRad);
                         const rotatedY = (i + gradientOffsetX) * Math.sin(angleRad) + (j + gradientOffsetY) * Math.cos(angleRad);
                         const linearValue = (rotatedX + rotatedY) * 2;
 
-                        // Circular gradient (radial from center)
                         const dx = i - centerX;
                         const dy = j - centerY;
                         const distance = Math.sqrt(dx * dx + dy * dy);
                         const circularValue = distance * 3;
 
-                        // Morph between linear and circular
                         const gradientValue = linearValue * (1 - morphFactor) + circularValue * morphFactor;
                         const cellHue = (hue + gradientValue) % 360;
                         ctx.fillStyle = `hsl(${cellHue}, 70%, 50%)`;
@@ -361,7 +1103,6 @@
             zoom = Math.max(minZoom, Math.min(maxZoom, zoom));
 
             if (oldZoom !== zoom) {
-                const oldCellSize = cellSize;
                 cellSize = Math.floor(10 * zoom);
                 const newCols = Math.floor(width / cellSize);
                 const newRows = Math.floor(height / cellSize);
@@ -373,7 +1114,6 @@
                     grid = createGrid();
                     nextGrid = createGrid();
 
-                    // Copy old grid to new grid
                     for (let i = 0; i < Math.min(oldGrid.length, cols); i++) {
                         for (let j = 0; j < Math.min(oldGrid[0].length, rows); j++) {
                             grid[i][j] = oldGrid[i][j];
@@ -392,13 +1132,11 @@
         initCanvas();
         animate();
 
-        // Zoom with mouse wheel
         canvas.addEventListener('wheel', (e) => {
             e.preventDefault();
             handleZoom(e.deltaY);
         }, { passive: false });
 
-        // Zoom with touch gestures
         let lastTouchDistance = 0;
         canvas.addEventListener('touchstart', (e) => {
             if (e.touches.length === 2) {
