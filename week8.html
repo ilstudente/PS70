@@ -152,6 +152,181 @@
             opacity: 0.15;
         }
 
+        .map-embed {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .map-embed img,
+        .map-embed object {
+            max-width: 100%;
+            max-height: 480px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+        }
+
+        .media-caption {
+            color: #666;
+            font-size: 0.85em;
+            text-align: center;
+            margin-top: 8px;
+            margin-bottom: 25px;
+            letter-spacing: 0.3px;
+        }
+
+        .vf-photo {
+            margin: 25px 0 8px;
+            text-align: center;
+        }
+
+        .vf-photo img {
+            max-width: 100%;
+            max-height: 520px;
+            border-radius: 4px;
+            border: 1px solid #222;
+            display: inline-block;
+        }
+
+        .placeholder-media {
+            border: 1px dashed #333;
+            border-radius: 4px;
+            color: #555;
+            text-align: center;
+            padding: 60px 20px;
+            margin: 20px 0;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            background: #0a0a0a;
+        }
+
+        .download-btn {
+            display: inline-block;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 8px 18px;
+            border-radius: 3px;
+            font-size: 0.88em;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #fff;
+        }
+
+        /* ============== Slideshow ============== */
+        .slideshow {
+            position: relative;
+            margin: 25px 0;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .slideshow-track {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: #000;
+        }
+
+        .slideshow-track .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slideshow-track .slide.active {
+            opacity: 1;
+        }
+
+        .slideshow-track .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .slideshow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.55);
+            color: #d4af37;
+            border: 1px solid #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.3em;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .slideshow-btn:hover {
+            background: rgba(212, 175, 55, 0.15);
+            color: #fff;
+            border-color: #d4af37;
+        }
+
+        .slideshow-btn.prev {
+            left: 14px;
+        }
+
+        .slideshow-btn.next {
+            right: 14px;
+        }
+
+        .slideshow-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 0 16px;
+            background: #0a0a0a;
+        }
+
+        .slideshow-dots button {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            background: #333;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .slideshow-dots button.active {
+            background: #d4af37;
+        }
+
+        .slideshow-counter {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            color: #aaa;
+            background: rgba(0, 0, 0, 0.55);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
@@ -163,6 +338,12 @@
 
             p, ul, ol {
                 font-size: 1em;
+            }
+
+            .slideshow-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 1.1em;
             }
         }
     </style>
@@ -179,41 +360,105 @@
 
         <div class="section">
             <h2>Overview</h2>
+            <p>We used a DXF of an Austria map derived from the <a href="https://commons.wikimedia.org/wiki/File:Austria_location_map.svg" target="_blank" rel="noopener">Austria location map SVG on Wikimedia Commons</a> (by Lencer, CC BY-SA 3.0). The map below is the source image; below it is our cutting DXF rendered inline.</p>
+
+            <div class="map-embed">
+                <img src="assets/week8/austria_location_map.svg" alt="Austria location map">
+            </div>
+            <p class="media-caption">Source: Austria location map by Lencer, <a href="https://commons.wikimedia.org/wiki/File:Austria_location_map.svg" target="_blank" rel="noopener">via Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>.</p>
+
+            <div class="map-embed">
+                <img src="assets/week8/austria_dxf_render.svg" alt="Rendered cutting DXF for Austria CNC piece">
+            </div>
+            <p class="media-caption">Our cutting DXF (<code>austria_location_map.dxf</code>) rendered inline.</p>
         </div>
 
         <div class="section">
-            <h2>Process</h2>
+            <h2>CNC</h2>
+            <p>We CNC-cut the Austria outline from the DXF. The slideshow below walks through the cut.</p>
+            <h3 style="color:#eee; font-weight:300; letter-spacing:1px; margin-top:20px; margin-bottom:10px;">Slideshow</h3>
+            <div class="slideshow" id="cnc-slideshow">
+                <div class="slideshow-counter"><span class="current">1</span> / <span class="total">6</span></div>
+                <div class="slideshow-track">
+                    <div class="slide active"><img src="assets/week8/cnc_1.jpeg" alt="CNC step 1"></div>
+                    <div class="slide"><img src="assets/week8/cnc_2.jpeg" alt="CNC step 2"></div>
+                    <div class="slide"><img src="assets/week8/cnc_3.jpeg" alt="CNC step 3"></div>
+                    <div class="slide"><img src="assets/week8/cnc_4.jpeg" alt="CNC step 4"></div>
+                    <div class="slide"><img src="assets/week8/cnc_5.jpeg" alt="CNC step 5"></div>
+                    <div class="slide"><img src="assets/week8/cnc_6.jpeg" alt="CNC step 6"></div>
+                    <button class="slideshow-btn prev" aria-label="Previous slide">‹</button>
+                    <button class="slideshow-btn next" aria-label="Next slide">›</button>
+                </div>
+                <div class="slideshow-dots"></div>
+            </div>
+            <p class="media-caption">CNC-cutting the Austria outline.</p>
         </div>
 
         <div class="section">
-            <h2>Code</h2>
-            <pre><code>// Example code
-function setup() {
-    // initialization code
-}
+            <h2>Vacuum Forming</h2>
+            <p>We then vacuum-formed the CNC-cut shape. The first try didn't work, because the heat was too low and the plastic never softened enough to take the shape of the mold. A second, hotter pull worked.</p>
 
-function loop() {
-    // main loop
-}</code></pre>
-        </div>
 
-        <div class="section">
-            <h2>Results</h2>
+            <div class="vf-photo">
+                <img src="assets/week8/vacuumform_lowheat.jpeg" alt="Failed vacuum form attempt due to insufficient heat">
+            </div>
+            <p class="media-caption">First attempt: too-low heat, the plastic didn't soften enough to conform to the mold.</p>
+
+            <div class="vf-photo">
+                <img src="assets/week8/vacuumform_success.jpeg" alt="Successful vacuum-formed Austria map">
+            </div>
+            <p class="media-caption">Second attempt: plastic fully drawn over the CNC-cut Austria outline.</p>
+
+            <div class="vf-photo">
+                <img src="assets/week8/vacuumform_mountains.jpeg" alt="Finished vacuum-formed piece in front of Austrian mountains">
+            </div>
+            <p class="media-caption">The finished vacuum form together with the CNC-cut piece, in front of some actual Austrian mountains.</p>
         </div>
 
         <div class="divider"></div>
 
         <div class="section">
-            <h2>Resources</h2> 
-            <ul>
-                <li><a href="#">Design Files</a></li>
-                <li><a href="#">Code Repository</a></li>
-                <li><a href="#">Documentation</a></li>
-            </ul>
+            <h2>Files</h2>
+            <p><a class="download-btn" href="assets/week8/austria_location_map.dxf" download>↓ Austria DXF (austria_location_map.dxf)</a></p>
         </div>
     </div>
 
     <script>
+        // ============== Slideshow ==============
+        (function() {
+            const root = document.getElementById('cnc-slideshow');
+            if (!root) return;
+            const slides = root.querySelectorAll('.slide');
+            const dotsContainer = root.querySelector('.slideshow-dots');
+            const counterCurrent = root.querySelector('.slideshow-counter .current');
+            const prevBtn = root.querySelector('.slideshow-btn.prev');
+            const nextBtn = root.querySelector('.slideshow-btn.next');
+            let index = 0;
+
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goTo(i));
+                dotsContainer.appendChild(dot);
+            });
+            const dots = dotsContainer.querySelectorAll('button');
+
+            function goTo(i) {
+                index = (i + slides.length) % slides.length;
+                slides.forEach((s, j) => s.classList.toggle('active', j === index));
+                dots.forEach((d, j) => d.classList.toggle('active', j === index));
+                if (counterCurrent) counterCurrent.textContent = index + 1;
+            }
+
+            prevBtn.addEventListener('click', () => goTo(index - 1));
+            nextBtn.addEventListener('click', () => goTo(index + 1));
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') goTo(index - 1);
+                if (e.key === 'ArrowRight') goTo(index + 1);
+            });
+        })();
+
         const canvas = document.getElementById('gameOfLife');
         const ctx = canvas.getContext('2d');
         let width, height, cellSize, cols, rows, grid, nextGrid, hue = 45, zoom = 1;
