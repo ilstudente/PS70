@@ -245,12 +245,12 @@
 
         <div class="section">
             <h2>Overview</h2>
-            <p>This project implements a self-contained soccer simulation running entirely on a 128×64 OLED display driven by an ESP32-DevKitM-1. Six autonomous players — three per team — chase a physics-simulated ball around a rendered pitch, score goals, and trigger a flashing celebration sequence, all within 50KB of RAM. The display is driven over I²C using the Adafruit SSD1306 library, with players distinguished by shape: left team renders as filled circles, right team as crosses.</p>
+            <p>This project implements a self-contained soccer simulation running entirely on a 128×64 OLED display driven by an ESP32-DevKitM-1. Six autonomous players (three per team) chase a physics-simulated ball around a rendered pitch, score goals, and trigger a flashing celebration sequence, all within 50KB of RAM. The display is driven over I²C using the Adafruit SSD1306 library, with players distinguished by shape: left team renders as filled circles, right team as crosses.</p>
         </div>
 
         <div class="section">
             <h2>Circuit</h2>
-            <p>The OLED's SDA and SCL lines connect to pins 22 and 21 on the ESP32-DevKitM-1, powered from 3.3V and GND — no additional components required.</p>
+            <p>The OLED's SDA and SCL lines connect to pins 22 and 21 on the ESP32-DevKitM-1, powered from 3.3V and GND. No additional components required.</p>
             <div class="circuit-wrap">
                 <img src="assets/week4/soccersim/esp32_oled_soccer_wiring.svg" alt="Wiring diagram: ESP32-DevKitM-1 and SSD1306 OLED on I²C pins 22 and 21">
             </div>
