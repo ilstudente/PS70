@@ -227,7 +227,7 @@
             <h2>3D model</h2>
             <div class="viewer-3d" id="gear-viewer"></div>
             <p class="media-caption">Interactive STL viewer. Click and drag to rotate.</p>
-            <p><a href="assets/week3/gears.stl" class="download-btn" download>Download STL</a></p>
+            <p><a href="assets/week3/planetensystemfrfr.stl" class="download-btn" download>Download STL</a></p>
         </div>
 
         <div class="section">
@@ -265,7 +265,7 @@
 
             let mesh;
             const loader = new THREE.STLLoader();
-            loader.load('assets/week3/gears.stl', function (geometry) {
+            loader.load('assets/week3/planetensystemfrfr.stl', function (geometry) {
                 geometry.computeBoundingBox();
                 const center = new THREE.Vector3();
                 geometry.boundingBox.getCenter(center);
