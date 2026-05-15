@@ -245,6 +245,28 @@
             display: block;
         }
 
+        details.code-toggle { margin: 30px 0; }
+        details.code-toggle summary {
+            cursor: pointer;
+            list-style: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #d4af37;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            user-select: none;
+        }
+        details.code-toggle summary::-webkit-details-marker { display: none; }
+        details.code-toggle summary::before {
+            content: '▶';
+            font-size: 0.75em;
+            transition: transform 0.2s ease;
+        }
+        details.code-toggle[open] summary::before { transform: rotate(90deg); }
+        details.code-toggle pre { margin-top: 15px; }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
@@ -322,6 +344,23 @@
         </div>
 
         <div class="section">
+            <h2>Code appendix</h2>
+            <p><a href="assets/week6/compass.ino" class="download-btn" download>Download compass.ino</a></p>
+            <details class="code-toggle">
+                <summary>view source</summary>
+                <pre><code id="compass-code">Loading...</code></pre>
+            </details>
+            <script>
+                fetch('assets/week6/compass.ino')
+                    .then(r => r.text())
+                    .then(code => { document.getElementById('compass-code').textContent = code; })
+                    .catch(() => { document.getElementById('compass-code').textContent = '// See assets/week6/compass.ino'; });
+            </script>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
             <h2>Second assignment: capacitive sensor</h2>
             <p>The second assignment for this week was a group project. I worked on a capacitive sensor with <a href="https://aaditsaluja.github.io/ps70/" target="_blank">Aadit Saluja</a>, Vlad, and <a href="https://rubyeye7.github.io/PS70/" target="_blank">Darwin</a>. We also built the Oblometer together in class as part of the same session.</p>
 
@@ -334,20 +373,6 @@
             <div class="embed-container">
                 <iframe src="https://rubyeye7.github.io/PS70/06_inputs/index.html" title="Darwin — Week 6 Inputs"></iframe>
             </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section">
-            <h2>Code appendix</h2>
-            <p><a href="assets/week6/compass.ino" class="download-btn" download>Download compass.ino</a></p>
-            <pre><code id="compass-code">Loading...</code></pre>
-            <script>
-                fetch('assets/week6/compass.ino')
-                    .then(r => r.text())
-                    .then(code => { document.getElementById('compass-code').textContent = code; })
-                    .catch(() => { document.getElementById('compass-code').textContent = '// See assets/week6/compass.ino'; });
-            </script>
         </div>
     </div>
 
