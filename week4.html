@@ -169,8 +169,8 @@
             margin: 30px 0;
         }
 
-        .placeholder-img  { height: 300px; }
-        .placeholder-vid  { height: 360px; }
+        .placeholder-img { height: 300px; }
+        .placeholder-vid { height: 360px; }
 
         details.code-toggle { margin: 30px 0; }
         details.code-toggle summary {
@@ -201,6 +201,11 @@
             border-radius: 5px;
             overflow: hidden;
             background: #0a0a0a;
+        }
+
+        .circuit-wrap img {
+            width: 100%;
+            display: block;
         }
 
         #gameOfLife {
@@ -242,98 +247,74 @@
 
         <div class="section">
             <h2>Overview</h2>
-            <p>For this week's microcontroller project I built a miniature soccer simulation that runs entirely on a 128×64 OLED display driven by an ESP32. Six autonomous players — three per team — chase a physics-simulated ball around a rendered pitch, score goals, and trigger a celebration flash sequence, all in under 50 KB of RAM.</p>
-            <p>The display communicates over I²C using the Adafruit SSD1306 library. Players are distinguished by shape: the left team renders as filled circles, the right team as crosses. Each player runs a lightweight AI loop — the nearest player to the ball actively chases and kicks it, while the rest drift to randomised positions within their half to simulate realistic spread.</p>
+            <p>This project implements a self-contained soccer simulation running entirely on a 128×64 OLED display driven by an ESP32-DevKitM-1. Six autonomous players — three per team — chase a physics-simulated ball around a rendered pitch, score goals, and trigger a flashing celebration sequence, all within 50KB of RAM. The display is driven over I²C using the Adafruit SSD1306 library, with players distinguished by shape: left team renders as filled circles, right team as crosses.</p>
         </div>
 
         <div class="section">
             <h2>Circuit</h2>
-            <p>The wiring is minimal: the OLED's SDA and SCL lines connect to pins D4 and D5 on the ESP32, with 3.3 V power and a shared ground. No additional components are required.</p>
+            <p>The OLED's SDA and SCL lines connect to pins 22 and 21 on the ESP32-DevKitM-1, powered from 3.3V and GND — no additional components required.</p>
             <div class="circuit-wrap">
-                <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-                    <!-- ESP32 chip -->
-                    <rect x="60" y="60" width="180" height="140" rx="8" fill="#1a1a2e" stroke="#d4af37" stroke-width="1.5"/>
-                    <text x="150" y="88" text-anchor="middle" fill="#d4af37" font-family="monospace" font-size="11" font-weight="bold">ESP32</text>
-                    <text x="150" y="103" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">(Seeed XIAO)</text>
-                    <!-- ESP32 pins right side -->
-                    <rect x="236" y="110" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="228" y="119" text-anchor="end" fill="#ccc" font-family="monospace" font-size="9">3.3V</text>
-                    <rect x="236" y="128" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="228" y="137" text-anchor="end" fill="#ccc" font-family="monospace" font-size="9">GND</text>
-                    <rect x="236" y="146" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="228" y="155" text-anchor="end" fill="#ccc" font-family="monospace" font-size="9">D4 (SDA)</text>
-                    <rect x="236" y="164" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="228" y="173" text-anchor="end" fill="#ccc" font-family="monospace" font-size="9">D5 (SCL)</text>
-
-                    <!-- OLED display -->
-                    <rect x="440" y="60" width="200" height="140" rx="8" fill="#0d1117" stroke="#d4af37" stroke-width="1.5"/>
-                    <text x="540" y="88" text-anchor="middle" fill="#d4af37" font-family="monospace" font-size="11" font-weight="bold">SSD1306 OLED</text>
-                    <text x="540" y="103" text-anchor="middle" fill="#888" font-family="monospace" font-size="9">128×64 I²C</text>
-                    <!-- Simulated screen area -->
-                    <rect x="468" y="112" width="144" height="72" rx="3" fill="#111" stroke="#333" stroke-width="1"/>
-                    <!-- tiny soccer field lines on simulated screen -->
-                    <rect x="470" y="114" width="140" height="68" rx="2" fill="none" stroke="#444" stroke-width="0.5"/>
-                    <line x1="540" y1="114" x2="540" y2="182" stroke="#444" stroke-width="0.5" stroke-dasharray="2,2"/>
-                    <circle cx="540" cy="148" r="10" fill="none" stroke="#444" stroke-width="0.5"/>
-                    <!-- OLED pins left side -->
-                    <rect x="446" y="110" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="472" y="119" fill="#ccc" font-family="monospace" font-size="9">VCC</text>
-                    <rect x="446" y="128" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="472" y="137" fill="#ccc" font-family="monospace" font-size="9">GND</text>
-                    <rect x="446" y="146" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="472" y="155" fill="#ccc" font-family="monospace" font-size="9">SDA</text>
-                    <rect x="446" y="164" width="18" height="10" rx="2" fill="#333" stroke="#d4af37" stroke-width="1"/>
-                    <text x="472" y="173" fill="#ccc" font-family="monospace" font-size="9">SCL</text>
-
-                    <!-- Wires -->
-                    <!-- 3.3V → VCC (red) -->
-                    <polyline points="254,115 350,115 350,115 446,115" fill="none" stroke="#e74c3c" stroke-width="2"/>
-                    <text x="350" y="110" text-anchor="middle" fill="#e74c3c" font-family="monospace" font-size="8">3.3 V</text>
-                    <!-- GND → GND (white/grey) -->
-                    <polyline points="254,133 360,133 360,133 446,133" fill="none" stroke="#aaa" stroke-width="2"/>
-                    <text x="360" y="128" text-anchor="middle" fill="#aaa" font-family="monospace" font-size="8">GND</text>
-                    <!-- D4 → SDA (blue) -->
-                    <polyline points="254,151 370,151 370,151 446,151" fill="none" stroke="#3498db" stroke-width="2"/>
-                    <text x="370" y="146" text-anchor="middle" fill="#3498db" font-family="monospace" font-size="8">SDA</text>
-                    <!-- D5 → SCL (yellow) -->
-                    <polyline points="254,169 380,169 380,169 446,169" fill="none" stroke="#f1c40f" stroke-width="2"/>
-                    <text x="380" y="195" text-anchor="middle" fill="#f1c40f" font-family="monospace" font-size="8">SCL</text>
-
-                    <!-- Legend -->
-                    <line x1="60" y1="228" x2="85" y2="228" stroke="#e74c3c" stroke-width="2"/>
-                    <text x="90" y="232" fill="#ccc" font-family="monospace" font-size="9">3.3 V / VCC</text>
-                    <line x1="180" y1="228" x2="205" y2="228" stroke="#aaa" stroke-width="2"/>
-                    <text x="210" y="232" fill="#ccc" font-family="monospace" font-size="9">GND</text>
-                    <line x1="270" y1="228" x2="295" y2="228" stroke="#3498db" stroke-width="2"/>
-                    <text x="300" y="232" fill="#ccc" font-family="monospace" font-size="9">SDA (D4)</text>
-                    <line x1="390" y1="228" x2="415" y2="228" stroke="#f1c40f" stroke-width="2"/>
-                    <text x="420" y="232" fill="#ccc" font-family="monospace" font-size="9">SCL (D5)</text>
-                </svg>
+                <img src="assets/week4/wiring.svg" alt="Wiring diagram: ESP32-DevKitM-1 and SSD1306 OLED on I²C pins 22 and 21">
             </div>
-
-            <h2>Breadboard</h2>
-            <div class="placeholder placeholder-img">[ photo coming soon ]</div>
+            <div class="placeholder placeholder-img">[ breadboard photo — to be added ]</div>
         </div>
 
         <div class="section">
             <h2>Code</h2>
+            <p>The simulation is built around three interacting systems: a physics engine for the ball, a lightweight AI for each player, and a rendering pipeline that redraws the full frame every 16ms. The ball bounces off walls, gets speed-clamped to keep the game watchable, and triggers goal or wall events on boundary collision. Each player decides independently whether to chase the ball or drift to a randomised position in their half, based on who is currently nearest to the ball. Goals freeze the game loop and hand control to a celebration sequence before reinitialising all positions.</p>
+
+            <pre><code>SETUP:
+  Initialise I²C on pins 22 (SDA) / 21 (SCL) at 400 kHz
+  Initialise SSD1306 display
+  Seed random number generator from floating ADC pin
+  Place six players at random positions in their respective halves
+
+LOOP every ~16 ms:
+
+  1. PLAYER AI
+     For each team, identify the player nearest the ball
+     Nearest player  →  target = ball position, re-evaluate every 100 ms
+     All others      →  target = random point in own half, re-evaluate every 400–900 ms
+     Move every player one step toward its target at constant speed
+     If the kicker is within KICK_DIST of the ball:
+       Apply a randomised kick impulse in the kicker's team direction
+
+  2. BALL PHYSICS
+     Advance ball position by (vx, vy)
+     Clamp speed to [MIN_SPEED, MAX_SPEED]
+     Top/bottom wall hit  →  reflect vy
+
+  3. GOAL DETECTION
+     Left wall reached  AND ball inside goal zone   →  right team scores; go to GOAL
+     Right wall reached AND ball inside goal zone   →  left team scores;  go to GOAL
+     Wall hit outside goal zone                     →  reflect vx
+
+  4. GOAL SEQUENCE
+     Flash "GOAL!" and updated scoreline three times
+     Reset ball to centre with a randomised velocity
+     Re-initialise all player positions
+     Return to LOOP
+
+  5. RENDER
+     Clear display buffer
+     Draw field (borders, goal boxes, centre line, centre circle)
+     Draw score
+     Draw players  (filled circle = left team  /  cross = right team)
+     Draw ball
+     Push buffer to display</code></pre>
+
             <details class="code-toggle">
                 <summary>view source</summary>
-            <pre><code>#include &lt;SPI.h&gt;
-#include &lt;Wire.h&gt;
+                <pre><code>#include &lt;Wire.h&gt;
 #include &lt;Adafruit_GFX.h&gt;
 #include &lt;Adafruit_SSD1306.h&gt;
 
 #define SCREEN_WIDTH  128
 #define SCREEN_HEIGHT 64
-
-#define I2C_SDA D4
-#define I2C_SCL D5
-TwoWire I2C_screen = TwoWire(0);
-
-#define OLED_RESET     -1
+#define OLED_RESET    -1
 #define SCREEN_ADDRESS 0x3C
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;I2C_screen, OLED_RESET);
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET);
 
 // --- Ball ---
 float ballX = 64, ballY = 32;
@@ -480,7 +461,7 @@ void goalFlash(bool rightScored) {
 
 void setup() {
   Serial.begin(115200);
-  I2C_screen.begin(I2C_SDA, I2C_SCL, 400000);
+  Wire.begin(22, 21);
   delay(500);
   if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed"));
@@ -523,7 +504,7 @@ void loop() {
 
         <div class="section">
             <h2>In Action</h2>
-            <div class="placeholder placeholder-vid">[ video coming soon ]</div>
+            <div class="placeholder placeholder-vid">[ video — to be added ]</div>
         </div>
     </div>
 
