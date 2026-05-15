@@ -231,6 +231,20 @@
             color: #fff;
         }
 
+        .embed-container {
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 25px 0;
+        }
+
+        .embed-container iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            display: block;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
@@ -285,7 +299,7 @@
                     <source src="assets/week6/calibrationvideo.mov" type="video/mp4">
                 </video>
             </div>
-            <p class="media-caption">Calibration sequence: sensor rotated through 360° while the plotter captures raw X/Y scatter.</p>
+            <p class="media-caption">Calibration sequence: rotate the sensor in all directions while the plotter captures raw X/Y scatter.</p>
         </div>
 
         <div class="section">
@@ -309,7 +323,17 @@
 
         <div class="section">
             <h2>Second assignment: capacitive sensor</h2>
-            <p>The second assignment for this week was a group project. I worked on a capacitive sensor with <a href="https://aaditsaluja.github.io/ps70/" target="_blank">Aadit Saluja</a>, Vlad, and Darwin. You can find their write-ups on their respective PS70 pages. We also built the Oblometer together in class as part of the same session.</p>
+            <p>The second assignment for this week was a group project. I worked on a capacitive sensor with <a href="https://aaditsaluja.github.io/ps70/" target="_blank">Aadit Saluja</a>, Vlad, and Darwin. We also built the Oblometer together in class as part of the same session.</p>
+
+            <h3>Aadit's page</h3>
+            <div class="embed-container">
+                <iframe src="https://aaditsaluja.github.io/ps70/06_inputs/index.html" title="Aadit Saluja — Week 6 Inputs"></iframe>
+            </div>
+
+            <h3>Darwin's page</h3>
+            <div class="embed-container">
+                <iframe src="" title="Darwin — Week 6 Inputs" id="darwin-embed"></iframe>
+            </div>
         </div>
 
         <div class="divider"></div>
