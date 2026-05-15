@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compass Calibration Plotter</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  button:disabled { opacity: 0.4; cursor: default; }
+
+  #btn-connect { background: #3b82f6; color: #fff; }
+  #btn-clear   { background: #1e293b; color: #94a3b8; border: 1px solid #334155; }
+  #btn-export  { background: #1e293b; color: #94a3b8; border: 1px solid #334155; }
+
+  .status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: #1e293b;
+    color: #64748b;
+    border: 1px solid #334155;
+  }
+  .status.connected   { background: #052e16; color: #4ade80; border-color: #166534; }
+  .status.calibrating { background: #1c1917; color: #fb923c; border-color: #9a3412; }
+  .status.running     { background: #0c1a2e; color: #60a5fa; border-color: #1d4ed8; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card h2 { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #e2e8f0; }
+  .card p  { font-size: 12px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
+
+  canvas { width: 100% !important; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .stat-label { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+  .stat-value { font-size: 22px; font-weight: 500; color: #e2e8f0; }
+  .stat-unit  { font-size: 12px; color: #94a3b8; }
+
+  .analysis {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .analysis h2 { font-size: 14px; font-weight: 500; margin-bottom: 12px; }
+  .analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.7;
+  }
+  .analysis-grid strong { color: #e2e8f0; }
+
+  #no-serial {
+    background: #1e293b;
+    border: 1px solid #f59e0b44;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 13px;
+    color: #fbbf24;
+    margin-bottom: 20px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>Compass calibration plotter</h1>
+<p class="subtitle">GY-271 (QMC5883L) via ESP32-DevKitM-1 — Web Serial</p>
+
+<div id="no-serial">
+  Web Serial API not supported. Use Chrome or Edge (desktop).
+</div>
+
+<div class="toolbar">
+  <button id="btn-connect">Connect to ESP32</button>
+  <button id="btn-clear">Clear data</button>
+  <button id="btn-export" disabled>Export CSV</button>
+  <span class="status" id="status">Disconnected</span>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">Heading</div>
+    <div class="stat-value" id="stat-heading">—</div>
+    <div class="stat-unit">degrees</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Direction</div>
+    <div class="stat-value" id="stat-dir">—</div>
+    <div class="stat-unit">cardinal</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Samples</div>
+    <div class="stat-value" id="stat-samples">0</div>
+    <div class="stat-unit">points</div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Raw X/Y during calibration</h2>
+    <p>
+      Without calibration the data forms an <strong>ellipse offset from the origin</strong> — caused by hard-iron distortion from nearby electronics.
+      A perfect sensor would produce a circle centred at (0,0). The calibration computes offsets and scale factors to correct this.
+    </p>
+    <canvas id="scatter-chart" height="300"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>Heading over time (post-calibration)</h2>
+    <p>
+      After calibration, heading is derived via <strong>atan2(y, x)</strong> — a non-linear arctangent function.
+      Small changes in X/Y near 180° produce large heading jumps while changes near 0/90° are more gradual.
+      The 359° to 0° wrap discontinuity is expected behaviour.
+    </p>
+    <canvas id="line-chart" height="300"></canvas>
+  </div>
+</div>
+
+<div class="analysis" id="analysis" style="display:none">
+  <h2>Calibration analysis</h2>
+  <div class="analysis-grid">
+    <div>
+      <strong>Hard-iron offset X:</strong> <span id="a-xoffset">—</span> raw units<br>
+      <strong>Hard-iron offset Y:</strong> <span id="a-yoffset">—</span> raw units<br>
+      <strong>Scale X:</strong> <span id="a-xscale">—</span><br>
+      <strong>Scale Y:</strong> <span id="a-yscale">—</span>
+    </div>
+    <div>
+      <strong>X range:</strong> <span id="a-xrange">—</span> raw units<br>
+      <strong>Y range:</strong> <span id="a-yrange">—</span> raw units<br>
+      <strong>Ellipse eccentricity:</strong> <span id="a-ecc">—</span><br>
+      <strong>Non-linearity:</strong> atan2 arctangent relationship
+    </div>
+  </div>
+</div>
+
+<script>
+if (!('serial' in navigator)) {
+  document.getElementById('no-serial').style.display = 'block';
+  document.getElementById('btn-connect').disabled = true;
+}
+
+const calData     = [];
+const headingData = [];
+const timeLabels  = [];
+let csvRows = [['timestamp_s','mode','rawX','rawY','heading','direction']];
+let t0     = null;
+let port   = null;
+let reader = null;
+
+const statusEl   = document.getElementById('status');
+const btnConnect = document.getElementById('btn-connect');
+const btnExport  = document.getElementById('btn-export');
+
+const scatterChart = new Chart(document.getElementById('scatter-chart'), {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {
+        label: 'Raw XY',
+        data: calData,
+        backgroundColor: 'rgba(251,146,60,0.5)',
+        pointRadius: 2,
+      },
+      {
+        label: 'Calibrated centre',
+        data: [],
+        backgroundColor: '#4ade80',
+        pointRadius: 8,
+        pointStyle: 'crossRot',
+      }
+    ]
+  },
+  options: {
+    animation: false,
+    responsive: true,
+    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } },
+    scales: {
+      x: {
+        title: { display: true, text: 'Raw X (magnetic units)', color: '#64748b', font: { size: 11 } },
+        ticks: { color: '#64748b' },
+        grid: { color: '#ffffff11' }
+      },
+      y: {
+        title: { display: true, text: 'Raw Y (magnetic units)', color: '#64748b', font: { size: 11 } },
+        ticks: { color: '#64748b' },
+        grid: { color: '#ffffff11' }
+      }
+    }
+  }
+});
+
+const lineChart = new Chart(document.getElementById('line-chart'), {
+  type: 'line',
+  data: {
+    labels: timeLabels,
+    datasets: [{
+      label: 'Heading (°)',
+      data: headingData,
+      borderColor: '#60a5fa',
+      backgroundColor: 'rgba(96,165,250,0.08)',
+      borderWidth: 1.5,
+      pointRadius: 0,
+      tension: 0,
+      fill: true,
+    }]
+  },
+  options: {
+    animation: false,
+    responsive: true,
+    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } },
+    scales: {
+      x: {
+        title: { display: true, text: 'Time (s)', color: '#64748b', font: { size: 11 } },
+        ticks: { color: '#64748b', maxTicksLimit: 10 },
+        grid: { color: '#ffffff11' }
+      },
+      y: {
+        min: 0,
+        max: 360,
+        title: { display: true, text: 'Heading (degrees)', color: '#64748b', font: { size: 11 } },
+        ticks: { color: '#64748b', callback: v => v + '°' },
+        grid: { color: '#ffffff11' }
+      }
+    }
+  }
+});
+
+function setStatus(text, cls) {
+  statusEl.textContent = text;
+  statusEl.className = 'status ' + (cls || '');
+}
+
+function processLine(line) {
+  line = line.trim();
+  if (!line.startsWith('{')) return;
+  let msg;
+  try { msg = JSON.parse(line); } catch { return; }
+
+  if (!t0) t0 = Date.now();
+  const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+
+  if (msg.mode === 'cal') {
+    setStatus('Calibrating…', 'calibrating');
+    calData.push({ x: msg.x, y: msg.y });
+    document.getElementById('stat-samples').textContent = calData.length;
+    if (calData.length % 5 === 0) scatterChart.update();
+    csvRows.push([elapsed, 'cal', msg.x, msg.y, '', '']);
+  }
+
+  if (msg.mode === 'cal_done') {
+    scatterChart.data.datasets[1].data = [{ x: msg.xOffset, y: msg.yOffset }];
+    scatterChart.update();
+
+    const xRange = (1 / msg.xScale).toFixed(1);
+    const yRange = (1 / msg.yScale).toFixed(1);
+    const ecc = Math.abs(1 - Math.min(msg.xScale, msg.yScale) / Math.max(msg.xScale, msg.yScale)).toFixed(3);
+
+    document.getElementById('a-xoffset').textContent = msg.xOffset.toFixed(1);
+    document.getElementById('a-yoffset').textContent = msg.yOffset.toFixed(1);
+    document.getElementById('a-xscale').textContent  = msg.xScale.toFixed(4);
+    document.getElementById('a-yscale').textContent  = msg.yScale.toFixed(4);
+    document.getElementById('a-xrange').textContent  = xRange;
+    document.getElementById('a-yrange').textContent  = yRange;
+    document.getElementById('a-ecc').textContent     = ecc;
+    document.getElementById('analysis').style.display = 'block';
+    btnExport.disabled = false;
+  }
+
+  if (msg.mode === 'run') {
+    setStatus('Running', 'running');
+    headingData.push(msg.heading);
+    timeLabels.push(elapsed);
+    document.getElementById('stat-heading').textContent = msg.heading;
+    document.getElementById('stat-dir').textContent     = msg.direction;
+    document.getElementById('stat-samples').textContent = calData.length + headingData.length;
+
+    if (headingData.length > 300) {
+      headingData.shift();
+      timeLabels.shift();
+    }
+
+    lineChart.update();
+    csvRows.push([elapsed, 'run', msg.rawX, msg.rawY, msg.heading, msg.direction]);
+  }
+}
+
+async function connect() {
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200 });
+    setStatus('Connected', 'connected');
+    btnConnect.textContent = 'Disconnect';
+
+    const decoder = new TextDecoderStream();
+    port.readable.pipeTo(decoder.writable);
+    reader = decoder.readable.getReader();
+
+    let buf = '';
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += value;
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      lines.forEach(processLine);
+    }
+  } catch (e) {
+    if (e.name !== 'NotFoundError') {
+      console.error('Serial error:', e.name, e.message);
+    }
+  } finally {
+    setStatus('Disconnected');
+    btnConnect.textContent = 'Connect to ESP32';
+    port   = null;
+    reader = null;
+  }
+}
+
+btnConnect.addEventListener('click', async () => {
+  if (port) {
+    try { await reader.cancel(); } catch {}
+    try { await port.close();   } catch {}
+    port   = null;
+    reader = null;
+    setStatus('Disconnected');
+    btnConnect.textContent = 'Connect to ESP32';
+  } else {
+    await connect();
+  }
+});
+
+document.getElementById('btn-clear').addEventListener('click', () => {
+  calData.length     = 0;
+  headingData.length = 0;
+  timeLabels.length  = 0;
+  csvRows = [['timestamp_s','mode','rawX','rawY','heading','direction']];
+  t0 = null;
+  scatterChart.data.datasets[1].data = [];
+  scatterChart.update();
+  lineChart.update();
+  document.getElementById('stat-heading').textContent = '—';
+  document.getElementById('stat-dir').textContent     = '—';
+  document.getElementById('stat-samples').textContent = '0';
+  document.getElementById('analysis').style.display   = 'none';
+  btnExport.disabled = true;
+});
+
+btnExport.addEventListener('click', () => {
+  const csv = csvRows.map(r => r.join(',')).join('\n');
+  const a   = document.createElement('a');
+  a.href     = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'compass_data.csv';
+  a.click();
+});
+</script>
+</body>
+</html>
