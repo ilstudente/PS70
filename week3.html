@@ -240,73 +240,73 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/STLLoader.js"></script>
-    <script>
-        (function () {
-            const container = document.getElementById('gear-viewer');
-            const w = container.clientWidth, h = container.clientHeight;
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(w, h);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 2000);
-            camera.position.set(0, 0, 200);
+        const container = document.getElementById('gear-viewer');
+        const w = container.clientWidth, h = container.clientHeight;
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(w, h);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
 
-            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-            const dir = new THREE.DirectionalLight(0xd4af37, 1.2);
-            dir.position.set(2, 3, 4);
-            scene.add(dir);
-            const dir2 = new THREE.DirectionalLight(0xffffff, 0.4);
-            dir2.position.set(-2, -1, -2);
-            scene.add(dir2);
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 2000);
+        camera.position.set(0, 0, 200);
 
-            let mesh;
-            const loader = new THREE.STLLoader();
-            loader.load('assets/week3/planetensystemfrfr.stl', function (geometry) {
-                geometry.computeBoundingBox();
-                const center = new THREE.Vector3();
-                geometry.boundingBox.getCenter(center);
-                geometry.translate(-center.x, -center.y, -center.z);
-                const size = new THREE.Vector3();
-                geometry.boundingBox.getSize(size);
-                const scale = 140 / Math.max(size.x, size.y, size.z);
-                const mat = new THREE.MeshPhongMaterial({ color: 0xd4af37, specular: 0x222222, shininess: 50 });
-                mesh = new THREE.Mesh(geometry, mat);
-                mesh.scale.setScalar(scale);
-                scene.add(mesh);
-            });
+        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+        const dir = new THREE.DirectionalLight(0xd4af37, 1.2);
+        dir.position.set(2, 3, 4);
+        scene.add(dir);
+        const dir2 = new THREE.DirectionalLight(0xffffff, 0.4);
+        dir2.position.set(-2, -1, -2);
+        scene.add(dir2);
 
-            let isDragging = false, lastX = 0, lastY = 0, rotX = 0, rotY = 0;
-            const el = renderer.domElement;
-            el.addEventListener('mousedown', e => { isDragging = true; lastX = e.clientX; lastY = e.clientY; });
-            window.addEventListener('mouseup', () => { isDragging = false; });
-            window.addEventListener('mousemove', e => {
-                if (!isDragging || !mesh) return;
-                rotY += (e.clientX - lastX) * 0.01;
-                rotX += (e.clientY - lastY) * 0.01;
-                lastX = e.clientX; lastY = e.clientY;
-            });
+        let mesh, isDragging = false, lastX = 0, lastY = 0, rotX = 0, rotY = 0;
 
-            (function animate() {
-                requestAnimationFrame(animate);
-                if (mesh) {
-                    if (!isDragging) rotY += 0.004;
-                    mesh.rotation.x = rotX;
-                    mesh.rotation.y = rotY;
-                }
-                renderer.render(scene, camera);
-            })();
+        new STLLoader().load('assets/week3/planetensystemfrfr.stl', geometry => {
+            geometry.computeBoundingBox();
+            const center = new THREE.Vector3();
+            geometry.boundingBox.getCenter(center);
+            geometry.translate(-center.x, -center.y, -center.z);
+            const size = new THREE.Vector3();
+            geometry.boundingBox.getSize(size);
+            const scale = 140 / Math.max(size.x, size.y, size.z);
+            mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({ color: 0xd4af37, specular: 0x222222, shininess: 50 }));
+            mesh.scale.setScalar(scale);
+            scene.add(mesh);
+        });
 
-            window.addEventListener('resize', () => {
-                const nw = container.clientWidth;
-                renderer.setSize(nw, h);
-                camera.aspect = nw / h;
-                camera.updateProjectionMatrix();
-            });
+        renderer.domElement.addEventListener('mousedown', e => { isDragging = true; lastX = e.clientX; lastY = e.clientY; });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+        window.addEventListener('mousemove', e => {
+            if (!isDragging || !mesh) return;
+            rotY += (e.clientX - lastX) * 0.01;
+            rotX += (e.clientY - lastY) * 0.01;
+            lastX = e.clientX; lastY = e.clientY;
+        });
+
+        (function animate() {
+            requestAnimationFrame(animate);
+            if (mesh) { if (!isDragging) rotY += 0.004; mesh.rotation.x = rotX; mesh.rotation.y = rotY; }
+            renderer.render(scene, camera);
         })();
+
+        window.addEventListener('resize', () => {
+            const nw = container.clientWidth;
+            renderer.setSize(nw, h);
+            camera.aspect = nw / h;
+            camera.updateProjectionMatrix();
+        });
     </script>
 
     <script>
